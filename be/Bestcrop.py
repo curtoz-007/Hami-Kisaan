@@ -13,11 +13,9 @@ except FileNotFoundError:
     print("File not found")
     df = pd.DataFrame()
 
-# Convert column names to strings before using .str.contains
 df.columns = df.columns.map(str)
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
-# For initialization of speed recommendation
 
 crop_names = df["Crop"].to_numpy()
 temp_opt_min = df["Ecology_Temp_Optimal_Min"].to_numpy()

@@ -1,0 +1,390 @@
+[
+  {
+    "name": "Wheat",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1670909649532-d1d68ee475cd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Maize",
+    "imagelink": "https://images.pexels.com/photos/872483/pexels-photo-872483.jpeg"
+  },
+  {
+    "name": "Rice",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1705338026411-00639520a438?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmljZXxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "name": "Barley",
+    "imagelink": "https://images.pexels.com/photos/326082/pexels-photo-326082.jpeg"
+  },
+  {
+    "name": "Potato",
+    "imagelink": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG90YXRvfGVufDB8fDB8fHww"
+  },
+  {
+    "name": "Tomato",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1661811820259-2575b82101bf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8VG9tYXRvfGVufDB8fDB8fHww"
+  },
+  {
+    "name": "Onion",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1668076517573-fa01307d87ad?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8b25pb258ZW58MHx8MHx8fDA%3D"
+  },
+  {
+    "name": "Spinach",
+    "imagelink": "https://images.pexels.com/photos/6824475/pexels-photo-6824475.jpeg"
+  },
+  {
+    "name": "Pea",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1663844169236-ff32474d1dc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8UGVhfGVufDB8fDB8fHww"
+  },
+  {
+    "name": "Lentil",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1671130295987-13d3b3b4e9dc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TGVudGlsfGVufDB8fDB8fHww"
+  },
+  {
+    "name": "Soybean",
+    "imagelink": "https://images.pexels.com/photos/273838/pexels-photo-273838.jpeg"
+  },
+  {
+    "name": "Cabbage",
+    "imagelink": "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Q2FiYmFnZXxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "name": "Bell Pepper",
+    "imagelink": "https://images.unsplash.com/photo-1621953723422-6023013f659d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Garlic",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1666270423754-5b66a5184cc3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8R2FybGljfGVufDB8fDB8fHww"
+  },
+  {
+    "name": "Sugarcane",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1694864661950-288ec8a06e5c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8U3VnYXJjYW5lfGVufDB8fDB8fHww"
+  },
+  {
+    "name": "Upland Cotton",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1726783222818-48f7588177d5?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Arabica Coffee",
+    "imagelink": "https://images.pexels.com/photos/2131720/pexels-photo-2131720.jpeg"
+  },
+  {
+    "name": "Tea",
+    "imagelink": "https://plus.unsplash.com/premium_photo-1692049123825-8d43174c9c5c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VGVhfGVufDB8fDB8fHww"
+  },
+  {
+    "name": "Peanut",
+    "imagelink": "https://tse2.mm.bing.net/th/id/OIP.5G5CY514HhljTho4zDoybgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Sunflower",
+    "imagelink": "https://images.pexels.com/photos/1169084/pexels-photo-1169084.jpeg"
+  },
+  {
+    "name": "Carrot",
+    "imagelink": "https://c.ndtvimg.com/2022-12/a4ds147g_carrot-health-benefits_295x200_13_December_22.jpg"
+  },
+  {
+    "name": "Cucumber",
+    "imagelink": "https://th.bing.com/th/id/OIP.e5XlI-BDQp5h4IOZN9FgNAHaFj?w=246&h=185&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+  },
+  {
+    "name": "Apple",
+    "imagelink": "https://tse3.mm.bing.net/th/id/OIP.kori7Y8NQzmHi4RLlD-T9AHaE5?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Grape",
+    "imagelink": "https://tse2.mm.bing.net/th/id/OIP.9MFUrUXKBTD3KBu3pF9AiQHaF7?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Banana",
+    "imagelink": "https://upload.wikimedia.org/wikipedia/commons/6/69/Banana.png"
+  },
+  {
+    "name": "Pineapple",
+    "imagelink": "https://tse3.mm.bing.net/th/id/OIP.XlF-UXkfEiX79yBwfHEl4AHaE9?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Mango",
+    "imagelink": "https://th.bing.com/th/id/R.cf307e454ab5465085bad1946d78ce25?rik=Sy6y%2fhBrxzAD2w&riu=http%3a%2f%2fwww.modernthrill.com%2fwp-content%2fuploads%2f2015%2f06%2fMangoes.jpg&ehk=%2bMbq%2fjKfQjMcdTRQtLpPPIwXfVMPxSF7J%2bBgbjY0mAc%3d&risl=&pid=ImgRaw&r=0"
+  },
+  {
+    "name": "Coconut",
+    "imagelink": "https://images.pexels.com/photos/1424457/pexels-photo-1424457.jpeg"
+  },
+  {
+    "name": "Sweet Orange",
+    "imagelink": "https://tse2.mm.bing.net/th/id/OIP.OKaxUGA7GJnb1iGEU_Xp-wHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Oat",
+    "imagelink": "https://tse4.mm.bing.net/th/id/OIP.ZVRjNCJ78zFd0N8TEDrNKwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Sorghum",
+    "imagelink": "https://tse4.mm.bing.net/th/id/OIP.ZVRjNCJ78zFd0N8TEDrNKwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Sweet Potato",
+    "imagelink": "https://tse2.mm.bing.net/th/id/OIP.K8wbHi6Pp3sJmYYQmOIYQAHaLI?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Cassava",
+    "imagelink": "https://tse2.mm.bing.net/th/id/OIP.a5IUxlSzdsrc72w8-mP5TQHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Chickpea",
+    "imagelink": "https://th.bing.com/th/id/R.93b4bd6b0ffeff40a5c65b6baebd71ab?rik=s1DJ84gTocFg1Q&riu=http%3a%2f%2fstatic.producer.com%2fwp-content%2fuploads%2f2016%2f05%2fchickpeas.jpg&ehk=DoM9L6F8kO6CjSlOrNQVOicjls26L3xwbtpbw0T3vT0%3d&risl=&pid=ImgRaw&r=0"
+  },
+  {
+    "name": "Mung Bean",
+    "imagelink": "https://tse1.mm.bing.net/th/id/OIP.EZlxKnuP8h7W3V_CrkCA4QHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Black Gram",
+    "imagelink": "https://tse3.mm.bing.net/th/id/OIP.xZZsUH9tq_9oqZgSWxOuXQHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Cowpea",
+    "imagelink": "https://www.agrifarming.in/wp-content/uploads/Cowpea-Farming1.jpg"
+  },
+  {
+    "name": "Pigeon Pea",
+    "imagelink": "https://th.bing.com/th/id/OIP.7b-m7ihD5VtUCQ5LXfIR5wHaEK?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Horse Gram",
+    "imagelink": "https://tse1.mm.bing.net/th/id/OIP.QBsbOLlXbSmdroUO0mMYjQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Kidney Bean",
+    "imagelink": "https://tse4.mm.bing.net/th/id/OIP.arQiTuz14VWaFf7t3fZtdgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Broad Bean",
+    "imagelink": "https://tse1.mm.bing.net/th/id/OIP.HhunMnKFG6kDBLqOpt_WVwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Rapeseed",
+    "imagelink": "https://thumbs.dreamstime.com/b/spraying-rapeseed-crop-farmer-his-rape-seed-also-known-as-canola-increasingly-used-bio-fuel-production-40464919.jpg"
+  },
+  {
+    "name": "Sesame",
+    "imagelink": "https://tse1.mm.bing.net/th/id/OIP.z_B3pzDW5bDUJguowh-tHwHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Linseed",
+    "imagelink": "https://i0.wp.com/dhcrop.bsmrau.net/wp-content/uploads/2016/03/Linseedseed.jpg?w=2580"
+  },
+  {
+    "name": "Safflower",
+    "imagelink": "https://th.bing.com/th/id/R.cc24b9ff38bf6640a57394bc423226bf?rik=kngBP%2b3L6AKZ6A&pid=ImgRaw&r=0"
+  },
+  {
+    "name": "Jute",
+    "imagelink": "https://static.vecteezy.com/system/resources/previews/009/773/902/large_2x/green-jute-plantation-field-raw-jute-plant-texture-background-this-is-the-called-golden-fiber-in-bangladesh-photo.jpg"
+  },
+  {
+    "name": "Pumpkin",
+    "imagelink": "https://tse4.mm.bing.net/th/id/OIP.-06upNMc0ar7Olw1zr5ojQHaE7?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Bottle Gourd",
+    "imagelink": "https://tse2.mm.bing.net/th/id/OIP.9ETA79RRaAn8RY19Z0EouwHaEU?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Bitter Gourd",
+    "imagelink": "https://th.bing.com/th/id/R.7b9801acf6830bd088957631175f36ed?rik=sgfxV17oNDRAXA&riu=http%3a%2f%2fnaturebring.com%2fwp-content%2fuploads%2f2017%2f02%2fBitter-Gourd-nb-02-1024x768.jpg&ehk=ml%2fySGvYUH7FU9zOAXSzYgS3rJ%2f3%2flcqL6hivXHudk0%3d&risl=&pid=ImgRaw&r=0"
+  },
+  {
+    "name": "Ridge Gourd",
+    "imagelink": "https://tse2.mm.bing.net/th/id/OIP.GtPIENfzyV8ptSQEGpQ0VAHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Brinjal",
+    "imagelink": "https://tse1.mm.bing.net/th/id/OIP.bXfZbIOHBaIk0CxxnCgczAHaE6?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Chili Pepper",
+    "imagelink": "https://th.bing.com/th/id/R.57637c0300a6c35994471c27bf0a994a?rik=XktRCkCmbUG09w&pid=ImgRaw&r=0"
+  },
+  {
+    "name": "Radish",
+    "imagelink": "https://th.bing.com/th/id/R.07accaa7fb3269ecfc99a38a9ae6914a?rik=HsPBI341OL0KYA&riu=http%3a%2f%2fwww.onlyfoods.net%2fwp-content%2fuploads%2f2012%2f07%2fRadish.jpg&ehk=d72Fmam%2fXzZUM9tw1y7Ioqop14QaAt6uH6P%2fcel9vIY%3d&risl=&pid=ImgRaw&r=0"
+  },
+  {
+    "name": "Okra",
+    "imagelink": "https://i0.wp.com/www.healthfitnessrevolution.com/wp-content/uploads/2016/10/iStock-520883902.jpg?fit=2120%2C1415&ssl=1"
+  },
+  {
+    "name": "Cauliflower",
+    "imagelink": "https://tse2.mm.bing.net/th/id/OIP.lQ9sBnPaLzGPbkdQgJ-DqwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Lettuce",
+    "imagelink": "https://media.istockphoto.com/id/1090496988/photo/closeup-fresh-organic-green-leaves-lettuce-salad-plant-in-hydroponics-vegetables-farm-system.jpg?s=612x612&w=0&k=20&c=ljnbtNVcQFtomCazDC2K7EIwTLFwbKMQ9uGatJ3O7f8="
+  },
+  {
+    "name": "Ginger",
+    "imagelink": "https://media.istockphoto.com/id/183852454/photo/fresh-ginger.jpg?s=612x612&w=0&k=20&c=BOPTNl7vgw5EptA0eZGSv1XZiIoxkGuZzWXpbJe3_bA="
+  },
+  {
+    "name": "Turmeric",
+    "imagelink": "https://media.istockphoto.com/id/1875088234/photo/many-raw-turmeric-rhizomes-as-background-closeup.jpg?s=612x612&w=0&k=20&c=WMf_G6_GKnKEv_4IKuNYo6l4gJmanBSNcNzsOiu80yw="
+  },
+  {
+    "name": "Cardamom",
+    "imagelink": "https://media.istockphoto.com/id/598149032/photo/green-cardamom.jpg?s=612x612&w=0&k=20&c=khOIaZKRBsbl82sJWOfJVvl0OkMaNPZSNM3_vE-Zylc="
+  },
+  {
+    "name": "Basil",
+    "imagelink": "https://th.bing.com/th/id/OSK.HEROdxAVg7N065Z2OgmCcWeoWK-_lok2Nh9byhKQAltVn80?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Coriander",
+    "imagelink": "https://cdn.britannica.com/95/205795-050-EF644B7F/Bowl-cilantro-leaves-coriander-fruits-Coriandrum-sativum.jpg"
+  },
+  {
+    "name": "Fenugreek",
+    "imagelink": "https://tse2.mm.bing.net/th/id/OIP.f1ql9xsHN1pZC1B-7aOt0AHaEo?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Black Pepper",
+    "imagelink": "https://images.pexels.com/photos/5988689/pexels-photo-5988689.jpeg"
+  },
+  {
+    "name": "Cinnamon",
+    "imagelink": "https://media.istockphoto.com/id/1536235481/photo/whole-dried-cinnamon-for-baking.jpg?s=612x612&w=0&k=20&c=QBjo7S60PHls9a1bYCwtcuAXg3RtpegNYraVYnAonXI="
+  },
+  {
+    "name": "Papaya",
+    "imagelink": "https://cdn.pixabay.com/photo/2022/06/17/07/48/papaya-7267391_1280.jpg"
+  },
+  {
+    "name": "Guava",
+    "imagelink": "https://tse4.mm.bing.net/th/id/OIP.PTXNUYWLnjucXhJ9LTCe8wHaH-?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Litchi",
+    "imagelink": "https://tse3.mm.bing.net/th/id/OIP.IytfVGLbf1Ne9ddHS-qF3wHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "name": "Jackfruit",
+    "imagelink": "https://th.bing.com/th/id/R.99a747cd42deab129dbdfe5e921c43ad?rik=NDkaFckZozSZmQ&pid=ImgRaw&r=0"
+  },
+  {
+    "name": "Avocado",
+    "imagelink": "https://images.pexels.com/photos/3687927/pexels-photo-3687927.jpeg"
+  },
+  {
+    "name": "Strawberry",
+    "imagelink": "https://images.pexels.com/photos/1788912/pexels-photo-1788912.jpeg"
+  },
+  {
+    "name": "Kiwi",
+    "imagelink": "https://images.pexels.com/photos/849685/pexels-photo-849685.jpeg"
+  },
+  {
+    "name": "Pomegranate",
+    "imagelink": "https://images.pexels.com/photos/2996250/pexels-photo-2996250.jpeg"
+  },
+  {
+    "name": "Pear",
+    "imagelink": "https://images.pexels.com/photos/2095571/pexels-photo-2095571.jpeg"
+  },
+  {
+    "name": "Peach",
+    "imagelink": "https://images.pexels.com/photos/209416/pexels-photo-209416.jpeg"
+  },
+  {
+    "name": "Plum",
+    "imagelink": "https://cdn.pixabay.com/photo/2017/09/07/08/17/plums-2724160_1280.jpg"
+  },
+  {
+    "name": "Apricot",
+    "imagelink": "https://images.pexels.com/photos/209416/pexels-photo-209416.jpeg"
+  },
+  {
+    "name": "Walnut",
+    "imagelink": "https://images.pexels.com/photos/3640631/pexels-photo-3640631.jpeg"
+  },
+  {
+    "name": "Lemon",
+    "imagelink": "https://images.pexels.com/photos/266346/pexels-photo-266346.jpeg"
+  },
+  {
+    "name": "Lime",
+    "imagelink": "https://images.pexels.com/photos/2363347/pexels-photo-2363347.jpeg"
+  },
+  {
+    "name": "Areca Nut",
+    "imagelink": "https://images.pexels.com/photos/5608059/pexels-photo-5608059.jpeg"
+  },
+  {
+    "name": "Hemp",
+    "imagelink": "https://images.pexels.com/photos/2731663/pexels-photo-2731663.jpeg"
+  },
+  {
+    "name": "Pearl Millet",
+    "imagelink": "https://images.pexels.com/photos/10738421/pexels-photo-10738421.jpeg"
+  },
+  {
+    "name": "Finger Millet",
+    "imagelink": "https://images.pexels.com/photos/13867829/pexels-photo-13867829.jpeg"
+  },
+  {
+    "name": "Foxtail Millet",
+    "imagelink": "https://images.pexels.com/photos/16977456/pexels-photo-16977456.jpeg"
+  },
+  {
+    "name": "Barnyard Millet",
+    "imagelink": "https://images.pexels.com/photos/30451721/pexels-photo-30451721.jpeg"
+  },
+  {
+    "name": "Buckwheat",
+    "imagelink": "https://cdn.pixabay.com/photo/2016/09/03/14/58/buckwheat-1641941_1280.jpg"
+  },
+  {
+    "name": "Quinoa",
+    "imagelink": "https://cdn.pixabay.com/photo/2016/03/08/08/18/quinoa-1243592_1280.jpg"
+  },
+  {
+    "name": "Chestnut",
+    "imagelink": "https://cdn.pixabay.com/photo/2016/11/09/17/59/castanea-1812362_1280.jpg"
+  },
+  {
+    "name": "Amla",
+    "imagelink": "https://cdn.pixabay.com/photo/2019/07/18/14/02/emblic-4346562_1280.jpg"
+  },
+  {
+    "name": "Jujube",
+    "imagelink": "https://cdn.pixabay.com/photo/2015/09/11/17/46/autumn-936183_1280.jpg"
+  },
+  {
+    "name": "Saffron",
+    "imagelink": "https://cdn.pixabay.com/photo/2017/10/06/19/29/saffron-2824327_1280.jpg"
+  },
+  {
+    "name": "Mandarin",
+    "imagelink": "https://cdn.pixabay.com/photo/2017/01/07/13/53/fruit-1960405_1280.jpg"
+  },
+  {
+    "name": "Pomelo",
+    "imagelink": "https://images.unsplash.com/photo-1550828553-7c8732c4bda6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG9tZWxvfGVufDB8fDB8fHww"
+  },
+  {
+    "name": "Watermelon",
+    "imagelink": "https://cdn.pixabay.com/photo/2015/12/05/00/06/watermelon-1077677_1280.jpg"
+  },
+  {
+    "name": "Muskmelon",
+    "imagelink": "https://images.pexels.com/photos/31539397/pexels-photo-31539397.jpeg"
+  },
+  {
+    "name": "Tobacco",
+    "imagelink": "https://cdn.pixabay.com/photo/2012/02/24/17/07/tobacco-16771_1280.jpg"
+  },
+  {
+    "name": "Taro",
+    "imagelink": "https://cdn.pixabay.com/photo/2016/10/01/16/53/taro-1707892_1280.jpg"
+  }
+]

@@ -1,3 +1,5 @@
+import requests
+from datetime import datetime, timedelta, timezone
 import pandas as pd
 import numpy as np
 
@@ -85,7 +87,75 @@ def recommend_crops(temp, rainfall, ph, latitude, altitude, month):
     return result.sort_values("Score", ascending=False).reset_index(drop=True)
 
 
-a = recommend_crops(20, 500, 6.5, 35, 1000, 5)
-print(a)
 
+
+def fetch_soil_ph(lat, lon):
+    url = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=phh2o&depth=0-5cm&value=mean"
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        if 'properties' in data and 'layers' in data['properties'] and data['properties']['layers']:
+            ph_mean = data['properties']['layers'][0]['depths'][0]['values']['mean']
+            if ph_mean is not None:
+                return round(ph_mean / 10.0, 1)
+        return None
+    except Exception as e:
+        return None
+
+
+
+def get_crop_recommendations_from_location(lat: float, lon: float):
+    weather_api_key = "433318bae28b4767920164042250708"
+    weather_url = f"https://api.weatherapi.com/v1/current.json?key={weather_api_key}&q={lat},{lon}"
+    weather_response = requests.get(weather_url, timeout=10)
+    weather_response.raise_for_status()
+    weather_data = weather_response.json()
+    if "error" in weather_data:
+        raise ValueError(f"Weather API error: {weather_data['error']['message']}")
+    temp = weather_data["current"]["temp_c"]
+    today = datetime.now(timezone.utc).date()
+    one_year_ago = today - timedelta(days=365)
+    rain_url = (
+        f"https://archive-api.open-meteo.com/v1/archive?"
+        f"latitude={lat}&longitude={lon}"
+        f"&start_date={one_year_ago}&end_date={today}"
+        "&daily=precipitation_sum&timezone=UTC"
+    )
+    rain_response = requests.get(rain_url, timeout=10)
+    rain_response.raise_for_status()
+    rain_data = rain_response.json()
+    if "daily" in rain_data and "precipitation_sum" in rain_data["daily"]:
+        rainfall = sum(p for p in rain_data["daily"]["precipitation_sum"] if p is not None)
+    else:
+        raise ValueError("No precipitation data found.")
+    alt_url = f"https://api.open-elevation.com/api/v1/lookup?locations={lat},{lon}"
+    alt_response = requests.get(alt_url, timeout=10)
+    alt_response.raise_for_status()
+    alt_data = alt_response.json()
+    if "results" in alt_data and len(alt_data["results"]) > 0:
+        altitude = alt_data["results"][0]["elevation"]
+    else:
+        raise ValueError("No elevation data found.")
+    month = datetime.utcnow().month
+    ph_soil = fetch_soil_ph(lat, lon)
+
+    if ph_soil is None:
+        print("No pH data found.")
+        ph_soil = 6.5  # Default pH value if fetching fails
+    print(ph_soil)
+
+    recommendations = recommend_crops(
+        temp=temp,
+        rainfall=rainfall,
+        ph=ph_soil,
+        latitude=lat,
+        altitude=altitude,
+        month=month
+    )
+    return recommendations
+
+
+a= get_crop_recommendations_from_location(27.705, 84.410)
+print(a)
 

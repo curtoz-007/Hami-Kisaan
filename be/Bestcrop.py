@@ -98,37 +98,26 @@ def recommend_crops(temp, rainfall, ph, latitude, altitude, month):
     return result.sort_values("Score", ascending=False).reset_index(drop=True)
 
 
-
-
-def fetch_soil_ph(lat, lon):
-    url = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=phh2o&depth=0-5cm&value=mean"
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        if 'properties' in data and 'layers' in data['properties'] and data['properties']['layers']:
-            ph_mean = data['properties']['layers'][0]['depths'][0]['values']['mean']
-            if ph_mean is not None:
-                return round(ph_mean / 10.0, 1)
-        return None
-    except Exception as e:
-        return None
-
-
 async def fetch_soil_ph(lat, lon):
-    url = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=phh2o&depth=0-5cm&value=mean"
+    url = f"https://soil.narc.gov.np/soil/api/?lat={lat}&lon={lon}"
     try:
         async with httpx.AsyncClient(timeout=10) as client:
             response = await client.get(url)
             response.raise_for_status()
             data = response.json()
-            if 'properties' in data and 'layers' in data['properties'] and data['properties']['layers']:
-                ph_mean = data['properties']['layers'][0]['depths'][0]['values']['mean']
-                if ph_mean is not None:
-                    return round(ph_mean / 10.0, 1)
-        return None
+            
+            # Extract pH
+            ph_value = data.get('ph')
+            if ph_value is not None:
+                # Remove spaces and convert to float
+                return round(float(ph_value.strip()), 2)
+            
+            # Default pH if not found
+            return 6.1
     except Exception:
-        return None
+        return 6.1
+
+
 
 async def fetch_weather(lat, lon):
     weather_api_key = os.getenv("weather_api_key")
@@ -196,5 +185,5 @@ async def get_crop_recommendations_from_location(lat: float, lon: float):
     return recommendations
 
 
-# a = asyncio.run(get_crop_recommendations_from_location(27, 84))
-# print(a)
+a = asyncio.run(get_crop_recommendations_from_location(27, 84))
+print(a)

@@ -1,0 +1,23 @@
+// Best Crop Recommendation Workflow
+digraph {
+	A [label="Input: Latitude & Longitude"]
+	B [label="Fetch Environmental Data
+- Weather (Temp)
+- Rainfall (Past Year)
+- Altitude
+- Soil pH"]
+	C [label="Compute Crop Scores
+- Temperature
+- Rainfall
+- Soil pH
+- Latitude
+- Altitude
+- Planting/Harvesting Month"]
+	D [label="Filter crops with Score > 0
+Sort by Score descending"]
+	E [label="Output: Recommended Crops (JSON)"]
+	A -> B [label="Provide coordinates"]
+	B -> C [label="Fetch data via APIs"]
+	C -> D [label="Calculate scores using dataset"]
+	D -> E [label="Return JSON to user"]
+}

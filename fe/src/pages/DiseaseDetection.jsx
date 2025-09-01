@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import "../styles/DiseaseDetection.css";
 
-export default function DiseaseDetection() {
+export default function Diseasedetection() {
   const [selectedFile, setSelectedFile] = useState(null)
   const [preview, setPreview] = useState(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
@@ -251,27 +251,33 @@ export default function DiseaseDetection() {
               <div className="result-card">
                 <div className="result-header">
                   <div className="disease-icon">
-                    {result.disease === 'healthy' ? '✅' : '⚠️'}
+                    {result.disease_detected.toLowerCase().includes('healthy') ? '✅' : '⚠️'}
                   </div>
                   <div className="result-info">
-                    <h3>{result.disease === 'healthy' ? 'Plant is Healthy' : `Disease: ${result.disease}`}</h3>
-                    <div className="confidence">
-                      Confidence: <span className="confidence-score">{result.confidence}%</span>
-                    </div>
+                    <h3>
+                      {result.disease_detected.toLowerCase().includes('healthy') 
+                        ? 'Plant is Healthy' 
+                        : `Disease: ${result.disease_detected}`}
+                    </h3>
                   </div>
                 </div>
                 
-                {result.disease !== 'healthy' && (
-                  <div className="treatment-info">
-                    <h4>Treatment Recommendations</h4>
-                    <ul className="treatment-list">
-                      <li>Remove affected leaves and dispose of them properly</li>
-                      <li>Apply appropriate fungicide or pesticide as recommended</li>
-                      <li>Improve air circulation around the plant</li>
-                      <li>Monitor for further spread of the disease</li>
-                    </ul>
-                  </div>
-                )}
+                <div className="result-details">
+                  <h4>Potential Harms</h4>
+                  <p>{result.Potential_Harms}</p>
+
+                  <h4>Solutions</h4>
+                  <p>{result.Solution}</p>
+
+                  <h4>Organic Solutions</h4>
+                  <p>{result.Organic_Solutions}</p>
+
+                  <h4>Fungicide Solutions</h4>
+                  <p>{result.Insecticide_Solutions}</p>
+
+                  <h4>Sources</h4>
+                  <p>{result.Sources}</p>
+                </div>
 
                 <div className="result-actions">
                   <button className="button secondary" onClick={resetForm}>
@@ -312,6 +318,7 @@ export default function DiseaseDetection() {
           </div>
         </div>
       </div>
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
     </div>
   )
 }

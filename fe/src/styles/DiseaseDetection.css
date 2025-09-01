@@ -241,30 +241,20 @@
   margin: 0;
 }
 
-.confidence {
-  font-size: 1rem;
-  color: #6b7280;
+.result-details {
+  margin-bottom: 20px;
 }
 
-.confidence-score {
-  color: #10b981;
-  font-weight: 600;
-}
-
-.treatment-info h4 {
+.result-details h4 {
   font-size: 1.2rem;
   color: #1f2937;
-  margin-bottom: 10px;
+  margin: 15px 0 10px;
 }
 
-.treatment-list {
-  list-style-type: disc;
-  padding-left: 20px;
+.result-details p {
+  font-size: 1rem;
   color: #4b5563;
-}
-
-.treatment-list li {
-  margin-bottom: 8px;
+  line-height: 1.5;
 }
 
 .result-actions {

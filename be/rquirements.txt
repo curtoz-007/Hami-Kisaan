@@ -1,0 +1,12 @@
+# Core packages
+fastapi
+uvicorn[standard]
+
+# ML / AI packages
+torch
+numpy
+pandas
+openai-whisper
+
+# Google Generative AI
+google-generativeai

@@ -1,8 +1,503 @@
-.app-container {
-  min-height: 100vh;
-  background: var(--light-background);
+/* General Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
 }
 
-.page {
-  min-height: 100vh;
+body {
+  background-color: #fdfbf1;
+  color: #2d2d2d;
+  line-height: 1.7;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Hero Section */
+.about-hero {
+  background: linear-gradient(to bottom, rgba(44, 107, 44, 0.9), rgba(44, 107, 44, 0.6)), url('https://source.unsplash.com/random/1600x900/?farmland,harvest');
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.hero-icon svg {
+  width: 80px;
+  height: 80px;
+  transition: transform 0.3s ease;
+}
+
+.hero-icon:hover svg {
+  transform: rotate(10deg);
+}
+
+.hero-content h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.5px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.hero-cta {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  background: #f4b400;
+  color: #2d2d2d;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.hero-cta:hover {
+  background: #d89b00;
+  transform: scale(1.03);
+}
+
+/* Story Section */
+.story-section {
+  padding: 80px 0;
+  background: #fff;
+}
+
+.section-title {
+  font-size: 2.6rem;
+  color: #2c6b2c;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.story-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.story-text, .story-visual {
+  flex: 1;
+  min-width: 280px;
+}
+
+.story-text p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 1.2rem;
+}
+
+.story-text strong {
+  color: #2c6b2c;
+  font-weight: 600;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 50px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: #2c6b2c;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+  transition: transform 0.3s ease;
+}
+
+.timeline-item:hover {
+  transform: translateX(8px);
+}
+
+.timeline-item .year {
+  font-weight: 600;
+  color: #2c6b2c;
+  font-size: 1.2rem;
+}
+
+.timeline-item .milestone {
+  font-size: 1rem;
+  color: #444;
+  margin-left: 20px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -50px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  background: #f4b400;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+/* Impact Section */
+.impact-section {
+  padding: 80px 0;
+  background: #eff7ee;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.metric-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e5e5;
+}
+
+.metric-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.metric-icon svg {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.metric-card:hover .metric-icon svg {
+  transform: scale(1.1);
+}
+
+.metric-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c6b2c;
+  margin: 0.5rem 0;
+}
+
+.metric-label {
+  font-size: 1rem;
+  color: #444;
+  font-weight: 500;
+}
+
+/* Technology Section */
+.tech-section {
+  padding: 80px 0;
+  background: #fff;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.tech-category h3 {
+  font-size: 1.8rem;
+  color: #2c6b2c;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.tech-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tech-name {
+  font-size: 1.1rem;
+  color: #2d2d2d;
+  font-weight: 500;
+}
+
+/* Team Section */
+.team-section {
+  padding: 80px 0;
+  background: #fdfbf1;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.team-member {
+  text-align: center;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e5e5;
+}
+
+.team-member:hover {
+  transform: translateY(-6px);
+}
+
+.member-avatar svg {
+  width: 70px;
+  height: 70px;
+  transition: transform 0.3s ease;
+}
+
+.team-member:hover .member-avatar svg {
+  transform: rotate(8deg);
+}
+
+.team-member h3 {
+  font-size: 1.5rem;
+  color: #2d2d2d;
+  margin: 0.6rem 0;
+  font-weight: 600;
+}
+
+.member-role {
+  font-size: 1rem;
+  color: #f4b400;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.member-bio {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* Values Section */
+.values-section {
+  padding: 80px 0;
+  background: #fff;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.value-card {
+  text-align: center;
+  padding: 20px;
+  background: #eff7ee;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-6px);
+}
+
+.value-icon svg {
+  width: 50px;
+  height: 50px;
+  transition: transform 0.3s ease;
+}
+
+.value-card:hover .value-icon svg {
+  transform: scale(1.1);
+}
+
+.value-card h3 {
+  font-size: 1.5rem;
+  color: #2c6b2c;
+  margin: 0.6rem 0;
+  font-weight: 600;
+}
+
+.value-card p {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* Contact CTA (Compact Footer) */
+.contact-cta {
+  padding: 50px 0;
+  background: linear-gradient(to bottom, rgba(44, 107, 44, 0.9), rgba(44, 107, 44, 0.6)), url('https://source.unsplash.com/random/1600x900/?farm,innovation');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: #fff;
+}
+
+.cta-content h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.cta-content p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button.primary {
+  background: #f4b400;
+  color: #2d2d2d;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.button.primary:hover {
+  background: #d89b00;
+  transform: scale(1.03);
+}
+
+.button.secondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #f4b400;
+}
+
+.button.secondary:hover {
+  background: #f4b400;
+  color: #2d2d2d;
+  transform: scale(1.03);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-cta {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+
+  .story-content {
+    flex-direction: column;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .metrics-grid, .tech-grid, .team-grid, .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .cta-content p {
+    font-size: 1rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .timeline {
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    left: 18px;
+  }
+
+  .timeline-item::before {
+    left: -40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem;
+  }
+
+  .hero-icon svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .metric-number {
+    font-size: 1.8rem;
+  }
+
+  .team-member h3 {
+    font-size: 1.3rem;
+  }
+
+  .value-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .cta-content h2 {
+    font-size: 1.6rem;
+  }
 }

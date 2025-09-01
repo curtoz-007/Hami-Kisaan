@@ -1,0 +1,351 @@
+/* General Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #f5f5f3;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.about-hero {
+  background: linear-gradient(to bottom, rgba(0, 100, 0, 0.7), rgba(0, 100, 0, 0.3)), url('https://source.unsplash.com/random/1600x900/?farmland');
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Story Section */
+.story-section {
+  padding: 60px 0;
+  background-color: #fff;
+}
+
+.story-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.story-text, .story-visual {
+  flex: 1;
+  min-width: 300px;
+}
+
+.story-text h2 {
+  font-size: 2.5rem;
+  color: #2e7d32;
+  margin-bottom: 1.5rem;
+}
+
+.story-text p {
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #4caf50;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.timeline-item .year {
+  font-weight: bold;
+  color: #2e7d32;
+  font-size: 1.2rem;
+}
+
+.timeline-item .milestone {
+  font-size: 1rem;
+  color: #555;
+  margin-left: 20px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -44px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  background: #4caf50;
+  border-radius: 50%;
+}
+
+/* Impact Section */
+.impact-section {
+  padding: 60px 0;
+  background: #e8f5e9;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.metric-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+}
+
+.metric-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.metric-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.metric-label {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Technology Section */
+.tech-section {
+  padding: 60px 0;
+  background: #fff;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.tech-category h3 {
+  font-size: 1.8rem;
+  color: #2e7d32;
+  margin-bottom: 1.5rem;
+}
+
+.tech-item {
+  margin-bottom: 1rem;
+}
+
+.tech-name {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 0;
+  transition: width 1s ease-in-out;
+}
+
+.progress-bar::after {
+  content: '';
+  display: block;
+  height: 100%;
+  background: #4caf50;
+  width: inherit;
+}
+
+/* Team Section */
+.team-section {
+  padding: 60px 0;
+  background: #f5f5f3;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.team-member {
+  text-align: center;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.member-avatar {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.member-role {
+  font-size: 1rem;
+  color: #4caf50;
+  margin-bottom: 0.5rem;
+}
+
+.member-bio {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.values-section {
+  padding: 60px 0;
+  background: #fff;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.value-card {
+  text-align: center;
+  padding: 20px;
+  background: #e8f5e9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.value-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.value-card h3 {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  margin-bottom: 0.5rem;
+}
+
+.value-card p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.contact-cta {
+  padding: 60px 0;
+  background: linear-gradient(to bottom, rgba(0, 100, 0, 0.7), rgba(0, 100, 0, 0.3)), url('https://source.unsplash.com/random/1600x900/?agriculture');
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: #fff;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.cta-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.button.primary {
+  background: #4caf50;
+  color: #fff;
+}
+
+.button.primary:hover {
+  background: #388e3c;
+}
+
+.button.secondary {
+  background: #fff;
+  color: #2e7d32;
+  border: 2px solid #4caf50;
+}
+
+.button.secondary:hover {
+  background: #f5f5f3;
+}
+
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .story-content {
+    flex-direction: column;
+  }
+
+  .metrics-grid, .tech-grid, .team-grid, .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

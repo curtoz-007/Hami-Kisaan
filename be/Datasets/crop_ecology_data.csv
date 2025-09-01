@@ -1,0 +1,101 @@
+Crop,Ecology_Temp_Optimal_Min,Ecology_Temp_Optimal_Max,Ecology_Temp_Absolute_Min,Ecology_Temp_Absolute_Max,Ecology_Rainfall_Annual_Optimal_Min,Ecology_Rainfall_Annual_Optimal_Max,Ecology_Rainfall_Annual_Absolute_Min,Ecology_Rainfall_Annual_Absolute_Max,Ecology_Latitude_Optimal_Min,Ecology_Latitude_Optimal_Max,Ecology_Latitude_Absolute_Min,Ecology_Latitude_Absolute_Max,Ecology_Altitude_Optimal_Min,Ecology_Altitude_Optimal_Max,Ecology_Altitude_Absolute_Min,Ecology_Altitude_Absolute_Max,Ecology_Soil_PH_Optimal_Min,Ecology_Soil_PH_Optimal_Max,Ecology_Soil_PH_Absolute_Min,Ecology_Soil_PH_Absolute_Max,Planting_Start_Month,Planting_End_Month,Harvesting_Start_Month,Harvesting_End_Month,Image
+Wheat,15,20,5,30,500,1750,250,1750,30,60,30,70,1500,2000,0,3500,6,7.5,5.5,9,9,11,3,6,https://plus.unsplash.com/premium_photo-1670909649532-d1d68ee475cd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+Maize,21,27,10,45,600,1100,250,2500,30,45,0,58,600,2400,0,3800,5.8,7,4.5,8.5,2,8,7,8,https://images.unsplash.com/photo-1651667343153-6dc318e27e41?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+Rice,20,37,10,40,1500,2500,1000,4500,0,45,0,53,0,1500,0,3000,5.5,6.5,4,8.5,5,6,10,11,https://plus.unsplash.com/premium_photo-1705338026411-00639520a438?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmljZXxlbnwwfHwwfHx8MA%3D%3D
+Barley,12,25,2,38,400,800,250,1200,30,60,30,70,500,2000,0,3500,6,7.5,5.5,9,10,11,4,5,https://unsplash.com/photos/a-close-up-of-a-bunch-of-seeds-Et7Z_LYBOxU
+Potato,15,20,2,30,500,700,300,1500,30,50,0,65,1000,3000,0,4200,5,6,4.2,8.5,9,12,7,9,https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG90YXRvfGVufDB8fDB8fHww
+Tomato,18,27,10,35,400,600,200,1300,30,45,0,50,0,2000,0,3000,6,6.8,5,7.5,2,3,5,7,https://plus.unsplash.com/premium_photo-1661811820259-2575b82101bf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8VG9tYXRvfGVufDB8fDB8fHww
+Onion,13,24,-6,35,350,550,200,700,35,55,0,60,1500,2100,0,2500,6,7,5.8,7.5,10,11,4,6,https://plus.unsplash.com/premium_photo-1668076517573-fa01307d87ad?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8b25pb258ZW58MHx8MHx8fDA%3D
+Spinach,15,18,-7,27,400,600,250,900,30,50,0,55,800,1500,0,1500,6.5,7.5,6,8,9,10,11,12,https://unsplash.com/photos/green-leafy-vegetables-4jpNPu7IW8k
+Pea,20,30,5,35,300,400,200,650,30,50,0,55,600,1800,0,3400,6,8,5.5,9,10,11,3,4,https://plus.unsplash.com/premium_photo-1663844169236-ff32474d1dc8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8UGVhfGVufDB8fDB8fHww
+Lentil,12,25,5,35,300,400,300,650,30,50,0,55,600,1800,0,3400,6,8,5.5,9,10,11,3,4,https://plus.unsplash.com/premium_photo-1671130295987-13d3b3b4e9dc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TGVudGlsfGVufDB8fDB8fHww
+Soybean,22,30,10,40,500,700,250,1500,35,45,0,52,0,1000,0,2000,6,6.8,5.5,8.5,5,6,9,10,https://plus.unsplash.com/premium_photo-1664301623693-91af1d1c408b?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+Cabbage,15,20,-10,35,350,500,250,1200,35,55,0,60,700,2200,0,2500,6,7.5,5.5,8,8,9,11,12,https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Q2FiYmFnZXxlbnwwfHwwfHx8MA%3D%3D
+Bell Pepper,21,29,15,35,600,1250,450,1500,0,40,0,50,0,1500,0,2500,5.5,7,4.3,8.5,2,3,5,6,https://images.unsplash.com/photo-1621953723422-6023013f659d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+Garlic,13,24,-10,38,400,500,300,800,35,50,0,50,1200,1800,0,1800,6,7.5,5.5,8.5,9,11,2,4,https://plus.unsplash.com/premium_photo-1666270423754-5b66a5184cc3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8R2FybGljfGVufDB8fDB8fHww
+Sugarcane,24,30,15,38,1200,1800,1000,2500,15,25,0,35,0,1200,0,1700,6,7.5,5,8.5,2,4,11,1,https://plus.unsplash.com/premium_photo-1694864661950-288ec8a06e5c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8U3VnYXJjYW5lfGVufDB8fDB8fHww
+Upland Cotton,21,37,15,43,550,1500,500,1800,30,37,0,45,0,800,0,1500,5.8,8,5.2,8.5,4,5,9,11,https://plus.unsplash.com/premium_photo-1726783222818-48f7588177d5?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+Arabica Coffee,15,24,7,30,1400,2000,1000,3000,15,24,0,25,800,2000,500,2800,5,6.5,4.5,7,6,8,10,1,https://www.bing.com/images/search?view=detailV2&ccid=TBehph09&id=A4C3A8FD43028CDCEB4191731E74B274631649B5&thid=OIP.TBehph09lSxSRj56ithFPAHaE7&mediaurl=https%3a%2f%2fwww.foodandwine.com%2fthmb%2f46brwc8LpzABHzsIb5fzDPEmpBk%3d%2f2000x1333%2ffilters%3afill(auto%2c1)%2fEverything-You-Need-To-Know-About-Arabica-Coffee-FT-BLOG0822-2000-127d1551916e45138ea373de75f08138.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.4c17a1a61d3d952c52463e7a8ad8453c%3frik%3dtUkWY3SydB5zkQ%26pid%3dImgRaw%26r%3d0&exph=1333&expw=2000&q=Arabica+Coffee&FORM=IRPRST&ck=EB2BEC4D1FDB868A7E8E3D67565EA523&selectedIndex=1&itb=0
+Tea,18,25,5,30,1500,3000,1000,5000,20,30,0,43,300,2400,100,2500,4.5,6,4,6.5,3,5,5,11,https://plus.unsplash.com/premium_photo-1692049123825-8d43174c9c5c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VGVhfGVufDB8fDB8fHww
+Peanut,25,30,15,40,450,650,300,1200,15,25,0,40,0,600,0,1000,5.9,7,5,8,4,5,8,10,https://tse2.mm.bing.net/th/id/OIP.5G5CY514HhljTho4zDoybgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3
+Sunflower,21,26,5,38,500,800,250,1000,30,50,0,55,1500,2500,0,3000,6,7.5,5.7,8.5,4,5,7,8,https://www.bing.com/images/search?view=detailV2&ccid=Kzw1RPeW&id=39436BFE001AD413953C0A90703687577B1AC8DE&thid=OIP.Kzw1RPeW5VSXCvAvfsRLBgHaE7&mediaurl=https%3a%2f%2fwallpaperaccess.com%2ffull%2f3608492.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.2b3c3544f796e554970af02f7ec44b06%3frik%3d3sgae1eHNnCQCg%26pid%3dImgRaw%26r%3d0&exph=1365&expw=2048&q=Sunflowe&FORM=IRPRST&ck=DC848FF4C2ADB6AB461889D91B20993C&selectedIndex=2&itb=0
+Carrot,15,20,4,30,400,700,300,1000,40,60,0,60,500,2000,0,2700,5.5,7,5,7.5,8,10,11,1,https://c.ndtvimg.com/2022-12/a4ds147g_carrot-health-benefits_295x200_13_December_22.jpg
+Cucumber,18,25,10,35,600,800,400,1200,15,40,0,50,0,1000,0,1000,6,7,5.5,7.5,2,5,4,8,https://th.bing.com/th/id/OIP.e5XlI-BDQp5h4IOZN9FgNAHaFj?w=246&h=185&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3
+Apple,15,25,-20,35,400,800,300,1200,35,55,0,67,600,1800,0,3500,6,7,5.5,8,12,2,8,10,https://tse3.mm.bing.net/th/id/OIP.kori7Y8NQzmHi4RLlD-T9AHaE5?rs=1&pid=ImgDetMain&o=7&rm=3
+Grape,20,25,-20,40,700,900,400,1200,30,50,23,51,200,1000,0,1500,6,7,5.5,8.5,2,3,5,7,https://tse2.mm.bing.net/th/id/OIP.9MFUrUXKBTD3KBu3pF9AiQHaF7?rs=1&pid=ImgDetMain&o=7&rm=3
+Banana,26,30,14,38,1500,2000,1000,3000,0,20,0,30,0,900,0,1200,5.5,7,4.5,8,3,5,8,10,https://upload.wikimedia.org/wikipedia/commons/6/69/Banana.png
+Pineapple,23,29,16,35,1000,1500,600,2500,0,25,0,30,300,800,0,1400,4.5,6,4,7,4,5,7,9,https://tse3.mm.bing.net/th/id/OIP.XlF-UXkfEiX79yBwfHEl4AHaE9?rs=1&pid=ImgDetMain&o=7&rm=3
+Mango,24,30,10,46,1000,2100,300,2500,0,25,0,30,0,1200,0,1400,5.5,7,4.5,7.5,2,3,6,8,https://th.bing.com/th/id/R.cf307e454ab5465085bad1946d78ce25?rik=Sy6y%2fhBrxzAD2w&riu=http%3a%2f%2fwww.modernthrill.com%2fwp-content%2fuploads%2f2015%2f06%2fMangoes.jpg&ehk=%2bMbq%2fjKfQjMcdTRQtLpPPIwXfVMPxSF7J%2bBgbjY0mAc%3d&risl=&pid=ImgRaw&r=0
+Coconut,27,29,20,34,1500,2000,1000,3000,0,15,0,20,0,300,0,600,5.5,7.5,5,8,1,12,1,12,https://th.bing.com/th/id/R.cf307e454ab5465085bad1946d78ce25?rik=Sy6y%2fhBrxzAD2w&riu=http%3a%2f%2fwww.modernthrill.com%2fwp-content%2fuploads%2f2015%2f06%2fMangoes.jpg&ehk=%2bMbq%2fjKfQjMcdTRQtLpPPIwXfVMPxSF7J%2bBgbjY0mAc%3d&risl=&pid=ImgRaw&r=0
+Sweet Orange,20,25,5,38,900,1400,700,2000,20,40,20,40,400,900,0,1300,6,7,5.5,8,11,12,1,2,https://tse2.mm.bing.net/th/id/OIP.OKaxUGA7GJnb1iGEU_Xp-wHaEK?rs=1&pid=ImgDetMain&o=7&rm=3
+Oat,15,21,-5,35,450,700,300,1000,45,65,24,65,600,2000,0,2500,5.5,7,5,8,10,11,4,5,https://tse4.mm.bing.net/th/id/OIP.ZVRjNCJ78zFd0N8TEDrNKwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3
+Sorghum,26,34,10,45,450,700,250,1000,30,40,0,45,450,900,0,1500,5.5,7.5,5,8.5,5,6,9,10,https://tse4.mm.bing.net/th/id/OIP.ZVRjNCJ78zFd0N8TEDrNKwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3
+Sweet Potato,23,29,12,35,750,1000,500,1300,30,40,0,40,0,900,0,2100,5.5,6.5,4.5,7.5,4,5,8,9,https://tse2.mm.bing.net/th/id/OIP.K8wbHi6Pp3sJmYYQmOIYQAHaLI?rs=1&pid=ImgDetMain&o=7&rm=3
+Cassava,23,29,12,40,1000,1500,500,2000,0,20,0,30,0,1400,0,2000,5.5,6.5,4,8,3,4,12,2,https://tse2.mm.bing.net/th/id/OIP.a5IUxlSzdsrc72w8-mP5TQHaE8?rs=1&pid=ImgDetMain&o=7&rm=3
+Chickpea,20,30,5,35,300,500,200,800,20,40,0,60,300,1800,0,2500,6,7.5,5.5,9,10,11,3,4,https://th.bing.com/th/id/R.93b4bd6b0ffeff40a5c65b6baebd71ab?rik=s1DJ84gTocFg1Q&riu=http%3a%2f%2fstatic.producer.com%2fwp-content%2fuploads%2f2016%2f05%2fchickpeas.jpg&ehk=DoM9L6F8kO6CjSlOrNQVOicjls26L3xwbtpbw0T3vT0%3d&risl=&pid=ImgRaw&r=0
+Mung Bean,20,30,5,35,300,600,200,1000,15,35,0,50,500,2000,0,3000,6,7,5.5,8,5,6,9,10,https://tse1.mm.bing.net/th/id/OIP.EZlxKnuP8h7W3V_CrkCA4QHaE8?rs=1&pid=ImgDetMain&o=7&rm=3
+Black Gram,20,32,10,40,400,700,300,1200,20,40,0,50,500,2000,0,3000,6,7.5,5.5,8,4,5,8,9,https://tse3.mm.bing.net/th/id/OIP.xZZsUH9tq_9oqZgSWxOuXQHaE8?rs=1&pid=ImgDetMain&o=7&rm=3
+Cowpea,20,32,10,40,400,700,300,1200,20,40,0,50,500,2000,0,3000,6,7.5,5.5,8,5,6,8,9,https://www.agrifarming.in/wp-content/uploads/Cowpea-Farming1.jpg
+Pigeon Pea,20,32,10,40,400,700,300,1200,20,40,0,50,500,2000,0,3000,6,7.5,5.5,8,2,3,7,9,https://th.bing.com/th/id/OIP.7b-m7ihD5VtUCQ5LXfIR5wHaEK?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3
+Horse Gram,20,32,10,40,400,700,300,1200,20,40,0,50,500,2000,0,3000,6,7.5,5.5,8,10,11,2,3,https://tse1.mm.bing.net/th/id/OIP.QBsbOLlXbSmdroUO0mMYjQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3
+Kidney Bean,20,32,10,40,400,700,300,1200,20,40,0,50,500,2000,0,3000,6,7.5,5.5,8,4,5,8,9,https://tse4.mm.bing.net/th/id/OIP.arQiTuz14VWaFf7t3fZtdgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3
+Broad Bean,20,32,10,40,400,700,300,1200,20,40,0,50,500,2000,0,3000,6,7.5,5.5,8,10,11,1,2,https://tse1.mm.bing.net/th/id/OIP.HhunMnKFG6kDBLqOpt_WVwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3
+Rapeseed,10,18,-5,30,600,1000,400,1500,30,45,20,60,1000,2000,0,2500,6,7,5,8.5,10,11,3,4,https://thumbs.dreamstime.com/b/spraying-rapeseed-crop-farmer-his-rape-seed-also-known-as-canola-increasingly-used-bio-fuel-production-40464919.jpg
+Sesame,25,32,15,40,400,600,200,900,15,25,0,40,0,600,0,1000,5.5,6.5,4.5,8,6,7,10,11,https://tse1.mm.bing.net/th/id/OIP.z_B3pzDW5bDUJguowh-tHwHaFj?rs=1&pid=ImgDetMain&o=7&rm=3
+Linseed,18,24,5,30,300,500,200,800,30,45,10,60,400,1800,0,2800,5.8,7,4.5,8.5,10,11,4,5,https://i0.wp.com/dhcrop.bsmrau.net/wp-content/uploads/2016/03/Linseedseed.jpg?w=2580
+Safflower,18,27,5,38,300,500,200,800,25,40,10,60,300,1500,0,3000,6,8,5.5,8.5,6,7,9,10,https://th.bing.com/th/id/R.cc24b9ff38bf6640a57394bc423226bf?rik=kngBP%2b3L6AKZ6A&pid=ImgRaw&r=0
+Jute,24,35,15,40,1500,2000,1000,3000,15,25,0,30,0,300,0,500,6,6.5,5.5,7.5,4,5,9,11,https://static.vecteezy.com/system/resources/previews/009/773/902/large_2x/green-jute-plantation-field-raw-jute-plant-texture-background-this-is-the-called-golden-fiber-in-bangladesh-photo.jpg
+Pumpkin,18,25,10,35,400,600,250,1200,30,45,0,50,0,2000,0,3000,6,6.8,5,7.5,2,3,5,7,https://tse4.mm.bing.net/th/id/OIP.-06upNMc0ar7Olw1zr5ojQHaE7?rs=1&pid=ImgDetMain&o=7&rm=3
+Bottle Gourd,18,25,10,35,400,600,250,1200,30,45,0,50,0,2000,0,3000,6,6.8,5,7.5,2,3,5,7,https://tse2.mm.bing.net/th/id/OIP.9ETA79RRaAn8RY19Z0EouwHaEU?rs=1&pid=ImgDetMain&o=7&rm=3
+Bitter Gourd,24,27,15,35,600,1250,450,1500,0,40,0,50,0,1500,0,2500,6,6.7,4.3,8.5,2,3,5,6,https://th.bing.com/th/id/R.7b9801acf6830bd088957631175f36ed?rik=sgfxV17oNDRAXA&riu=http%3a%2f%2fnaturebring.com%2fwp-content%2fuploads%2f2017%2f02%2fBitter-Gourd-nb-02-1024x768.jpg&ehk=ml%2fySGvYUH7FU9zOAXSzYgS3rJ%2f3%2flcqL6hivXHudk0%3d&risl=&pid=ImgRaw&r=0
+Ridge Gourd,21,29,15,35,600,1250,450,1500,0,40,0,50,0,1500,0,2500,5.5,7,4.3,8.5,2,3,5,6,https://tse2.mm.bing.net/th/id/OIP.GtPIENfzyV8ptSQEGpQ0VAHaFj?rs=1&pid=ImgDetMain&o=7&rm=3
+Brinjal,21,29,15,35,600,1250,450,1500,0,40,0,50,0,1500,0,2500,5.5,7,4.3,8.5,2,3,5,6,https://tse1.mm.bing.net/th/id/OIP.bXfZbIOHBaIk0CxxnCgczAHaE6?rs=1&pid=ImgDetMain&o=7&rm=3
+Chili Pepper,25,32,15,40,500,1000,300,1500,0,30,0,40,0,1500,0,2500,6,7,5,8,3,4,7,9,https://th.bing.com/th/id/R.57637c0300a6c35994471c27bf0a994a?rik=XktRCkCmbUG09w&pid=ImgRaw&r=0
+Radish,15,18,-7,27,400,600,250,900,30,50,0,55,800,1500,0,1500,6.5,7.5,6,8,8,9,11,12,https://th.bing.com/th/id/R.07accaa7fb3269ecfc99a38a9ae6914a?rik=HsPBI341OL0KYA&riu=http%3a%2f%2fwww.onlyfoods.net%2fwp-content%2fuploads%2f2012%2f07%2fRadish.jpg&ehk=d72Fmam%2fXzZUM9tw1y7Ioqop14QaAt6uH6P%2fcel9vIY%3d&risl=&pid=ImgRaw&r=0
+Okra,25,32,15,40,500,800,300,1500,15,30,0,40,0,1500,0,2500,6,7,5,8,3,4,7,9,https://i0.wp.com/www.healthfitnessrevolution.com/wp-content/uploads/2016/10/iStock-520883902.jpg?fit=2120%2C1415&ssl=1
+Cauliflower,15,20,-10,35,350,500,250,1200,35,55,0,60,700,2200,0,2500,6,7.5,5.5,8,8,9,11,12,https://tse2.mm.bing.net/th/id/OIP.lQ9sBnPaLzGPbkdQgJ-DqwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3
+Lettuce,15,21,5,35,400,700,300,1000,30,50,0,60,500,2000,0,2500,6.2,7,5,7.5,8,9,11,1,https://th.bing.com/th/id/R.3e12e2d6e21b37759cc15cd17ca4c200?rik=2SR5rNQIJH3FLg&pid=ImgRaw&r=0
+Ginger,25,30,10,40,1500,2500,1000,4000,10,25,0,30,0,1000,0,2500,6,6.5,5.5,7,3,4,12,1,https://th.bing.com/th/id/R.3e12e2d6e21b37759cc15cd17ca4c200?rik=2SR5rNQIJH3FLg&pid=ImgRaw&r=0
+Turmeric,23,28,10,35,1500,2500,1000,3000,10,25,0,30,0,1000,0,2000,5.5,6.5,4,8,5,6,11,12,https://th.bing.com/th/id/R.2c58c292ddcc6e075105f058ba11cd01?rik=IiaTnDsV6%2bMA7A&pid=ImgRaw&r=0
+Cardamom,21,32,5,35,1500,3000,1000,5000,20,30,0,40,300,2000,100,2500,5,6.5,4.5,7,6,8,10,1,https://th.bing.com/th/id/R.2c58c292ddcc6e075105f058ba11cd01?rik=IiaTnDsV6%2bMA7A&pid=ImgRaw&r=0
+Basil,20,30,10,35,400,800,200,1000,0,30,0,40,0,1200,0,2500,6,7,5.5,7.5,2,3,6,8,https://th.bing.com/th/id/OSK.HEROdxAVg7N065Z2OgmCcWeoWK-_lok2Nh9byhKQAltVn80?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3
+Coriander,15,20,0,30,300,600,200,800,20,35,0,50,600,1800,0,3000,6,7,5,8,9,10,12,1,https://cdn.britannica.com/95/205795-050-EF644B7F/Bowl-cilantro-leaves-coriander-fruits-Coriandrum-sativum.jpg
+Fenugreek,20,25,0,35,300,600,200,800,20,40,0,50,500,2000,0,3000,6,7,5.5,8,10,11,1,2,https://tse2.mm.bing.net/th/id/OIP.f1ql9xsHN1pZC1B-7aOt0AHaEo?rs=1&pid=ImgDetMain&o=7&rm=3
+Black Pepper,25,32,15,40,1200,2500,800,3500,0,30,0,40,0,1200,0,2000,5,6.5,4,7,6,7,11,1,https://th.bing.com/th/id/OIP.HrH2TTmMkcQgVlEDpIBNUAHaFj?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3
+Cinnamon,20,30,10,35,1500,2000,1000,3000,0,30,0,35,0,1200,0,2000,5.5,7,4.5,8,2,4,11,1,https://th.bing.com/th/id/OIP.HrH2TTmMkcQgVlEDpIBNUAHaFj?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3
+Papaya,26,30,14,38,1500,2000,1000,3000,0,20,0,30,0,900,0,1200,5.5,7,4.5,8,3,5,8,10,https://th.bing.com/th/id/OIP.HrH2TTmMkcQgVlEDpIBNUAHaFj?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3
+Guava,20,30,10,40,700,1000,400,2000,15,30,10,40,0,1200,0,1500,5,6.5,4,7.5,4,5,7,9,https://tse4.mm.bing.net/th/id/OIP.PTXNUYWLnjucXhJ9LTCe8wHaH-?rs=1&pid=ImgDetMain&o=7&rm=3
+Litchi,25,30,10,40,1500,2000,1000,3000,15,30,0,40,0,900,0,1200,5,6.5,4,8,3,4,7,9,https://tse3.mm.bing.net/th/id/OIP.IytfVGLbf1Ne9ddHS-qF3wHaFj?rs=1&pid=ImgDetMain&o=7&rm=3
+Jackfruit,23,30,14,38,1200,1800,800,2500,10,25,0,30,0,800,0,1200,6,7.5,5.5,8,2,3,6,8,https://th.bing.com/th/id/R.99a747cd42deab129dbdfe5e921c43ad?rik=NDkaFckZozSZmQ&pid=ImgRaw&r=0
+Avocado,20,25,10,40,800,1200,500,2000,0,20,0,30,800,2500,0,3000,6,6.5,5,8,3,5,9,11
+Strawberry,15,22,0,30,800,1200,500,2000,20,40,0,50,1000,2500,0,3000,5.5,6.8,5,7.5,9,10,11,1
+Kiwi,15,25,-5,35,1000,1400,800,2000,20,40,0,60,500,1500,0,2500,5.5,7,5,8,9,10,12,1
+Pomegranate,20,30,5,38,300,600,200,900,0,30,0,40,0,900,0,1500,5.5,7.5,4.5,8.5,2,3,8,9
+Pear,15,25,-20,35,400,800,300,1200,35,55,0,67,600,1800,0,3500,6,7,5.5,8,11,2,9,11
+Peach,15,25,-20,35,400,800,300,1200,35,55,0,67,600,1800,0,3500,6,7,5.5,8,11,1,7,8
+Plum,15,25,-20,35,400,800,300,1200,35,55,0,67,600,1800,0,3500,6,7,5.5,8,11,2,6,7
+Apricot,15,25,-20,35,400,800,300,1200,35,55,0,67,600,1800,0,3500,6,7,5.5,8,11,1,7,9
+Walnut,15,25,-20,35,400,800,300,1200,35,55,0,67,600,1800,0,3500,6,7,5.5,8,11,1,7,9
+Lemon,20,25,5,38,900,1400,700,2000,20,40,20,40,400,900,0,1300,6,7,5.5,8,11,12,1,2
+Lime,20,25,5,38,900,1400,700,2000,20,40,20,40,400,900,0,1300,6,7,5.5,8,11,12,1,2
+Areca Nut,25,29,15,35,1200,1800,1000,2500,10,25,0,35,0,900,0,1200,5.5,7.5,5,8,4,5,9,11
+Hemp,25,30,15,40,500,800,300,1500,10,25,0,40,0,800,0,1500,6,7.5,5.5,8.5,4,5,9,10
+Pearl Millet,20,30,10,40,300,500,250,800,15,30,0,45,0,1000,0,2000,5.5,8,5,8.5,5,6,9,10
+Finger Millet,20,30,10,40,300,500,250,800,15,30,0,45,0,1000,0,2000,5.5,8,5,8.5,5,6,9,10
+Foxtail Millet,20,30,10,40,300,500,250,800,15,30,0,45,0,1000,0,2000,5.5,8,5,8.5,5,6,9,10
+Barnyard Millet,20,30,10,40,300,500,250,800,15,30,0,45,0,1000,0,2000,5.5,8,5,8.5,5,6,9,10
+Buckwheat,10,25,-5,30,400,600,300,1000,35,55,0,60,1000,3000,0,3500,5.5,7,5,8.5,8,10,11,1
+Quinoa,0,30,-20,40,300,600,200,1000,35,60,0,67,0,4000,0,4500,5.5,7.5,5,8.5,5,6,8,9
+Persimmon,15,25,-20,35,400,800,300,1200,35,55,0,67,600,1800,0,3500,6,7,5.5,8,10,12,9,11
+Chestnut,15,25,-20,35,400,800,300,1200,35,55,0,67,600,1800,0,3500,6,7,5.5,8,10,12,9,10
+Amla,25,30,10,40,800,1200,500,2000,15,30,0,40,0,1000,0,1500,5.5,6.5,4.5,7.5,3,5,7,8
+Jamun,25,30,10,40,1200,1800,800,2500,10,25,0,30,0,800,0,1200,6,7.5,5.5,8,3,4,7,9
+Jujube,20,30,5,35,500,800,300,1500,0,35,0,40,0,1200,0,2000,6,7.5,5,8,2,3,6,7
+Saffron,15,25,-5,25,200,400,100,700,30,45,20,50,1000,3000,0,4500,6,8,5.5,8.5,10,11,7,8
+Mandarin,20,25,5,38,900,1400,700,2000,20,40,20,40,400,900,0,1300,6,7,5.5,8,11,12,1,2
+Pomelo,20,25,5,38,900,1400,700,2000,20,40,20,40,400,900,0,1300,6,7,5.5,8,10,12,1,3
+Watermelon,25,30,15,40,600,800,300,1300,15,30,0,40,0,1200,0,2000,6,7.5,5.5,8.5,2,3,7,8
+Muskmelon,20,30,10,38,600,800,300,1300,15,30,0,40,0,1200,0,2000,6,7.5,5.5,8.5,3,4,8,9
+Drumstick,25,35,15,40,500,1000,300,1500,10,25,0,30,0,800,0,1500,6,7,5.5,7.5,3,5,8,10
+Tobacco,25,30,15,40,800,1000,600,1500,15,25,0,35,0,800,0,1200,5.5,7,5,8,3,4,9,10
+Taro,25,30,15,40,1000,1500,800,2000,10,30,0,40,0,1000,0,1500,5.5,6.5,5,7.5,5,6,12,1

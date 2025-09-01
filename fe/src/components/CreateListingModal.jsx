@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createListing, uploadFile } from "../api/listings";
-// import VoiceRecorder from "";
+import VoiceRecorder from "./VoiceRecorder";
 
 export default function CreateListingModal({
   open,
@@ -71,33 +71,34 @@ export default function CreateListingModal({
   return (
     <div
       style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.4)",
-        display: "grid",
-        placeItems: "center",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        background: "rgba(0,0,0,0.9)",
         zIndex: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflowY: "auto",
       }}
     >
       <div
-        className="panel"
+        className="auth-container"
         style={{ width: 420, maxWidth: "95%", background: "white" }}
       >
-        <h3 style={{ marginTop: 0 }}>Create Listing</h3>
+        <h1 className="auth-title">Create Listing</h1>
         {error && (
           <div className="error-message">
             <span className="error-icon">!</span>
             {error}
           </div>
         )}
-        <form
-          onSubmit={submit}
-          className="form-grid"
-          style={{ gridTemplateColumns: "1fr" }}
-        >
+        <form onSubmit={submit} className="auth-form">
           <div className="form-group">
             <label>Product name</label>
             <input
+              className="form-input"
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
               placeholder="e.g., Fresh Tomatoes"
@@ -106,6 +107,7 @@ export default function CreateListingModal({
           <div className="form-group">
             <label>Price</label>
             <input
+              className="form-input"
               type="number"
               min="0"
               step="0.01"
@@ -119,6 +121,7 @@ export default function CreateListingModal({
           <div className="form-group">
             <label>Unit</label>
             <select
+              className="form-input"
               value={form.unit}
               onChange={(e) => setForm((f) => ({ ...f, unit: e.target.value }))}
             >
@@ -130,6 +133,7 @@ export default function CreateListingModal({
           <div className="form-group">
             <label>Quantity</label>
             <input
+              className="form-input"
               type="number"
               min="0"
               step="1"
@@ -145,10 +149,15 @@ export default function CreateListingModal({
             <input type="file" onChange={handleFileUpload} />
           </div>
           <div className="form-actions" style={{ justifyContent: "flex-end" }}>
-            <button type="button" className="button" onClick={onClose}>
+            <button
+              type="button"
+              className="button"
+              style={{ marginRight: "15px" }}
+              onClick={onClose}
+            >
               Cancel
             </button>
-            <button type="submit" className="button primary" disabled={saving}>
+            <button type="submit" className="listing-button" disabled={saving}>
               {saving ? "Saving..." : "Create"}
             </button>
           </div>

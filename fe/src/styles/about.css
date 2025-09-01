@@ -1,11 +1,12 @@
 /* Hero Section */
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .about-hero {
-  background: linear-gradient(
-      to bottom,
-      rgba(0, 100, 0, 0.7),
-      rgba(0, 100, 0, 0.3)
-    ),
-    url("https://source.unsplash.com/random/1600x900/?farmland");
+  background: var(--primary-green);
   background-size: cover;
   background-position: center;
   padding: 100px 0;
@@ -265,12 +266,7 @@
 
 .contact-cta {
   padding: 60px 0;
-  background: linear-gradient(
-      to bottom,
-      rgba(0, 100, 0, 0.7),
-      rgba(0, 100, 0, 0.3)
-    ),
-    url("https://source.unsplash.com/random/1600x900/?agriculture");
+  background: var(--primary-green);
   background-size: cover;
   background-position: center;
   text-align: center;

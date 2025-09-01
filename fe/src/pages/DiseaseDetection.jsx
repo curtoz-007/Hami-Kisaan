@@ -149,7 +149,7 @@ export default function Diseasedetection() {
 
         <div className="disease-content">
           <div className="upload-section">
-            <div
+            <div 
                  onDrop={handleDrop}
                  onDragOver={handleDragOver}
                  className={selectedFile ? 'upload-area has-file' : 'upload-area'}>
@@ -276,7 +276,18 @@ export default function Diseasedetection() {
                   <p>{result.Insecticide_Solutions}</p>
 
                   <h4>Sources</h4>
-                  <p>{result.Sources}</p>
+                  <ul className="sources-list">
+                    {result.Sources.map((source, index) => {
+                      const [name, url] = Object.entries(source)[0]
+                      return (
+                        <li key={index}>
+                          <a href={url} target="_blank" rel="noopener noreferrer" className="source-link">
+                            {name}
+                          </a>
+                        </li>
+                      )
+                    })}
+                  </ul>
                 </div>
 
                 <div className="result-actions">

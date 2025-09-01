@@ -2,7 +2,6 @@ import requests
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 import numpy as np
-import os
 
 try:
     df = pd.read_csv('Datasets/crop_ecology_data.csv')
@@ -109,9 +108,7 @@ def fetch_soil_ph(lat, lon):
 
 
 def get_crop_recommendations_from_location(lat: float, lon: float):
-    
-
-    weather_api_key = os.getenv("WEATHER_API_KEY")
+    weather_api_key = "433318bae28b4767920164042250708"
     weather_url = f"https://api.weatherapi.com/v1/current.json?key={weather_api_key}&q={lat},{lon}"
     weather_response = requests.get(weather_url, timeout=10)
     weather_response.raise_for_status()
@@ -147,7 +144,7 @@ def get_crop_recommendations_from_location(lat: float, lon: float):
 
     if ph_soil is None:
         print("No pH data found.")
-        ph_soil = 6.5  # Default pH value if fetching fails
+        ph_soil = 6.5  
     print(ph_soil)
 
     recommendations = recommend_crops(

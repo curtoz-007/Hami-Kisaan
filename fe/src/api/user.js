@@ -52,3 +52,14 @@ export async function upsertUserProfile({
   if (error) throw error;
   return data;
 }
+
+export const updateUserLocation = async (id, latitude, longitude) => {
+  const { data, error } = await supabase
+    .from(TABLE)
+    .update({ latitude, longitude })
+    .eq("id", id)
+    .select()
+    .single();
+  if (error) throw error;
+  return data;
+};

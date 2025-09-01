@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import CreateListingModal from "../components/CreateListingModal";
 import { useAuth } from "../context/AuthContext";
 import { signOut } from "../api/auth";
+import { updateUserLocation } from "../api/user";
 import { useGeoLocation } from "../api/useGeoLocation";
 import "../styles/dashboard.css";
 
@@ -56,25 +57,43 @@ export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      if (location.loaded && !location.error) {
-        try {
-          const response = await fetch(
-            `http://127.0.0.1:8000/dashboard/data/?latitude=${location.coordinates.lat}&longitude=${location.coordinates.lng}`
-          );
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          const data = await response.json();
-          setDashboardData(data);
-        } catch (error) {
-          console.error("Error fetching dashboard data:", error);
-        }
-      }
-    };
+    if (
+      user &&
+      location.loaded &&
+      !location.error &&
+      location.coordinates.lat &&
+      location.coordinates.lng
+    ) {
+      // Update user profile with location
+      updateUserLocation(
+        user.id,
+        location.coordinates.lat,
+        location.coordinates.lng
+      ).catch((err) => {
+        console.error("Failed to update user location:", err);
+      });
+    }
+  }, [user, location]);
+  // useEffect(() => {
+  //   const fetchDashboardData = async () => {
+  //     if (location.loaded && !location.error) {
+  //       try {
+  //         const response = await fetch(
+  //           `http://127.0.0.1:8000/dashboard/data/?latitude=${location.coordinates.lat}&longitude=${location.coordinates.lng}`
+  //         );
+  //         if (!response.ok) {
+  //           throw new Error("Network response was not ok");
+  //         }
+  //         const data = await response.json();
+  //         setDashboardData(data);
+  //       } catch (error) {
+  //         console.error("Error fetching dashboard data:", error);
+  //       }
+  //     }
+  //   };
 
-    fetchDashboardData();
-  }, [location]);
+  //   fetchDashboardData();
+  // }, [location]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -124,13 +143,9 @@ export default function Dashboard() {
             <div>
               <h1 className="welcome-title">
                 Welcome back
-                {user
-                  ? `, ${user.user_metadata?.full_name || user.email}`
-                  : ""}
+                {user ? `, ${user.user_metadata?.full_name || user.email}` : ""}
               </h1>
-              <p className="welcome-subtitle">
-                Your farming hub at a glance.
-              </p>
+              <p className="welcome-subtitle">Your farming hub at a glance.</p>
             </div>
             <div className="profile-icon">
               <span>🌾</span>
@@ -169,7 +184,12 @@ export default function Dashboard() {
                 {[
                   { id: 1, name: "Fresh Tomatoes", price: 45, unit: "per kg" },
                   { id: 2, name: "Cauliflower", price: 60, unit: "per kg" },
-                  { id: 3, name: "Organic Potatoes", price: 30, unit: "per kg" },
+                  {
+                    id: 3,
+                    name: "Organic Potatoes",
+                    price: 30,
+                    unit: "per kg",
+                  },
                   { id: 4, name: "Spinach", price: 25, unit: "per bundle" },
                 ].map((item) => (
                   <div key={item.id} className="listing-item">

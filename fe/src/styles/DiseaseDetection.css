@@ -1,4 +1,6 @@
 .disease-page {
+  font-family: Arial, sans-serif;
+  background-color: #f8fafc;
   min-height: 100vh;
   padding: 20px;
 }
@@ -15,13 +17,13 @@
 
 .disease-header h1 {
   font-size: 2.5rem;
-  color: var(--soil-brown);
+  color: #1f2937;
   margin-bottom: 10px;
 }
 
 .disease-header p {
   font-size: 1.1rem;
-  color: var(--muted-gray);
+  color: #4b5563;
 }
 
 .upload-section {
@@ -73,8 +75,7 @@
   gap: 10px;
 }
 
-.image-preview,
-.camera-preview {
+.image-preview, .camera-preview {
   position: relative;
   max-width: 100%;
   max-height: 300px;
@@ -82,8 +83,7 @@
   border-radius: 8px;
 }
 
-.image-preview img,
-.camera-preview video {
+.image-preview img, .camera-preview video {
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -255,6 +255,25 @@
   font-size: 1rem;
   color: #4b5563;
   line-height: 1.5;
+}
+
+.sources-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #4b5563;
+}
+
+.sources-list li {
+  margin-bottom: 8px;
+}
+
+.source-link {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.source-link:hover {
+  text-decoration: underline;
 }
 
 .result-actions {

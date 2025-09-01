@@ -1,15 +1,36 @@
+
 .header {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  height: 72px;
-  margin-bottom: 72px;
+  padding: 1.5rem 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  background: transparent;
+}
+
+.header.scrolled {
+  background-color: var(--white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 3rem;
-  background: var(--primary-green);
-  z-index: 100;
+}
+
+.logo {
+  font-family: var(--font-family-serif);
+  font-size: 2rem;
+  color: var(--white);
+  font-weight: 700;
+}
+
+.header.scrolled .logo {
+  color: var(--dark-gray);
 }
 
 .nav {
@@ -17,34 +38,61 @@
   gap: 2rem;
 }
 
-.logo {
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-.nav .nav-link {
-  color: white;
-  font-weight: 500;
-  text-decoration: none;
+.nav-link {
+  position: relative;
+  color: var(--white);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   transition: color 0.3s ease;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.nav .nav-link:hover {
-  color: var(--yellow-accent);
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent-yellow);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-link:hover {
+  color: var(--accent-yellow);
+}
+
+.header.scrolled .nav-link {
+  color: var(--dark-gray);
+}
+
+.header.scrolled .nav-link:hover {
+  color: var(--primary-green);
 }
 
 .auth-btns {
   display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.auth-btns > .btn-login {
-  background: transparent;
-  border: 2px solid var(--white-text);
-  color: var(--white-text);
+  gap: 1rem;
 }
 
-.auth-btns > .btn-signup {
-  background: var(--yellow-accent);
-  color: var(--green-text);
+.btn-login {
+  background-color: transparent;
+  border: 2px solid var(--accent-yellow);
+  color: var(--accent-yellow);
+}
+
+.btn-login:hover {
+  background-color: var(--accent-yellow);
+  color: var(--dark-gray);
+}
+
+.btn-signup {
+  background-color: var(--accent-yellow);
+  color: var(--dark-gray);
 }

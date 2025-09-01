@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { signInWithProvider, signInWithEmail } from "../api/auth";
-import "../styles/auth.css";
+import "../styles/auth.style.css";
 
 const Login = () => {
   const navigate = useNavigate();

@@ -4,6 +4,11 @@ import pandas as pd
 import numpy as np
 import os
 from dotenv import load_dotenv
+import time
+import asyncio
+import httpx
+
+
 
 load_dotenv()
 
@@ -13,8 +18,11 @@ except FileNotFoundError:
     print("File not found")
     df = pd.DataFrame()
 
+# Convert column names to strings before using .str.contains
 df.columns = df.columns.map(str)
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+
+# For initialization of speed recommendation
 
 
 crop_names = df["Crop"].to_numpy()
@@ -107,47 +115,76 @@ def fetch_soil_ph(lat, lon):
         return None
 
 
+async def fetch_soil_ph(lat, lon):
+    url = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=phh2o&depth=0-5cm&value=mean"
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            response = await client.get(url)
+            response.raise_for_status()
+            data = response.json()
+            if 'properties' in data and 'layers' in data['properties'] and data['properties']['layers']:
+                ph_mean = data['properties']['layers'][0]['depths'][0]['values']['mean']
+                if ph_mean is not None:
+                    return round(ph_mean / 10.0, 1)
+        return None
+    except Exception:
+        return None
 
-def get_crop_recommendations_from_location(lat: float, lon: float):
+async def fetch_weather(lat, lon):
     weather_api_key = os.getenv("weather_api_key")
-    weather_url = f"https://api.weatherapi.com/v1/current.json?key={weather_api_key}&q={lat},{lon}"
-    weather_response = requests.get(weather_url, timeout=10)
-    weather_response.raise_for_status()
-    weather_data = weather_response.json()
-    if "error" in weather_data:
-        raise ValueError(f"Weather API error: {weather_data['error']['message']}")
-    temp = weather_data["current"]["temp_c"]
+    url = f"https://api.weatherapi.com/v1/current.json?key={weather_api_key}&q={lat},{lon}"
+    async with httpx.AsyncClient(timeout=10) as client:
+        response = await client.get(url)
+        response.raise_for_status()
+        data = response.json()
+        if "error" in data:
+            raise ValueError(f"Weather API error: {data['error']['message']}")
+        return data["current"]["temp_c"]
+
+async def fetch_rainfall(lat, lon):
     today = datetime.now(timezone.utc).date()
     one_year_ago = today - timedelta(days=365)
-    rain_url = (
+    url = (
         f"https://archive-api.open-meteo.com/v1/archive?"
         f"latitude={lat}&longitude={lon}"
         f"&start_date={one_year_ago}&end_date={today}"
         "&daily=precipitation_sum&timezone=UTC"
     )
-    rain_response = requests.get(rain_url, timeout=10)
-    rain_response.raise_for_status()
-    rain_data = rain_response.json()
-    if "daily" in rain_data and "precipitation_sum" in rain_data["daily"]:
-        rainfall = sum(p for p in rain_data["daily"]["precipitation_sum"] if p is not None)
-    else:
-        raise ValueError("No precipitation data found.")
-    alt_url = f"https://api.open-elevation.com/api/v1/lookup?locations={lat},{lon}"
-    alt_response = requests.get(alt_url, timeout=10)
-    alt_response.raise_for_status()
-    alt_data = alt_response.json()
-    if "results" in alt_data and len(alt_data["results"]) > 0:
-        altitude = alt_data["results"][0]["elevation"]
-    else:
-        raise ValueError("No elevation data found.")
-    month = datetime.utcnow().month
-    ph_soil = fetch_soil_ph(lat, lon)
+    async with httpx.AsyncClient(timeout=10) as client:
+        response = await client.get(url)
+        response.raise_for_status()
+        data = response.json()
+        if "daily" in data and "precipitation_sum" in data["daily"]:
+            return sum(p for p in data["daily"]["precipitation_sum"] if p is not None)
+        return 0
+
+async def fetch_altitude(lat, lon):
+    url = f"https://api.open-elevation.com/api/v1/lookup?locations={lat},{lon}"
+    async with httpx.AsyncClient(timeout=10) as client:
+        response = await client.get(url)
+        response.raise_for_status()
+        data = response.json()
+        if "results" in data and len(data["results"]) > 0:
+            return data["results"][0]["elevation"]
+        return 0
+
+async def get_crop_recommendations_from_location(lat: float, lon: float):
+    # Run all fetches in parallel
+    ph_task = fetch_soil_ph(lat, lon)
+    weather_task = fetch_weather(lat, lon)
+    rain_task = fetch_rainfall(lat, lon)
+    alt_task = fetch_altitude(lat, lon)
+
+    ph_soil, temp, rainfall, altitude = await asyncio.gather(ph_task, weather_task, rain_task, alt_task)
 
     if ph_soil is None:
-        print("No pH data found.")
-        ph_soil = 6.5  
-    print(ph_soil)
+        print("No pH data found. Using default 6.5")
+        ph_soil = 6.5
 
+    month = datetime.utcnow().month
+    print(f"PH: {ph_soil}, Temp: {temp}, Rainfall: {rainfall}, Altitude: {altitude}, Month: {month}")
+
+    # Call your synchronous recommendation function
     recommendations = recommend_crops(
         temp=temp,
         rainfall=rainfall,
@@ -159,6 +196,5 @@ def get_crop_recommendations_from_location(lat: float, lon: float):
     return recommendations
 
 
-a= get_crop_recommendations_from_location(27.705, 84.410)
-print(a)
-
+# a = asyncio.run(get_crop_recommendations_from_location(27, 84))
+# print(a)

@@ -2,6 +2,7 @@ import requests
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 import numpy as np
+import os
 
 try:
     df = pd.read_csv('Datasets/crop_ecology_data.csv')
@@ -9,6 +10,8 @@ except FileNotFoundError:
     print("File not found")
     df = pd.DataFrame()
 
+# Convert column names to strings before using .str.contains
+df.columns = df.columns.map(str)
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
 # For initialization of speed recommendation
@@ -106,7 +109,9 @@ def fetch_soil_ph(lat, lon):
 
 
 def get_crop_recommendations_from_location(lat: float, lon: float):
-    weather_api_key = "433318bae28b4767920164042250708"
+    
+
+    weather_api_key = os.getenv("WEATHER_API_KEY")
     weather_url = f"https://api.weatherapi.com/v1/current.json?key={weather_api_key}&q={lat},{lon}"
     weather_response = requests.get(weather_url, timeout=10)
     weather_response.raise_for_status()

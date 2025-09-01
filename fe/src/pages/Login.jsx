@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { signInWithProvider, signInWithEmail } from "../api/auth";
 import "../styles/auth.css";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -10,12 +13,42 @@ const Login = () => {
     role: "",
   });
   const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    }
+    return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        setSubmitting(true);
+        await signInWithEmail({
+          email: formData.email,
+          password: formData.password,
+        });
+        navigate("/auth/callback");
+      } catch (err) {
+        setErrors({ root: err.message });
+      } finally {
+        setSubmitting(false);
+      }
+    } else {
+      setErrors(newErrors);
+    }
   };
 
   return (
@@ -25,7 +58,7 @@ const Login = () => {
           <h1 className="auth-title">Welcome Back!</h1>
           <p className="auth-subtitle">Continue your farming journey...</p>
         </div>
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <input
               type="email"
@@ -40,7 +73,7 @@ const Login = () => {
 
           <div className="form-group">
             <input
-              type={showPassword ? "text" : "password"}
+              type="password"
               name="password"
               placeholder="Password"
               value={formData.password}
@@ -54,7 +87,7 @@ const Login = () => {
           </div>
 
           <button type="submit" className="login-button" disabled={submitting}>
-            {submitting ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
+            {submitting ? "LOGGING IN..." : "LOG IN"}
           </button>
 
           <div className="social-login">

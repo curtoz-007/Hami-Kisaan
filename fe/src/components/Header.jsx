@@ -1,8 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { signOut } from "../api/auth";
 import "../styles/header.css";
 
 const Header = () => {
+  const { user } = useAuth();
+
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Explore", href: "/explore" },
@@ -25,12 +29,38 @@ const Header = () => {
         ))}
       </nav>
       <div className="auth-btns">
-        <button onClick={() => navigate("/login")} className="btn btn-login">
-          Login
-        </button>
-        <button onClick={() => navigate("/signup")} className="btn btn-signup">
-          Sign Up
-        </button>
+        {user ? (
+          <>
+            <span style={{ fontWeight: 600, color: "white" }}>
+              Welcome, {user.user_metadata?.username || user.email}
+            </span>
+            <button
+              className="btn btn-signup"
+              onClick={async (e) => {
+                e.preventDefault();
+                await signOut();
+                navigate("/");
+              }}
+            >
+              Sign out
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => navigate("/login")}
+              className="btn btn-login"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => navigate("/signup")}
+              className="btn btn-signup"
+            >
+              Sign Up
+            </button>
+          </>
+        )}
       </div>
     </header>
   );

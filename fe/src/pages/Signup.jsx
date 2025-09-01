@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { signInWithProvider, signUpWithEmail } from "../api/auth";
+import { createUserProfile } from "../api/user";
 import "../styles/auth.css";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
-    role: "consumer",
+    role: "Consumer",
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
@@ -15,7 +20,70 @@ const Signup = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
   };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Full name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+    return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        setSubmitting(true);
+        console.log(submitting);
+        console.log("formdata to submit", formData);
+        const { user } = await signUpWithEmail({
+          email: formData.email,
+          password: formData.password,
+          fullName: formData.fullName,
+          role: formData.role,
+        });
+        if (user) {
+          await createUserProfile({
+            id: user.id,
+            fullName: formData.fullName,
+            email: formData.email,
+            role: formData.role,
+          });
+        }
+        navigate("/auth/callback");
+      } catch (err) {
+        setErrors({ root: err.message });
+      } finally {
+        setSubmitting(false);
+      }
+    } else {
+      setErrors(newErrors);
+    }
+  };
+
   return (
     <div className="page auth-page">
       <div className="auth-container">
@@ -24,7 +92,7 @@ const Signup = () => {
           <p className="auth-subtitle">Start your farming journey with us...</p>
         </div>
 
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={(e) => handleSubmit(e)}>
           <div className="form-group">
             <input
               type="text"
@@ -82,15 +150,15 @@ const Signup = () => {
                 className="social-button" //for same css
                 style={{
                   background:
-                    formData.role === "consumer"
+                    formData.role === "Consumer"
                       ? "var(--secondary-green)"
                       : undefined,
                   color:
-                    formData.role === "consumer"
+                    formData.role === "Consumer"
                       ? "white"
                       : "var(--muted-gray)",
                 }}
-                onClick={() => setFormData((p) => ({ ...p, role: "consumer" }))}
+                onClick={() => setFormData((p) => ({ ...p, role: "Consumer" }))}
               >
                 Consumer
               </button>
@@ -100,13 +168,13 @@ const Signup = () => {
                 className="social-button" //for same css
                 style={{
                   background:
-                    formData.role === "farmer"
+                    formData.role === "Farmer"
                       ? "var(--secondary-green)"
                       : undefined,
                   color:
-                    formData.role === "farmer" ? "white" : "var(--muted-gray)",
+                    formData.role === "Farmer" ? "white" : "var(--muted-gray)",
                 }}
-                onClick={() => setFormData((p) => ({ ...p, role: "farmer" }))}
+                onClick={() => setFormData((p) => ({ ...p, role: "Farmer" }))}
               >
                 Farmer
               </button>

@@ -1,289 +1,229 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CreateListingModal from "../components/CreateListingModal";
-// import VoiceRecorderTest from "../components/VoiceRecorderTest";
 import { useAuth } from "../context/AuthContext";
 import { signOut } from "../api/auth";
+import { useGeoLocation } from "../api/useGeoLocation";
 import "../styles/dashboard.css";
+
+const DashboardHeader = ({ dashboardData, location }) => {
+  if (location.error) {
+    return <div>Error: {location.error}</div>;
+  }
+
+  if (!location.loaded || !dashboardData) {
+    return <div>Loading weather data...</div>;
+  }
+
+  const { weather } = dashboardData;
+
+  return (
+    <header className="dashboard-header">
+      <div className="detail-item">
+        <span className="detail-label">📍 Location</span>
+        <span className="detail-value">
+          {location.coordinates.lat.toFixed(2)},{" "}
+          {location.coordinates.lng.toFixed(2)}
+        </span>
+      </div>
+      <div className="detail-item">
+        <span className="detail-label">⛰️ Elevation</span>
+        <span className="detail-value">{weather.altitude?.toFixed(2)} m</span>
+      </div>
+      <div className="detail-item">
+        <span className="detail-label">🧪 Soil pH</span>
+        <span className="detail-value">{weather.soil_ph?.toFixed(2)}</span>
+      </div>
+      <div className="detail-item">
+        <span className="detail-label">🌧️ Rainfall</span>
+        <span className="detail-value">{weather.rainfall?.toFixed(2)} mm</span>
+      </div>
+      <div className="detail-item">
+        <span className="detail-label">🌤️ Weather</span>
+        <span className="detail-value">
+          {weather.temperature?.main?.temp?.toFixed(2)}°C
+        </span>
+      </div>
+    </header>
+  );
+};
 
 export default function Dashboard() {
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
-  // const [showVoiceTest, setShowVoiceTest] = useState(false);
   const userId = user?.id;
+  const location = useGeoLocation();
+  const [dashboardData, setDashboardData] = useState(null);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      if (location.loaded && !location.error) {
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:8000/dashboard/data/?latitude=${location.coordinates.lat}&longitude=${location.coordinates.lng}`
+          );
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          setDashboardData(data);
+        } catch (error) {
+          console.error("Error fetching dashboard data:", error);
+        }
+      }
+    };
+
+    fetchDashboardData();
+  }, [location]);
+
+  const handleSignOut = async () => {
+    await signOut();
+    window.location.href = "/";
+  };
+
+  const specialists = [
+    { id: 1, name: "Dr. Aarav Sharma", role: "Pathologist" },
+    { id: 2, name: "Rina Gupta", role: "Entomologist" },
+    { id: 3, name: "Sunil Verma", role: "Agronomist" },
+  ];
 
   return (
     <>
-      <div className="dashboard">
-        <div className="container" style={{ width: "100%", padding: "0 24px" }}>
-          <div
-            className="dashboard-grid"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "260px 1fr 320px",
-              gap: 20,
-            }}
-          >
-            <aside className="sidebar-agri panel">
-              <div className="brand-chip">
-                <strong style={{ fontSize: "24px" }}>Hami Kissan</strong>
-              </div>
-              <nav className="sidebar-list">
-                <Link className="sidebar-link" to="/">
-                  🏠 Home
-                </Link>
-                <Link className="sidebar-link" to="/explore">
-                  🌾 Crops Listings
-                </Link>
-                <Link className="sidebar-link" to="/disease">
-                  🧪 Plant Clinic
-                </Link>
-                <a className="sidebar-link" href="#">
-                  ⛈️ Weather Alerts
-                </a>
-                <a className="sidebar-link" href="#">
-                  🧯 Fertilizer Guide
-                </a>
-                <a className="sidebar-link" href="#">
-                  📰 News & Policies
-                </a>
-              </nav>
-              <div className="sidebar-section-label">Account</div>
-              <nav className="sidebar-list">
-                <a className="sidebar-link" href="#">
-                  👤 About Me
-                </a>
-                <Link to="/login">
+      <div className="dashboard-container">
+        <aside className="sidebar">
+          <div className="sidebar-header">
+            <strong className="brand-title">Hami Kissan</strong>
+          </div>
+          <nav className="sidebar-nav">
+            <Link className="sidebar-link" to="/">
+              <span className="icon">🏠</span> Home
+            </Link>
+            <Link className="sidebar-link" to="/explore">
+              <span className="icon">🌾</span> Crops Listings
+            </Link>
+            <Link className="sidebar-link" to="/disease">
+              <span className="icon">🧪</span> Plant Clinic
+            </Link>
+
+            <a className="sidebar-link" href="#">
+              <span className="icon">📰</span> News & Policies
+            </a>
+          </nav>
+          <div className="sidebar-footer">
+            <a className="sidebar-link" href="#">
+              <span className="icon">👤</span> About Me
+            </a>
+            <button className="btn-logout" onClick={handleSignOut}>
+              Log Out
+            </button>
+          </div>
+        </aside>
+
+        <main className="main-content">
+          <header className="main-header">
+            <div>
+              <h1 className="welcome-title">
+                Welcome back
+                {user
+                  ? `, ${user.user_metadata?.full_name || user.email}`
+                  : ""}
+              </h1>
+              <p className="welcome-subtitle">
+                Your farming hub at a glance.
+              </p>
+            </div>
+            <div className="profile-icon">
+              <span>🌾</span>
+            </div>
+          </header>
+
+          <DashboardHeader dashboardData={dashboardData} location={location} />
+
+          <section className="content-grid">
+            <div className="grid-col-span-2">
+              <div className="panel">
+                <h3 className="panel-title">🌱 List your crops</h3>
+
+                <p>
+                  Publish products to the marketplace and reach nearby buyers.
+                </p>
+                <div className="panel-actions">
                   <button
-                    className="btn btn-signup"
-                    style={{
-                      width: "100%",
-                      background: "var(--green-text)",
-                      color: "white",
-                    }}
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      await signOut();
-                      window.location.href = "/";
-                    }}
+                    className="btn btn-primary"
+                    onClick={() => setShowModal(true)}
                   >
-                    Log Out
+                    Create Listing
                   </button>
-                </Link>
-              </nav>
-            </aside>
-
-            <main style={{ display: "grid", gap: 20 }}>
-              <section className="panel" style={{ padding: "10px 20px" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: 12,
-                  }}
-                >
-                  <div>
-                    <h2 style={{ margin: 0 }}>
-                      🌿 Welcome back
-                      {user
-                        ? `, ${user.user_metadata?.full_name || user.email}`
-                        : ""}
-                    </h2>
-                    <p className="muted" style={{ marginTop: 6 }}>
-                      Your farming hub at a glance.
-                    </p>
-                  </div>
-                  <div
-                    className="brand-round"
-                    style={{ width: 44, height: 44 }}
-                  >
-                    🌾
-                  </div>
-                </div>
-              </section>
-
-              <section
-                className="panel"
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: 16,
-                  padding: "10px 20px",
-                }}
-              >
-                <div>
-                  <h3 style={{ marginTop: 0 }}>🌱 List your crops</h3>
-                  <p>
-                    Publish products to marketplace and reach nearby buyers.
-                  </p>
-                  <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
-                    <button
-                      className="listing-button"
-                      onClick={() => setShowModal(true)}
-                    >
-                      Create Listing
-                    </button>
-                    <Link to="/explore" className="listing-button">
-                      View Marketplace
-                    </Link>
-                  </div>
-                </div>
-                <div>
-                  <h4 style={{ margin: 0 }}>Your latest listings</h4>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(2, minmax(0,1fr))",
-                      gap: 10,
-                      marginTop: 10,
-                    }}
-                  >
-                    {[
-                      {
-                        id: 1,
-                        name: "Fresh Tomatoes",
-                        price: 45,
-                        unit: "per kg",
-                      },
-                      { id: 2, name: "Cauliflower", price: 60, unit: "per kg" },
-                    ].map((item) => (
-                      <div
-                        key={item.id}
-                        className="panel"
-                        style={{ padding: 12 }}
-                      >
-                        <div style={{ fontWeight: 600 }}>{item.name}</div>
-                        <div className="muted">
-                          Rs {item.price} {item.unit}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-
-              <section
-                className="panel"
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr 1fr",
-                  gap: 16,
-                  padding: 20,
-                }}
-              >
-                <div className="panel three-feature" style={{ padding: 16 }}>
-                  <h4 style={{ margin: 0 }}>🧪 Plant Clinic</h4>
-                  <p className="muted">
-                    Diagnose crop issues using images and symptoms.
-                  </p>
-                  <Link to="/disease" className="listing-button">
-                    Open Clinic
+                  <Link to="/explore" className="btn btn-secondary">
+                    View Marketplace
                   </Link>
                 </div>
-                <div className="panel three-feature" style={{ padding: 16 }}>
-                  <h4 style={{ margin: 0 }}>📰 News & Policies</h4>
-                  <p className="muted">
-                    Get information about latest news & policied.
-                  </p>
-                  <a href="#" className="listing-button">
-                    Know More
-                  </a>
-                </div>
-                <div className="panel three-feature" style={{ padding: 16 }}>
-                  <h4 style={{ margin: 0 }}>🧯 Fertilizer guide</h4>
-                  <p className="muted">Smart nutrient plans for major crops.</p>
-                  <a href="#" className="listing-button">
-                    View Guide
-                  </a>
-                </div>
-              </section>
-            </main>
-
-            <aside
-              className="panel"
-              style={{
-                display: "grid",
-                gap: 12,
-                padding: 20,
-              }}
-            >
-              <div className="notifications">
-                <h3 style={{ marginTop: 0 }}>🔔 Notifications</h3>
-                {[
-                  "Your seed order has been shipped.",
-                  "Rain expected in 2 days for your area.",
-                  "Market price for tomatoes up 6% this week.",
-                ].map((n, i) => (
-                  <div
-                    key={i}
-                    className="detail-item"
-                    style={{
-                      padding: "6px 0",
-                      borderBottom:
-                        i < 2 ? "1px solid var(--surface-soft)" : "none",
-                    }}
-                  >
-                    <span className="detail-value">{n}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="alerts">
-                <h3 style={{ marginTop: 0 }}>⛈️ Weather ALerts</h3>
-                {[
-                  "Heavy rainfall in few days",
-                  "Rain expected in 2 days for your area.",
-                  "High winds today.",
-                ].map((n, i) => (
-                  <div
-                    key={i}
-                    className="detail-item"
-                    style={{
-                      padding: "6px 0",
-                      borderBottom:
-                        i < 2 ? "1px solid var(--surface-soft)" : "none",
-                    }}
-                  >
-                    <span className="detail-value" style={{ color: "#d33021" }}>
-                      {n}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </aside>
-          </div>
-          {/* Bottom: location details spanning full width */}
-          <section className="panel" style={{ marginTop: 20, padding: 20 }}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(5, minmax(0,1fr))",
-                gap: 16,
-              }}
-            >
-              <div className="detail-item" style={{ borderBottom: "none" }}>
-                <span className="detail-label">📍 Location</span>
-                <span className="detail-value">Your District</span>
-              </div>
-              <div className="detail-item" style={{ borderBottom: "none" }}>
-                <span className="detail-label">⛰️ Elevation</span>
-                <span className="detail-value">1,350 m</span>
-              </div>
-              <div className="detail-item" style={{ borderBottom: "none" }}>
-                <span className="detail-label">🧪 Soil pH</span>
-                <span className="detail-value">6.5</span>
-              </div>
-              <div className="detail-item" style={{ borderBottom: "none" }}>
-                <span className="detail-label">🌧️ Rainfall</span>
-                <span className="detail-value">24 mm (weekly)</span>
-              </div>
-              <div className="detail-item" style={{ borderBottom: "none" }}>
-                <span className="detail-label">🌤️ Weather</span>
-                <span className="detail-value">22°C, Mostly sunny</span>
               </div>
             </div>
           </section>
-        </div>
+
+          <div className="dashboard-row">
+            <div className="panel dashboard-col">
+              <h4 className="panel-title">Your latest listings</h4>
+              <div className="listings-grid">
+                {[
+                  { id: 1, name: "Fresh Tomatoes", price: 45, unit: "per kg" },
+                  { id: 2, name: "Cauliflower", price: 60, unit: "per kg" },
+                  { id: 3, name: "Organic Potatoes", price: 30, unit: "per kg" },
+                  { id: 4, name: "Spinach", price: 25, unit: "per bundle" },
+                ].map((item) => (
+                  <div key={item.id} className="listing-item">
+                    <div className="item-name">{item.name}</div>
+                    <div className="item-price">
+                      Rs {item.price} {item.unit}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="panel feature-card dashboard-col">
+              <h4 className="panel-title">🧪 Plant Clinic</h4>
+              <p>Diagnose crop issues using images and symptoms.</p>
+              <div className="image-preview">
+                <span>Upload image for diagnosis</span>
+              </div>
+              <Link to="/disease" className="btn btn-tertiary">
+                Open Clinic
+              </Link>
+              <div className="specialists-list">
+                <h5>Plant Specialists</h5>
+                <ul>
+                  {specialists.map((specialist) => (
+                    <li key={specialist.id}>
+                      <span>
+                        {specialist.name} - {specialist.role}
+                      </span>
+                      <button className="btn-contact">Contact</button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <aside className="right-sidebar">
+          <div className="panel full-height-panel">
+            <h3 className="panel-title">🔔 Notifications</h3>
+            <div className="notification-list">
+              {[
+                "Your seed order has been shipped.",
+                "Rain expected in 2 days for your area.",
+                "Market price for tomatoes up 6% this week.",
+              ].map((n, i) => (
+                <div key={i} className="notification-item">
+                  {n}
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
       </div>
 
       <CreateListingModal

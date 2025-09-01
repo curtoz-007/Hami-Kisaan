@@ -1,0 +1,235 @@
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 20px;
+  position: relative;
+}
+
+.dashboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/dashboard_bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(218, 228, 205, 0.8);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
+    inset 0px 10px 25px rgba(167, 215, 177, 0.3);
+  backdrop-filter: blur(3px);
+  position: relative;
+}
+
+.three-feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.sidebar-agri {
+  border-radius: 16px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1;
+  backdrop-filter: blur(3px);
+}
+
+.sidebar-agri .brand-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-round {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, hsl(86 60% 30%), hsl(86 60% 45%));
+  font-weight: 700;
+  color: white;
+}
+
+.sidebar-list {
+  margin: 8px 0;
+  display: grid;
+  gap: 6px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-link:hover {
+  background: rgb(59, 79, 34);
+  color: white;
+}
+
+.sidebar-link.active {
+  background: #f0f7ea;
+  color: hsl(86 60% 14%);
+}
+
+.sidebar-section-label {
+  margin: 8px 6px 4px;
+  font-size: 15px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.listing-button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background: var(--green-text);
+  color: white;
+}
+
+a.listing-button {
+  background: var(--soil-brown);
+  transition: transform 0.2s ease;
+}
+a.listing-button:hover {
+  transform: scale(1.03);
+}
+
+.disease-header,
+.recommend-header,
+.explore-header {
+  text-align: center;
+  padding: 80px 0 60px;
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-dark) 100%
+  );
+  color: white;
+}
+
+.disease-header h1,
+.recommend-header h1,
+.explore-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.disease-header p,
+.recommend-header p,
+.explore-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.disease-content,
+.recommend-content,
+.explore-content {
+  padding: 40px 80px;
+}
+
+/* Upload Section */
+.upload-section {
+  margin-bottom: 40px;
+}
+
+.form-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
+}
+
+.form-card h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.upload-area {
+  border: 3px dashed var(--border);
+  border-radius: 20px;
+  padding: 60px 40px;
+  text-align: center;
+  transition: all 0.3s ease;
+  background: var(--surface-soft);
+  cursor: pointer;
+}
+
+.upload-area:hover,
+.upload-area.has-file {
+  border-color: var(--primary);
+  background: white;
+}
+
+.upload-placeholder h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 15px;
+}
+
+.upload-placeholder p {
+  color: var(--muted-foreground);
+  margin-bottom: 25px;
+}
+
+.upload-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.file-info {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--surface-soft);
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.file-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.file-name {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.file-size {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.analyze-btn {
+  min-width: 150px;
+}

@@ -21,8 +21,12 @@ const App = () => {
   }, [location.pathname]);
   return (
     <div className="app-container">
-      <Header />
-      <div style={{ marginTop: "72px" }}>
+      {location.pathname !== "/dashboard" && <Header />}
+      <div
+        style={{
+          marginTop: location.pathname === "/dashboard" ? "0px" : "72px",
+        }}
+      >
         {/*to offset fixed header height*/}
         <Routes>
           <Route path="/" element={<Home />} />

@@ -45,5 +45,5 @@
 
 .auth-btns > .btn-signup {
   background: var(--yellow-accent);
-  color: var(--primary-green);
+  color: var(--green-text);
 }

@@ -1,3 +1,8 @@
 .app-container {
+  min-height: 100vh;
   background: var(--light-background);
+}
+
+.page {
+  min-height: 100vh;
 }

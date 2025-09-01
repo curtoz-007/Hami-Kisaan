@@ -2,6 +2,10 @@ import requests
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 import numpy as np
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 try:
     df = pd.read_csv('Datasets/crop_ecology_data.csv')
@@ -45,7 +49,6 @@ plant_start = df["Planting_Start_Month"].to_numpy()
 plant_end = df["Planting_End_Month"].to_numpy()
 harvest_start = df["Harvesting_Start_Month"].to_numpy()
 harvest_end = df["Harvesting_End_Month"].to_numpy()
-images = df["Image"].to_numpy()
 
 
 
@@ -85,7 +88,7 @@ def recommend_crops(temp, rainfall, ph, latitude, altitude, month):
 
     # --- Results ---
     mask = scores > 0
-    result = pd.DataFrame({"Crop": crop_names[mask], "Score": scores[mask], "Image": images[mask]})
+    result = pd.DataFrame({"Crop": crop_names[mask], "Score": scores[mask], })
     return result.sort_values("Score", ascending=False).reset_index(drop=True)
 
 
@@ -108,7 +111,7 @@ def fetch_soil_ph(lat, lon):
 
 
 def get_crop_recommendations_from_location(lat: float, lon: float):
-    weather_api_key = "433318bae28b4767920164042250708"
+    weather_api_key = os.getenv("weather_api_key")
     weather_url = f"https://api.weatherapi.com/v1/current.json?key={weather_api_key}&q={lat},{lon}"
     weather_response = requests.get(weather_url, timeout=10)
     weather_response.raise_for_status()

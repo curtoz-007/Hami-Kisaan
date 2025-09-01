@@ -2,6 +2,7 @@ import requests
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 import numpy as np
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,6 +13,8 @@ except FileNotFoundError:
     print("File not found")
     df = pd.DataFrame()
 
+# Convert column names to strings before using .str.contains
+df.columns = df.columns.map(str)
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
 # For initialization of speed recommendation
@@ -46,7 +49,6 @@ plant_start = df["Planting_Start_Month"].to_numpy()
 plant_end = df["Planting_End_Month"].to_numpy()
 harvest_start = df["Harvesting_Start_Month"].to_numpy()
 harvest_end = df["Harvesting_End_Month"].to_numpy()
-images = df["Image"].to_numpy()
 
 
 
@@ -86,7 +88,7 @@ def recommend_crops(temp, rainfall, ph, latitude, altitude, month):
 
     # --- Results ---
     mask = scores > 0
-    result = pd.DataFrame({"Crop": crop_names[mask], "Score": scores[mask], "Image": images[mask]})
+    result = pd.DataFrame({"Crop": crop_names[mask], "Score": scores[mask], })
     return result.sort_values("Score", ascending=False).reset_index(drop=True)
 
 
@@ -109,7 +111,7 @@ def fetch_soil_ph(lat, lon):
 
 
 def get_crop_recommendations_from_location(lat: float, lon: float):
-    weather_api_key = os.getenv("WEATHER_API_KEY")
+    weather_api_key = os.getenv("weather_api_key")
     weather_url = f"https://api.weatherapi.com/v1/current.json?key={weather_api_key}&q={lat},{lon}"
     weather_response = requests.get(weather_url, timeout=10)
     weather_response.raise_for_status()

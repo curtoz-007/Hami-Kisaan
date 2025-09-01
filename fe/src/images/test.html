@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Image Gallery</title>
+  <style>
+    :root { 
+      --maxw: 1200px; 
+      --gap: 14px;
+      --primary: #007bff;
+      --transition: 0.2s ease;
+    }
+
+    body { 
+      margin: 0; 
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
+      background: #f7f7f8; 
+      color: #222; 
+    }
+
+    header { 
+      max-width: var(--maxw); 
+      margin: 24px auto 0; 
+      padding: 0 16px; 
+    }
+
+    h1 { 
+      font-size: 1.25rem; 
+      margin: 0 0 10px; 
+    }
+
+    .search-box {
+      margin: 16px 0;
+      position: relative;
+    }
+
+    #search {
+      width: 100%;
+      padding: 10px 16px;
+      font-size: 1rem;
+      border: 1px solid #e6e6e9;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    #search:focus {
+      border-color: var(--primary);
+    }
+
+    #grid {
+      max-width: var(--maxw);
+      margin: 12px auto 40px;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--gap);
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e6e6e9;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 1px 2px rgba(0,0,0,.04);
+      transition: transform var(--transition);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .thumb-box {
+      width: 100%;
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .thumb.loaded {
+      opacity: 1;
+    }
+
+    .thumb-error {
+      background: #ffe6e6;
+      color: #d00;
+      font-size: 0.9rem;
+      padding: 8px;
+      text-align: center;
+    }
+
+    figcaption {
+      padding: 10px 12px;
+      font-size: .95rem;
+      text-align: center;
+      border-top: 1px solid #f0f0f2;
+      word-break: break-word;
+    }
+
+    #status { 
+      max-width: var(--maxw); 
+      margin: 10px auto 0; 
+      padding: 0 16px; 
+      color: #666; 
+      font-size: .95rem; 
+    }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    #lightbox.active {
+      display: flex;
+    }
+
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    #lightbox-caption {
+      position: absolute;
+      bottom: 20px;
+      color: #fff;
+      font-size: 1.1rem;
+      text-align: center;
+      padding: 8px 16px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 4px;
+    }
+
+    #close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Image Gallery</h1>
+    <div class="search-box">
+      <input type="search" id="search" placeholder="Search images..." aria-label="Search images by name">
+    </div>
+    <div id="status">Loading images…</div>
+  </header>
+
+  <main id="grid" aria-live="polite" aria-busy="true"></main>
+
+  <div id="lightbox">
+    <button id="close-lightbox" aria-label="Close lightbox">×</button>
+    <img id="lightbox-img" alt="">
+    <div id="lightbox-caption"></div>
+  </div>
+
+  <template id="card-tpl">
+    <figure class="card">
+      <div class="thumb-box">
+        <img class="thumb" alt="" loading="lazy" />
+        <div class="thumb-error" style="display: none;">Failed to load image</div>
+      </div>
+      <figcaption></figcaption>
+    </figure>
+  </template>
+
+  <script>
+    async function loadImages() {
+      const grid = document.getElementById('grid');
+      const status = document.getElementById('status');
+      const search = document.getElementById('search');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      const closeLightbox = document.getElementById('close-lightbox');
+      let imageData = [];
+
+      try {
+        const res = await fetch('images.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load images.json');
+        const data = await res.json();
+
+        if (!Array.isArray(data)) throw new Error('images.json should be an array');
+
+        imageData = data;
+        renderImages(data);
+
+        function renderImages(images) {
+          grid.innerHTML = '';
+          let count = 0;
+
+          for (const item of images) {
+            const name = item?.name || 'Untitled';
+            const src = item?.imagelink || '';
+
+            const node = document.getElementById('card-tpl').content.cloneNode(true);
+            const img = node.querySelector('img.thumb');
+            const errorBox = node.querySelector('.thumb-error');
+            const cap = node.querySelector('figcaption');
+
+            img.src = src;
+            img.alt = name;
+            cap.textContent = name;
+
+            img.onload = () => img.classList.add('loaded');
+            img.onerror = () => {
+              img.style.display = 'none';
+              errorBox.style.display = 'block';
+            };
+
+            node.querySelector('.card').addEventListener('click', () => {
+              lightboxImg.src = src;
+              lightboxImg.alt = name;
+              lightboxCaption.textContent = name;
+              lightbox.classList.add('active');
+            });
+
+            grid.appendChild(node);
+            count++;
+          }
+
+          status.textContent = count ? `Loaded ${count} image${count > 1 ? 's' : ''}.` : 'No images found.';
+          grid.setAttribute('aria-busy', 'false');
+        }
+
+        search.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase();
+          const filtered = imageData.filter(item => 
+            (item?.name || '').toLowerCase().includes(query)
+          );
+          renderImages(filtered);
+          status.textContent = filtered.length ? `Found ${filtered.length} image${filtered.length > 1 ? 's' : ''}.` : 'No matching images.';
+        });
+
+        closeLightbox.addEventListener('click', () => {
+          lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            lightbox.classList.remove('active');
+          }
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            lightbox.classList.remove('active');
+          }
+        });
+
+      } catch (err) {
+        console.error(err);
+        status.textContent = 'Error: ' + err.message;
+        grid.setAttribute('aria-busy', 'false');
+      }
+    }
+
+    loadImages();
+  </script>
+</body>
+</html>

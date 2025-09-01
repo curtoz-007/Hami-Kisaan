@@ -1,13 +1,8 @@
 /* Recommend.css - AgroTech Theme */
-
-* {
-  box-sizing: border-box;
-}
-
 .recommend-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 20px;
   color: #2d3748;
 }
@@ -116,8 +111,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Retry Button */
@@ -424,11 +423,11 @@
   .crop-card {
     min-width: 100%;
   }
-  
+
   .crops-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .modal-overlay {
     padding: 10px;
   }

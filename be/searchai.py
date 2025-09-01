@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def grounded_search(prompt: str) -> str:
-    """
-    Perform an online grounded search using Google Gemini and return the response with sources.
-    """
+    
+    # Perform an online search
+    
    
     api_key = os.getenv("GEMINI_API_KEY")
 

@@ -56,37 +56,37 @@ harvest_end = df["Harvesting_End_Month"].to_numpy()
 def recommend_crops(temp, rainfall, ph, latitude, altitude, month):
     scores = np.zeros(len(crop_names), dtype=int)
 
-    # --- Temperature ---
-    scores += np.where((temp_opt_min <= temp) & (temp <= temp_opt_max), 3,
-                       np.where((temp_abs_min <= temp) & (temp <= temp_abs_max), 1, -100))
+    # --- Temperature (max 7) ---
+    scores += np.where((temp_opt_min <= temp) & (temp <= temp_opt_max), 7,
+                       np.where((temp_abs_min <= temp) & (temp <= temp_abs_max), 2, -100))
 
-    # --- Rainfall ---
-    scores += np.where((rain_opt_min <= rainfall) & (rainfall <= rain_opt_max), 2,
-                       np.where((rain_abs_min <= rainfall) & (rainfall <= rain_abs_max), 1, -100))
+    # --- Rainfall (max 5) ---
+    scores += np.where((rain_opt_min <= rainfall) & (rainfall <= rain_opt_max), 5,
+                       np.where((rain_abs_min <= rainfall) & (rainfall <= rain_abs_max), 2, -100))
 
-    # --- Soil pH ---
-    scores += np.where((ph_opt_min <= ph) & (ph <= ph_opt_max), 3,
-                       np.where((ph_abs_min <= ph) & (ph <= ph_abs_max), 1, -100))
+    # --- Soil pH (max 7) ---
+    scores += np.where((ph_opt_min <= ph) & (ph <= ph_opt_max), 7,
+                       np.where((ph_abs_min <= ph) & (ph <= ph_abs_max), 2, -100))
 
-    # --- Latitude ---
-    scores += np.where((lat_opt_min <= latitude) & (latitude <= lat_opt_max), 2,
-                       np.where((lat_abs_min <= latitude) & (latitude <= lat_abs_max), 1, -100))
+    # --- Latitude (max 5) ---
+    scores += np.where((lat_opt_min <= latitude) & (latitude <= lat_opt_max), 5,
+                       np.where((lat_abs_min <= latitude) & (latitude <= lat_abs_max), 2, -100))
 
-    # --- Altitude ---
-    scores += np.where((alt_opt_min <= altitude) & (altitude <= alt_opt_max), 4,
-                       np.where((alt_abs_min <= altitude) & (altitude <= alt_abs_max), 1, -100))
+    # --- Altitude (max 9) ---
+    scores += np.where((alt_opt_min <= altitude) & (altitude <= alt_opt_max), 9,
+                       np.where((alt_abs_min <= altitude) & (altitude <= alt_abs_max), 2, -100))
 
-    # --- Planting season ---
+    # --- Planting season (max 34) ---
     in_planting = ((plant_start <= plant_end) & ((plant_start <= month) & (month <= plant_end))) | \
                   ((plant_start > plant_end) & ((month >= plant_start) | (month <= plant_end)))
-    scores += np.where(in_planting, 15, 0)
+    scores += np.where(in_planting, 34, 0)
 
-    # --- Harvesting season ---
+    # --- Harvesting season (max 34) ---
     in_harvesting = ((harvest_start <= harvest_end) & ((harvest_start <= month) & (month <= harvest_end))) | \
                     ((harvest_start > harvest_end) & ((month >= harvest_start) | (month <= harvest_end)))
-    scores += np.where(in_harvesting, 15, 0)
+    scores += np.where(in_harvesting, 34, 0)
 
-    # --- Results ---
+    # --- Results --- 
     mask = scores > 0
     result = pd.DataFrame({"Crop": crop_names[mask], "Score": scores[mask], })
     return result.sort_values("Score", ascending=False).reset_index(drop=True)

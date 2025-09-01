@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File,  Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
-from Bestcrop import get_crop_recommendations_from_location
+from Bestcrop import get_crop_recommendations_from_location,fetch_soil_ph,fetch_weather,fetch_rainfall,fetch_altitude
 import pandas as pd
 from faster_whisper import WhisperModel
 import json
@@ -24,6 +24,10 @@ SUPABASE_KEY: str = os.getenv("SUPABASE_SERVICE_ROLE")
 
 # Initialize Supabase client
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+model = WhisperModel("medium", device="cpu", compute_type="int8", cpu_threads=os.cpu_count())
+
+print("Model loaded ready to transcribe")
 
 
 app = FastAPI()
@@ -82,10 +86,8 @@ def crop_recommendation(lat: float, lon: float):
 @app.post("/transcribe")
 async def upload_audio(file: UploadFile = File(...)):
 
+    print("Received request for transcription")
 
-    model = WhisperModel("medium", device="cpu", compute_type="int8", cpu_threads=os.cpu_count())
-
-    print("Model loaded ready to transcribe")
     try:
         # Save uploaded file temporarily
         file_path = f"./temp_{file.filename}"
@@ -124,14 +126,14 @@ Extract the following information and return ONLY a valid JSON object:
 
 {{
   "crop_name": "English crop name or null",
-  "crop_unit": "unit like kg, kilo, per kg or null",
+  "crop_unit": "unit like per kg,per dozen , per piece, null",
   "price_per_unit": "price number or null",
   "quantity": "quantity number or null"
 }}
 
 Look for:
 - Crop names (English)
-- Quantities (numbers with kg, kilo,per piece, etc.)
+- Quantities (numbers with per kilo,per piece, etc.)
 - Prices (numbers with rupees, rs, per kg, per piece, etc.)
 - Units (kg, kilo, per kg, etc.)
 
@@ -223,17 +225,12 @@ The expected JSON format should be:
     "Potential_Harms": "Description of potential harms",
     "Sources": "Source(s)"
 }}
-"""
-)
+""")
         json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
         if not json_match:
             raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
 
         data = json.loads(json_match.group(0))
-
-
-        # Async AI call to check if we should notify other farmers     
-
         
         disease_detected(disease_result, latitude, lon)
     
@@ -243,3 +240,16 @@ The expected JSON format should be:
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+@app.get("/dashboard/data/")
+
+async def get_dashboard_data(latitude:float, longitude:float):
+    return {
+        "weather": {
+            "temperature": await fetch_weather(latitude, longitude),
+            "rainfall": await fetch_rainfall(latitude, longitude),
+            "soil_ph": await fetch_soil_ph(latitude, longitude),
+            "altitude": await fetch_altitude(latitude, longitude),
+        },
+    }

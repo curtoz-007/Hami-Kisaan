@@ -35,6 +35,7 @@
 
 .auth-btns {
   display: flex;
+  align-items: center;
   gap: 20px;
 }
 .auth-btns > .btn-login {

@@ -9,16 +9,20 @@ const HeroSection = () => {
       <img className="hero-image" src={heroImageUrl} />
 
       <div className="content">
-        <h1 className="hero-title">Hami Kissan</h1>
+        <h1 className="hero-title">
+          Hami Kissan: Growing a Food-Secure Nepal.
+        </h1>
         <h2 className="hero-subtitle">
-          Smart Agriculture Technology for Modern Farmers
+          Our AI platform helps you protect harvests from disease, get smart
+          crop recommendations, and increase profits by connecting you directly
+          to the community.
         </h2>
         <div className="cta-btns">
-          <Link to="/recommend" className="btn">
+          <Link to="/recommend" className="hero-btn">
             🌱 Discover Your Crops
             <p>AI Powered Recommendations</p>
           </Link>
-          <Link to="/disease" className="btn">
+          <Link to="/disease" className="hero-btn">
             🦠 Smart Agri-Toolkit
             <p>Complete suite of smart tools</p>
           </Link>

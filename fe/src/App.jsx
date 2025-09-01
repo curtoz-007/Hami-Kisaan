@@ -11,6 +11,7 @@ import DiseaseDetection from "./pages/DiseaseDetection";
 import Recommend from "./pages/Recommend";
 import AuthCallback from "./pages/AuthCallback";
 import "./App.css";
+import AgriToolkit from "./pages/AgriToolkit";
 
 const App = () => {
   const location = useLocation();
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/disease" element={<DiseaseDetection />} />
           <Route path="/recommend" element={<Recommend />} />
+          <Route path="/toolkit" element={<AgriToolkit />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auth/callback" element={<AuthCallback />} />

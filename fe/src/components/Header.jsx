@@ -7,7 +7,7 @@ import "../styles/header.css";
 const Header = () => {
   const { user } = useAuth();
 
-  const navLinks = [
+  let navLinks = [
     { name: "Home", href: "/" },
     { name: "Explore", href: "/explore" },
     { name: "About", href: "/about" },
@@ -15,6 +15,15 @@ const Header = () => {
     { name: "Crop Recommendation", href: "/recommend" },
   ];
 
+  if (user) {
+    navLinks = [
+      { name: "Home", href: "/" },
+      { name: "Dashboard", href: "/dashboard" },
+      { name: "Smart Agri-Toolkit", href: "/toolkit" },
+      { name: "Explore", href: "/explore" },
+      { name: "About", href: "/about" },
+    ];
+  }
   const navigate = useNavigate();
   return (
     <header className="header shadow-dark-md">
@@ -32,7 +41,7 @@ const Header = () => {
         {user ? (
           <>
             <span style={{ fontWeight: 600, color: "white" }}>
-              Welcome, {user.user_metadata?.username || user.email}
+              Welcome, {user.user_metadata?.full_name || user.email}
             </span>
             <button
               className="btn btn-signup"

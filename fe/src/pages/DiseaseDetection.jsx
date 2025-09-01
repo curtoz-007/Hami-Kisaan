@@ -278,11 +278,11 @@ export default function Diseasedetection() {
                   <h4>Sources</h4>
                   <ul className="sources-list">
                     {result.Sources.map((source, index) => {
-                      const [name, url] = Object.entries(source)[0]
+                      const [source_name, URL] = Object.entries(source)[0]
                       return (
                         <li key={index}>
-                          <a href={url} target="_blank" rel="noopener noreferrer" className="source-link">
-                            {name}
+                          <a href={URL} target="_blank" rel="noopener noreferrer" className="source-link">
+                            {source_name}
                           </a>
                         </li>
                       )

@@ -21,9 +21,28 @@ export async function createListing({
 }
 
 export const getListings = async () => {
-  const { data, error } = await supabase.from(TABLE).select("*");
-  if (error) throw error;
-  return data;
+  const { data: listings, error: listingsError } = await supabase
+    .from(TABLE)
+    .select("*");
+  if (listingsError) throw listingsError;
+
+  // Fetch user details for each listing in parallel
+  const enrichedListings = await Promise.all(
+    listings.map(async (listing) => {
+      const { data: usersData, error: usersError } = await supabase
+        .from("users")
+        .select("id, full_name, email, address, phone, facebook_profile_url")
+        .eq("id", listing.user_id)
+        .maybeSingle();
+      if (usersError) throw usersError;
+      return {
+        ...listing,
+        user: usersData,
+      };
+    })
+  );
+
+  return enrichedListings;
 };
 
 export const uploadFile = async (file) => {

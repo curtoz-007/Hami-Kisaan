@@ -1,0 +1,344 @@
+.disease-page {
+  font-family: Arial, sans-serif;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.disease-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.disease-header h1 {
+  font-size: 2.5rem;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.disease-header p {
+  font-size: 1.1rem;
+  color: #4b5563;
+}
+
+.upload-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.upload-area {
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  transition: border-color 0.3s ease;
+}
+
+.upload-area.has-file {
+  border-color: #10b981;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.upload-icon {
+  font-size: 3rem;
+  color: #6b7280;
+}
+
+.upload-placeholder h3 {
+  font-size: 1.5rem;
+  color: #1f2937;
+  margin: 0;
+}
+
+.upload-placeholder p {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0 0 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.image-preview, .camera-preview {
+  position: relative;
+  max-width: 100%;
+  max-height: 300px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.image-preview img, .camera-preview video {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.preview-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-preview:hover .preview-overlay {
+  opacity: 1;
+}
+
+.camera-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.button.primary {
+  background-color: #10b981;
+  color: #ffffff;
+  border: none;
+}
+
+.button.primary:hover {
+  background-color: #059669;
+  transform: translateY(-2px);
+}
+
+.button.primary:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
+}
+
+.button.secondary {
+  background-color: #e5e7eb;
+  color: #1f2937;
+  border: none;
+}
+
+.button.secondary:hover {
+  background-color: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.file-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.file-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-name {
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.file-size {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #fee2e2;
+  color: #dc2626;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.results-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.results-section h2 {
+  font-size: 1.8rem;
+  color: #1f2937;
+  margin-bottom: 20px;
+}
+
+.result-card {
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.disease-icon {
+  font-size: 2rem;
+}
+
+.result-info h3 {
+  font-size: 1.4rem;
+  color: #1f2937;
+  margin: 0;
+}
+
+.confidence {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.confidence-score {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.treatment-info h4 {
+  font-size: 1.2rem;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.treatment-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #4b5563;
+}
+
+.treatment-list li {
+  margin-bottom: 8px;
+}
+
+.result-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.tips-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.tips-section h2 {
+  font-size: 1.8rem;
+  color: #1f2937;
+  margin-bottom: 20px;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.tip-card {
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.tip-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.tip-card h3 {
+  font-size: 1.2rem;
+  color: #1f2937;
+  margin: 0 0 10px;
+}
+
+.tip-card p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .disease-header h1 {
+    font-size: 2rem;
+  }
+
+  .upload-area {
+    padding: 20px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .file-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -9,6 +9,7 @@ from searchai import grounded_search
 import os
 from fastapi.responses import JSONResponse
 import re
+from Cropinfo import get_crop_info
 
 
 
@@ -127,3 +128,19 @@ Return ONLY the JSON object. No explanations, no markdown, no extra text.
         raise HTTPException(status_code=500, detail=str(e))
     
 
+
+
+@app.get("/Crop_info")
+def crop_info(name):
+    # Get recommendations (returns a pandas DataFrame)
+    recommendations = get_crop_info(name)
+    
+    
+    if not isinstance(recommendations, pd.DataFrame):
+        recommendations = pd.DataFrame(recommendations)
+    
+    
+    recommendations = recommendations.astype(object).where(pd.notnull(recommendations), None)
+    
+    # Convert to list of dicts for JSON response
+    return recommendations.to_dict(orient="records")

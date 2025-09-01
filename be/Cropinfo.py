@@ -60,3 +60,7 @@ def get_crop_info(crop_name):
         return merged_row
     else:
         return f"Crop '{crop_name}' not found in either dataset."
+    
+
+a = get_crop_info("Wheat")
+print(a)

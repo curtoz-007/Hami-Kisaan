@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { signInWithProvider, signUpWithEmail } from "../api/auth";
 import { createUserProfile } from "../api/user";
-import "../styles/auth.style.css";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import "../styles/auth.style.css";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -135,18 +135,32 @@ const Signup = () => {
           </div>
 
           <div className="form-group">
-            <div className="role-selector">
+            <div className="social-buttons">
               <button
                 type="button"
-                className={`role-option ${formData.role === "Consumer" ? "selected" : ""}`}
+                className="social-button"
                 onClick={() => setFormData((p) => ({ ...p, role: "Consumer" }))}
+                style={{
+                  backgroundColor:
+                    formData.role === "Consumer"
+                      ? "var(--secondary-green)"
+                      : null,
+                  color: formData.role === "Consumer" ? "white" : null,
+                }}
               >
                 Consumer
               </button>
               <button
                 type="button"
-                className={`role-option ${formData.role === "Farmer" ? "selected" : ""}`}
+                className="social-button"
                 onClick={() => setFormData((p) => ({ ...p, role: "Farmer" }))}
+                style={{
+                  backgroundColor:
+                    formData.role === "Farmer"
+                      ? "var(--secondary-green)"
+                      : null,
+                  color: formData.role === "Farmer" ? "white" : null,
+                }}
               >
                 Farmer
               </button>
@@ -157,23 +171,23 @@ const Signup = () => {
             {submitting ? "Creating Account..." : "Create Account"}
           </button>
         </form>
-        <div className="social-divider">Or continue with</div>
+        <div className="social-divider">— Or continue with —</div>
         <div className="social-buttons">
-          <button
-            type="button"
-            className="social-button google-button"
-            onClick={() => signInWithProvider("google")}
-          >
-            <FcGoogle size={24} />
-            <span>Google</span>
-          </button>
           <button
             type="button"
             className="social-button facebook-button"
             onClick={() => signInWithProvider("facebook")}
           >
             <FaFacebook size={24} color="#1877F2" />
-            <span>Facebook</span>
+            <span className="social-icon">Facebook</span>
+          </button>
+          <button
+            type="button"
+            className="social-button google-button"
+            onClick={() => signInWithProvider("google")}
+          >
+            <FcGoogle size={24} />
+            <span className="social-icon">Google</span>
           </button>
         </div>
         <div className="auth-toggle">

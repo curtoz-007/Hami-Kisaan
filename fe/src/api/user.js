@@ -25,6 +25,36 @@ export async function getUserProfile(id) {
   return data || null;
 }
 
+export const uploadKYCFile = async (file) => {
+  try {
+    // Upload the KYC  to Supabase Storage
+    const uniqueFileName = `${Date.now()}_${file?.name || "file"}`;
+    const { data, error: uploadError } = await supabase.storage
+      .from("images")
+      .upload(`KYC/${uniqueFileName}`, file, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: file.type, // Important for images
+      });
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    // Get the public URL of the uploaded thumbnail
+    const { data: imageData, error: urlError } = supabase.storage
+      .from("images")
+      .getPublicUrl(data.path);
+
+    if (urlError) {
+      throw urlError;
+    }
+    return imageData.publicUrl;
+  } catch (error) {
+    console.log("Error uploading thumbnail file:", error);
+  }
+};
+
 export async function upsertUserProfile({
   id,
   fullName,

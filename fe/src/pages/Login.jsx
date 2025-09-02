@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { signInWithProvider, signInWithEmail } from "../api/auth";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 import "../styles/auth.style.css";
 
 const Login = () => {
@@ -40,7 +42,7 @@ const Login = () => {
           email: formData.email,
           password: formData.password,
         });
-        navigate("/auth/callback");
+        navigate("/dashboard");
       } catch (err) {
         setErrors({ root: err.message });
       } finally {
@@ -97,8 +99,8 @@ const Login = () => {
 
             <div className="social-buttons">
               <button type="button" className="social-button facebook-button">
-                <span className="social-icon">f</span>
-                Facebook
+                <FaFacebook size={24} color="#1877F2" />
+                <span className="social-icon">Facebook</span>
               </button>
 
               <button
@@ -106,8 +108,8 @@ const Login = () => {
                 className="social-button google-button"
                 onClick={() => signInWithProvider("google")}
               >
-                <span className="social-icon">G</span>
-                Google
+                <FcGoogle size={24} />
+                <span className="social-icon">Google</span>
               </button>
             </div>
           </div>

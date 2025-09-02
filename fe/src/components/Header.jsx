@@ -19,9 +19,9 @@ const Header = () => {
     navLinks = [
       { name: "Home", href: "/" },
       { name: "Dashboard", href: "/dashboard" },
-      { name: "Smart Agri-Toolkit", href: "/toolkit" },
       { name: "Explore", href: "/explore" },
-      { name: "About", href: "/about" },
+      { name: "Plant Clinic & Alerts", href: "/disease" },
+      { name: "Recommendations", href: "/recommend" },
     ];
   }
   const navigate = useNavigate();

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { uploadKYCFile } from "../api/user";
 import "../styles/auth.style.css";
 
 export default function CompleteProfileModal({
@@ -12,7 +13,14 @@ export default function CompleteProfileModal({
     phone: defaultValues?.phone || "",
     address: defaultValues?.address || "",
     facebook_profile_url: defaultValues?.facebook_profile_url || "",
+    kyc_image_url: defaultValues?.kyc_image_url || "",
   });
+  const [file, setFile] = useState(null);
+  const handleFileUpload = (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+    setFile(selectedFile);
+  };
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -23,6 +31,14 @@ export default function CompleteProfileModal({
     setError("");
     try {
       setSaving(true);
+
+      let imageUrl = "";
+      if (file) {
+        // Upload the file and get the URL
+        imageUrl = await uploadKYCFile(file);
+        console.log(imageUrl);
+      }
+      setForm((p) => ({ ...p, kyc_image_url: imageUrl || p.kyc_image_url }));
       await onSubmit?.(form);
       onClose?.();
     } catch (err) {
@@ -110,6 +126,10 @@ export default function CompleteProfileModal({
               }
               placeholder="City, District"
             />
+          </div>
+          <div className="form-group">
+            <label>Identity Confirmation(enter valid document)</label>
+            <input type="file" onChange={handleFileUpload} />
           </div>
           <div className="form-group">
             <label>Facebook profile URL</label>

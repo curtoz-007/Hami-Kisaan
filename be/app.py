@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File,  Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from Bestcrop import get_crop_recommendations_from_location,fetch_soil_ph,fetch_weather,fetch_rainfall,fetch_altitude
+from weatherforecast import analyze_forecast_for_alerts_async, LocationInput as WeatherLocationInput
 import pandas as pd
 from faster_whisper import WhisperModel
 import json
@@ -46,8 +47,6 @@ app.add_middleware(
 )
 
 
-from datetime import datetime, timezone
-from datetime import datetime, timezone
 
 def disease_detected(disease_name: str, latitude: float, longitude: float):
     """
@@ -219,7 +218,7 @@ async def disease_detection(
 
         print(disease_result)
 
-        disease_result = disease_result.replace("___", " ").replace("_", " ").replace("___"," ")
+        disease_result = disease_result.replace("_", " ").replace("___", " ").replace("__"," ")
 
         disease_detected(disease_result, lat, lon)
         return {"disease_detected": disease_result}
@@ -304,3 +303,16 @@ async def get_dashboard_data(latitude:float, longitude:float):
             "altitude": await fetch_altitude(latitude, longitude),
         },
     }
+
+
+@app.post("/weatherforecast")
+async def weather_forecast(input_data: WeatherLocationInput):
+    print(f"Received weather forecast request for lat: {input_data.latitude}, lon: {input_data.longitude}, days: {input_data.days}")
+    try:
+        alerts = await analyze_forecast_for_alerts_async(input_data.latitude, input_data.longitude, input_data.days)
+        print("Returning weather forecast alerts")
+        return {"alerts": alerts}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")

@@ -1,11 +1,13 @@
 import { useState, useRef } from 'react'
 import "../styles/DiseaseDetection.css";
 
-export default function Diseasedetection() {
+export default function DiseaseDetection() {
   const [selectedFile, setSelectedFile] = useState(null)
   const [preview, setPreview] = useState(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [isFetchingRecommendations, setIsFetchingRecommendations] = useState(false)
   const [result, setResult] = useState(null)
+  const [recommendations, setRecommendations] = useState(null)
   const [error, setError] = useState(null)
   const fileInputRef = useRef(null)
   const videoRef = useRef(null)
@@ -85,12 +87,40 @@ export default function Diseasedetection() {
     setError(null)
   }
 
+   const fetchRecommendations = async (disease) => {
+    setIsFetchingRecommendations(true)
+    setError(null)
+
+    try {
+      const response = await fetch('http://10.40.20.91:8000/disease_detection_detailed/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ disease_name: disease }),
+      })
+
+      if (response.ok) {
+        const content = await response.json()
+        setRecommendations(content)
+      } else {
+        throw new Error('Failed to fetch recommendations from disease detection API')
+      }
+    } catch (err) {
+      setError('Failed to fetch recommendations. Please try again.')
+      console.error('Disease Detection API Error:', err)
+    } finally {
+      setIsFetchingRecommendations(false)
+    }
+  }
+
   const analyzeImage = async () => {
     if (!selectedFile) return
 
     setIsAnalyzing(true)
     setError(null)
     setResult(null)
+    setRecommendations(null)
 
     try {
       if (!navigator.geolocation) {
@@ -106,7 +136,7 @@ export default function Diseasedetection() {
       const formData = new FormData()
       formData.append('image', selectedFile)
 
-      const url = new URL('http://localhost:8000/disease_detection')
+      const url = new URL('http://10.40.20.91:8000/disease_detection')
       url.searchParams.append('lat', latitude)
       url.searchParams.append('lon', longitude)
 
@@ -117,7 +147,13 @@ export default function Diseasedetection() {
 
       if (response.ok) {
         const data = await response.json()
+        console.log(data)
         setResult(data)
+        if (data.disease_detected) {
+          fetchRecommendations(data.disease_detected)
+        } else {
+          throw new Error('No disease detected in the response')
+        }
       } else {
         throw new Error('Failed to analyze image')
       }
@@ -133,6 +169,7 @@ export default function Diseasedetection() {
     setSelectedFile(null)
     setPreview(null)
     setResult(null)
+    setRecommendations(null)
     setError(null)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
@@ -149,10 +186,10 @@ export default function Diseasedetection() {
 
         <div className="disease-content">
           <div className="upload-section">
-            <div 
+            <div  
                  onDrop={handleDrop}
                  onDragOver={handleDragOver}
-                 className={selectedFile ? 'upload-area has-file' : 'upload-area'}>
+                 className={selectedFile ? 'upload-area +has-file' : 'upload-area'}>
               
               {!preview && !showCamera ? (
                 <div className="upload-placeholder">
@@ -251,43 +288,51 @@ export default function Diseasedetection() {
               <div className="result-card">
                 <div className="result-header">
                   <div className="disease-icon">
-                    {result.disease_detected.toLowerCase().includes('healthy') ? '✅' : '⚠️'}
+                    {result?.disease_detected?.toLowerCase()?.includes('healthy') ? '✅' : '⚠️'}
                   </div>
                   <div className="result-info">
                     <h3>
-                      {result.disease_detected.toLowerCase().includes('healthy') 
-                        ? 'Plant is Healthy' 
-                        : `Disease: ${result.disease_detected}`}
+                      {result?.disease_detected
+                        ? result.disease_detected.toLowerCase().includes('healthy')
+                          ? 'Plant is Healthy'
+                          : `Disease: ${result.disease_detected}`
+                        : 'Unknown Disease'}
                     </h3>
                   </div>
                 </div>
                 
                 <div className="result-details">
-                  <h4>Potential Harms</h4>
-                  <p>{result.Potential_Harms}</p>
+                  {isFetchingRecommendations ? (
+                    <div className="loading-recommendations">
+                      <span className="loading-spinner"></span>
+                      Getting Recommendations...
+                    </div>
+                  ) : recommendations ? (
+                    <>
+                      <h4>Potential Harms</h4>
+                      <p>{recommendations.Potential_Harms}</p>
 
-                  <h4>Solutions</h4>
-                  <p>{result.Solution}</p>
+                      <h4>Solutions</h4>
+                      <p>{recommendations.Solution}</p>
 
-                  <h4>Organic Solutions</h4>
-                  <p>{result.Organic_Solutions}</p>
+                      <h4>Organic Solutions</h4>
+                      <p>{recommendations.Organic_Solutions}</p>
 
-                  <h4>Fungicide Solutions</h4>
-                  <p>{result.Insecticide_Solutions}</p>
-
-                  <h4>Sources</h4>
-                  <ul className="sources-list">
-                    {result.Sources.map((source, index) => {
-                      const [name, url] = Object.entries(source)[0]
-                      return (
-                        <li key={index}>
-                          <a href={url} target="_blank" rel="noopener noreferrer" className="source-link">
-                            {name}
-                          </a>
-                        </li>
-                      )
-                    })}
-                  </ul>
+                      <h4>Sources</h4>
+                      <ul className="sources-list">
+                        {recommendations.Sources?.map((source, index) => {
+                          const [source_name, URL] = Object.entries(source)[0]
+                          return (
+                            <li key={index}>
+                              <a href={URL} target="_blank" rel="noopener noreferrer" className="source-link">
+                                {source_name}
+                              </a>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </>
+                  ) : null}
                 </div>
 
                 <div className="result-actions">

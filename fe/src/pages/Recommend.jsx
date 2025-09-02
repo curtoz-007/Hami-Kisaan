@@ -3,7 +3,7 @@ import "../styles/recommend.css";
 import imagesList from "../images/images.json";
 
 const Recommend = () => {
-  const [locationState, setLocationState] = useState("requesting"); // requesting, denied, fetching, success, error
+  const [locationState, setLocationState] = useState("requesting");
   const [crops, setCrops] = useState([]);
   const [userLocation, setUserLocation] = useState({ lat: null, lon: null });
   const [placeName, setPlaceName] = useState("");
@@ -12,20 +12,11 @@ const Recommend = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
   const [error, setError] = useState("");
+  const [visibleCrops, setVisibleCrops] = useState(8);
 
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Poush", "Magh", "Falgun", "chaitra", "Baishakh", "Jestha",
+    "Aasad", "Shrawan", "Bhadra", "Ashoj", "Kartik", "Mangshir"
   ];
 
   const currentMonth = monthNames[new Date().getUTCMonth()];
@@ -60,9 +51,7 @@ const Recommend = () => {
       },
       (error) => {
         setLocationState("denied");
-        setError(
-          "Location access denied. Please enable location permissions and refresh the page."
-        );
+        setError("Location access denied. Please enable location permissions and refresh the page.");
       },
       {
         enableHighAccuracy: true,
@@ -91,8 +80,8 @@ const Recommend = () => {
       );
       if (!response.ok) throw new Error("Failed to fetch location name");
       const data = await response.json();
-      const place = data.display_name || `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
-      setPlaceName(place);
+      const city = data.address.city || data.address.town || data.address.village || data.address.district || `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+      setPlaceName(city);
     } catch (err) {
       setPlaceName(`${lat.toFixed(4)}, ${lon.toFixed(4)}`);
     }
@@ -135,6 +124,10 @@ const Recommend = () => {
       return monthNames[startMonth - 1];
     }
     return `${monthNames[startMonth - 1]} - ${monthNames[endMonth - 1]}`;
+  };
+
+  const handleSeeMore = () => {
+    setVisibleCrops((prev) => prev + 8);
   };
 
   const renderLocationStatus = () => {
@@ -182,7 +175,7 @@ const Recommend = () => {
     return (
       <div className="recommend-container">
         <header className="recommend-header">
-          <h1>🌱 Hami Kisaan Crop Recommendations</h1>
+          <h1 className="text-3xl font-bold text-green-700">🌱 Hami Kisaan Crop Recommendations</h1>
         </header>
         {renderLocationStatus()}
       </div>
@@ -192,7 +185,7 @@ const Recommend = () => {
   return (
     <div className="recommend-container">
       <header className="recommend-header">
-        <h1>🌱 Hami Kissan Crop Recommendations</h1>
+        <h1 className="text-3xl font-bold text-green-700">🌱 Hami Kisaan Crop Recommendations</h1>
         <div className="location-info">
           <div className="info-item">
             <span className="info-label">📍 Location:</span>
@@ -210,7 +203,7 @@ const Recommend = () => {
       </header>
 
       <main className="crops-grid">
-        {crops.map((crop, index) => (
+        {crops.slice(0, visibleCrops).map((crop, index) => (
           <div
             key={index}
             className="crop-card"
@@ -232,20 +225,28 @@ const Recommend = () => {
                   e.target.src = "/api/placeholder/200/150";
                 }}
               />
-              <div className="score-badge">{crop.Score}%</div>
             </div>
             <div className="crop-info">
               <h3 className="crop-name">{crop.Crop}</h3>
+              <p className="suitability-score">Suitability: {crop.Score}%</p>
             </div>
           </div>
         ))}
       </main>
 
+      {visibleCrops < crops.length && (
+        <div className="see-more-container">
+          <button onClick={handleSeeMore} className="see-more-btn">
+            See More
+          </button>
+        </div>
+      )}
+
       {isModalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>{selectedCrop?.Crop}</h2>
+              <h2 className="text-2xl font-semibold text-green-700">{selectedCrop?.Crop}</h2>
               <button
                 className="close-btn"
                 onClick={closeModal}
@@ -268,7 +269,7 @@ const Recommend = () => {
               ) : cropDetails ? (
                 <div className="crop-details">
                   <div className="details-section">
-                    <h3>🌡️ Environmental Requirements</h3>
+                    <h3 className="section-title">🌡️ Environmental Requirements</h3>
                     <div className="details-grid">
                       <div className="detail-item">
                         <span className="detail-label">Temperature:</span>
@@ -309,7 +310,7 @@ const Recommend = () => {
                   </div>
 
                   <div className="details-section">
-                    <h3>📅 Planting & Harvesting</h3>
+                    <h3 className="section-title">📅 Planting & Harvesting</h3>
                     <div className="details-grid">
                       <div className="detail-item">
                         <span className="detail-label">Planting Period:</span>
@@ -333,7 +334,7 @@ const Recommend = () => {
                   </div>
 
                   <div className="details-section">
-                    <h3>🌿 Nutrient Requirements</h3>
+                    <h3 className="section-title">🌿 Nutrient Requirements</h3>
                     <div className="details-grid">
                       <div className="detail-item">
                         <span className="detail-label">Nitrogen (N):</span>
@@ -357,21 +358,15 @@ const Recommend = () => {
                   </div>
 
                   <div className="details-section">
-                    <h3>💧 Fertilizer Information</h3>
+                    <h3 className="section-title">💧 Fertilizer Information</h3>
                     <div className="fertilizer-info">
                       <div className="detail-item full-width">
-                        <span className="detail-label">
-                          Recommended Fertilizers:
-                        </span>
-                        <span className="detail-value">
-                          {cropDetails.Fertilizers}
-                        </span>
+                        <span className="detail-label">Recommended Fertilizers:</span>
+                        <span className="detail-value">{cropDetails.Fertilizers}</span>
                       </div>
                       <div className="detail-item full-width">
                         <span className="detail-label">Usage Period:</span>
-                        <span className="detail-value">
-                          {cropDetails.Usage_Period}
-                        </span>
+                        <span className="detail-value">{cropDetails.Usage_Period}</span>
                       </div>
                     </div>
                   </div>

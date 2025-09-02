@@ -12,7 +12,7 @@ const HeroSection = () => {
 
       <div className="content">
         <h1 className="hero-title">
-          Hami Kissan: Growing a Food-Secure Nepal.
+          Hami Kisaan: Growing a Food-Secure Nepal.
         </h1>
         <h2 className="hero-subtitle">
           Our AI platform helps you protect harvests from disease, get smart

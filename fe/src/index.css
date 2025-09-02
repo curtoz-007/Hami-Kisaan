@@ -172,3 +172,11 @@ button:hover {
 .fade-in-up {
   animation: fadeInUp 0.8s ease-out forwards;
 }
+/* 
+.icon-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+} */

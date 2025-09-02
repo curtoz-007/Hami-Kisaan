@@ -39,7 +39,7 @@ const Dashboard = () => {
 
         <div className="dashboard-content">
         <h1 className="dashboard-title">
-            <span className="gradient-text">Hami Kissan</span>
+            <span className="gradient-text">Hami Kisaan </span>
           </h1>
           
           <p className="dashboard-subtitle">
@@ -52,28 +52,43 @@ const Dashboard = () => {
 
           {/* Quick Actions */}
           <div className="quick-actions">
-            <Link to="../recommend" className="action-card card-crops">
+            <Link to="../recommend" className="action-card card-crops"
+            
+            >
               <div className="action-icon">🌱</div>
               <h3 className="action-title">Crop Advisor And Fertilizer Guide</h3>
               <p className="action-description">AI recommendations</p>
             </Link>
             
-            <Link to="/disease" className="action-card card-disease">
+            <Link to="/disease" className="action-card card-disease"
+            
+            >
               <div className="action-icon">🔬</div>
               <h3 className="action-title">Plant Doctor</h3>
               <p className="action-description">Disease detection</p>
             </Link>
             
-            <Link to="/weatheralerts" className="action-card card-weather">
+            <Link to="/weatheralerts" className="action-card card-weather"
+            
+            >
               <div className="action-icon">🌦️</div>
               <h3 className="action-title">Weather Hub</h3>
               <p className="action-description">Live Weather alerts</p>
             </Link>
             
-            <Link to="/alerts" className="action-card card-fertilizer">
+            <Link to="/alerts" className="action-card card-alert">
               <div className="action-icon">🛡️</div>
               <h3 className="action-title">Crop Protections</h3>
               <p className="action-description">Disease Alerts To Protect Your Crops</p>
+            </Link>
+
+
+
+
+            <Link to="/tutorial" className="action-card card-toturial">
+              <div className="action-icon">®️</div>
+              <h3 className="action-title">Guides for Crops</h3>
+              <p className="action-description">Tutorials/Advice on how to Grow Crops Effectively</p>
             </Link>
           </div>
 

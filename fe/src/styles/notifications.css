@@ -1,0 +1,67 @@
+.notifications-page {
+  animation: fadeIn 0.6s ease-in-out;
+  margin-top: 80px;
+}
+
+.container {
+  width: 70vw;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(30,86,49,0.08);
+  padding: 24px 20px;
+}
+
+.notifications-sections {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.notifications-section {
+  background: var(--light-background);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(30,86,49,0.04);
+}
+
+.notification-card {
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 1px 4px rgba(30,86,49,0.06);
+  border-left: 4px solid var(--light-green-accent);
+  transition: box-shadow 0.2s;
+}
+
+.alert-card {
+  border-left-color: var(--secondary-green);
+}
+
+.notice-card {
+  border-left-color: var(--yellow-accent);
+}
+
+.todo-card {
+  border-left-color: var(--primary-green);
+}
+
+.notification-time {
+  font-size: 0.9em;
+  color: var(--muted-gray-text);
+  margin-top: 4px;
+}
+
+.todo-card.done {
+  opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+  .notifications-sections {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .container {
+    padding: 24px;
+  } }

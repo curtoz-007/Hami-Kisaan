@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import { IoMdMic } from "react-icons/io";
 import "./App.css";
 import VoiceRoutingModal from "./components/VoiceRoutingModal";
+import Notifications from "./pages/Notifications";
 
 const App = () => {
   const location = useLocation();
@@ -42,7 +43,7 @@ const App = () => {
       >
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="explore" element={<Explore />} />
+          <Route path="/explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
           <Route path="/disease" element={<DiseaseDetection />} />
           <Route path="/recommend" element={<Recommend />} />
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="/alerts" element={<MapAlerts />} />
           <Route path="/weatheralerts" element={<WeatherAlerts />} />
           <Route path="/tutorial" element={<HamikissanTutorial />} />
+          <Route path="/notifications" element={<Notifications />} />
         </Routes>
       </div>
        <Footer />

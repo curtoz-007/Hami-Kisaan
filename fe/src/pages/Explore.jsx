@@ -73,7 +73,7 @@ const Explore = () => {
               </p>
             ) : (
               filteredCrops.map((p) => (
-                <div key={p.id} className="card" style={{ textAlign: "left" }}>
+                <div data-aos="fade-up" key={p.id} className="card" style={{ textAlign: "left" }}>
                   <div
                     style={{
                       width: "100%",

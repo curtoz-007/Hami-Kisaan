@@ -31,6 +31,7 @@ body {
 }
 
 .dashboard {
+  padding-top: 80px;
   min-height: 100vh;
   background-color: var(--color-background);
 }
@@ -563,13 +564,6 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.dashboard-badge,
-.dashboard-title,
-.dashboard-subtitle,
-.dashboard-description {
-  animation: fadeIn 0.8s ease-out forwards;
 }
 
 .dashboard-title {

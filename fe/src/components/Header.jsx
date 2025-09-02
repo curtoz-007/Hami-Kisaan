@@ -2,6 +2,9 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { signOut } from "../api/auth";
+import { FaSignOutAlt } from "react-icons/fa";
+import { MdOutlineExplore } from "react-icons/md";
+import { FaRegBell } from "react-icons/fa";
 import "../styles/header.css";
 
 const Header = () => {
@@ -17,10 +20,10 @@ const Header = () => {
 
   if (user) {
     navLinks = [
-      { name: "Home", href: "/" },
       { name: "Dashboard", href: "/dashboard" },
-      { name: "Explore", href: "/explore" },
-      { name: "Plant Clinic & Alerts", href: "/disease" },
+      { name: "Explore", href: "/explore", icon: <MdOutlineExplore /> },
+      { name: "Plant Clinic", href: "/disease" },
+      { name: "Alerts", href: "/alerts" },
       { name: "Recommendations", href: "/recommend" },
     ];
   }
@@ -33,6 +36,7 @@ const Header = () => {
       <nav className="nav">
         {navLinks.map((link) => (
           <Link key={link.name} to={link.href} className="nav-link">
+            {link.icon}
             {link.name}
           </Link>
         ))}
@@ -51,7 +55,7 @@ const Header = () => {
                 navigate("/");
               }}
             >
-              Sign out
+        Sign out <FaSignOutAlt />
             </button>
           </>
         ) : (
@@ -68,6 +72,9 @@ const Header = () => {
             >
               Sign Up
             </button>
+            <Link to="/notifications" className="icon-button" title="Notifications">
+              <FaRegBell />
+            </Link>
           </>
         )}
       </div>

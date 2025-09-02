@@ -13,11 +13,11 @@ import AuthCallback from "./pages/AuthCallback";
 import AgriToolkit from "./pages/AgriToolkit";
 import MapAlerts from "./pages/MapAlerts";
 import "./App.css";
+import Footer from "./components/Footer";
 
 const App = () => {
   const location = useLocation();
   const headerRef = useRef(null);
-  const [headerHeight, setHeaderHeight] = useState(0);
 
   useEffect(() => {
     if (headerRef.current) {
@@ -34,12 +34,12 @@ const App = () => {
     <div className="app-container">
       {location.pathname !== "/dashboard" && <Header ref={headerRef} />}
       <div
-        style={{
-          paddingTop: location.pathname === "/dashboard" ? "0px" : `${headerHeight}px`,
-        }}
+      // style={{
+      //   paddingTop: location.pathname === "/dashboard" ? "0px" : "72px",
+      // }}
       >
         <Routes>
-          <Route path="/" element={<Home headerHeight={headerHeight} />} />
+          <Route path="/" element={<Home />} />
           <Route path="explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
           <Route path="/disease" element={<DiseaseDetection />} />
@@ -52,6 +52,7 @@ const App = () => {
           <Route path="/alerts" element={<MapAlerts />} />
         </Routes>
       </div>
+      {location.pathname !== "/dashboard" && <Footer />}
     </div>
   );
 };

@@ -52,6 +52,7 @@ export default function AuthCallback() {
       phone: values.phone,
       address: values.address,
       facebook_profile_url: values.facebook_profile_url,
+      kyc_image_url: values.kyc_image_url,
     });
     navigate("/dashboard", { replace: true });
   };

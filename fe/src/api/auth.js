@@ -13,14 +13,19 @@ export async function signUpWithEmail({ email, password, fullName, role }) {
 }
 
 export async function signInWithEmail({ email, password }) {
+  console.log(email, password);
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
     options: {
-      redirectTo: `${window.location.origin}/auth/callback`,
+      // redirectTo: `${window.location.origin}/auth/callback`,
+      redirectTo: `${window.location.origin}/dashboard`,
     },
   });
-  if (error) throw error;
+  if (error) {
+    console.log("Error logging in:", error);
+    throw error;
+  }
   return data;
 }
 

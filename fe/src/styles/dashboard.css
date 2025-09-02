@@ -137,7 +137,7 @@
 .btn {
   padding: 10px 20px;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 0.6;
   text-decoration: none;
   text-align: center;
 }
@@ -235,12 +235,12 @@
   font-weight: 500;
 }
 
-.dashboard-row{
+.dashboard-row {
   display: flex;
   align-items: center;
 }
 
-.dashboard-row > *{
+.dashboard-row > * {
   height: 100%;
 }
 .dashboard-header {

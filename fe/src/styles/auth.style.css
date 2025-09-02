@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   background: url("../assets/auth-bg.jpeg") no-repeat center center fixed;
+  padding-top: 80px;
 }
 
 .auth-container {
@@ -101,7 +102,7 @@
 
 .social-divider {
   text-align: center;
-  margin-bottom: 20px;
+  margin-block: 20px;
   position: relative;
 }
 
@@ -123,7 +124,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 35px;
   padding: 12px;
   border: 1px solid var(--green-background);
   border-radius: 20px;

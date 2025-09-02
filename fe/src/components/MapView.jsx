@@ -40,8 +40,16 @@ const MapView = () => {
       if (!user) return;
       try {
         const pos = await fetchUserLocation(user.id);
-
-        setPosition([pos.latitude, pos.longitude]);
+        if (
+          pos &&
+          typeof pos.latitude === "number" &&
+          typeof pos.longitude === "number"
+        ) {
+          setPosition([pos.latitude, pos.longitude]);
+        } else {
+          // fallback to Kathmandu if not available
+          setPosition([27.5761, 84.43]);
+        }
       } catch (error) {
         console.error("Error fetching user location:", error);
       }

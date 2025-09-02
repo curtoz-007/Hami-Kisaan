@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/heroSection.css";
+// import heroImageUrl from "../assets/hero-image3.jpg";
+// import heroImageUrl from "../assets/hero-image2.png";
 import heroImageUrl from "../assets/hero-image.png";
 
 const HeroSection = () => {
@@ -23,8 +25,8 @@ const HeroSection = () => {
             <p>AI Powered Recommendations</p>
           </Link>
           <Link to="/disease" className="hero-btn">
-            🦠 Smart Agri-Toolkit
-            <p>Complete suite of smart tools</p>
+            🦠 Plant Clinic & Alerts
+            <p>Detect diseases and notify others too</p>
           </Link>
         </div>
       </div>

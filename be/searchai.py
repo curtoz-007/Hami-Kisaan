@@ -7,7 +7,6 @@ load_dotenv()
 
 def grounded_search(prompt: str) -> str:
     
-    # Perform an online search
     
    
     api_key = os.getenv("GEMINI_API_KEY")
@@ -18,24 +17,19 @@ def grounded_search(prompt: str) -> str:
     except Exception as e:
         return f"❌ Failed to create client: {e}"
 
-    # Define grounding tool
     grounding_tool = types.Tool(google_search=types.GoogleSearch())
 
-    # Configure generation
     config = types.GenerateContentConfig(tools=[grounding_tool])
 
     try:
-        # Generate content with grounding
         response = client.models.generate_content(
             model="gemini-2.0-flash-exp",
             contents=prompt,
             config=config,
         )
 
-        # Extract response text
         output = response.text.strip()
 
-        # Extract sources if available
         sources = []
         if hasattr(response, 'candidates') and response.candidates:
             candidate = response.candidates[0]
@@ -53,7 +47,7 @@ def grounded_search(prompt: str) -> str:
         return f"❌ Error making request: {e}"
 
 
-# # Example usage
+# # how to use
 # if __name__ == "__main__":
 #     queries = [
 #         "Who won the Euro 2024?",

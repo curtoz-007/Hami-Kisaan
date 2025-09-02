@@ -257,6 +257,20 @@
   line-height: 1.5;
 }
 
+.loading-recommendations {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #4b5563;
+  margin: 20px 0;
+}
+
+.loading-recommendations .loading-spinner {
+  border: 2px solid #4b5563;
+  border-top: 2px solid transparent;
+}
+
 .sources-list {
   list-style-type: disc;
   padding-left: 20px;

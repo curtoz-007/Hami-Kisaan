@@ -12,6 +12,8 @@ import Recommend from "./pages/Recommend";
 import AuthCallback from "./pages/AuthCallback";
 import AgriToolkit from "./pages/AgriToolkit";
 import MapAlerts from "./pages/MapAlerts";
+import WeatherAlerts from "./pages/WeatherAlerts";
+import HamikissanTutorial from "./pages/HamikissanTutorial";
 import "./App.css";
 
 const App = () => {
@@ -50,6 +52,8 @@ const App = () => {
           <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/alerts" element={<MapAlerts />} />
+          <Route path="/weatheralerts" element={<WeatherAlerts />} />
+          <Route path="/hamikissantutorial" element={<HamikissanTutorial />} />
         </Routes>
       </div>
     </div>

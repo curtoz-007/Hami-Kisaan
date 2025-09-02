@@ -17,6 +17,7 @@ from PIL import Image
 from io import BytesIO
 import traceback
 import asyncio
+from pydantic import BaseModel
 
 
 SUPABASE_URL: str = os.getenv("SUPABASE_URL")
@@ -28,6 +29,9 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 model = WhisperModel("medium", device="cpu", compute_type="int8", cpu_threads=os.cpu_count())
 
 print("Model loaded ready to transcribe")
+
+class DiseaseRequest(BaseModel):
+    disease_name: str
 
 
 app = FastAPI()
@@ -227,8 +231,8 @@ async def disease_detection(
 # disease detection detailed info by gemini
 
 @app.post("/disease_detection_detailed/")
-async def disease_detection_detailed(
-    disease_name: str ):
+async def disease_detection_detailed(request: DiseaseRequest):
+    disease_name = request.disease_name
     try:
         print(f"Disease detected: {disease_name}")
 
@@ -245,18 +249,21 @@ async def disease_detection_detailed(
         solution = grounded_search(search_prompt)
 
         new_solution = msg(
-            f"""{solution}
+             f"""{solution}
 Make it simpler and return the output strictly in JSON format, without extra words or explanations.
-The expected JSON format should be short and structured compulsary as below:
+The expected JSON format should be as short as possible (Only give the important output) and structured compulsary as below. You Must Give the links compulsary:
 
 {{
     "Potential_Harms": "Description of potential harms",
     "Solution": "Recommended solution for the disease",
     "Organic_Solutions": "Organic solutions for the disease",
-    "Sources": [{"source_name": "URL"}, {"source_name": "URL"}]
+    "Sources": [{{"source_name": "URL"}}, {{"source_name": "URL"}}, {{"source_name": "URL"}}]
+    "Give only three sources maximum with there respective URL like above style"
 }}
 """
-        )
+)
+
+
 
         # Extract JSON from AI output
         json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)

@@ -10,9 +10,9 @@ import Dashboard from "./pages/Dashboard";
 import DiseaseDetection from "./pages/DiseaseDetection";
 import Recommend from "./pages/Recommend";
 import AuthCallback from "./pages/AuthCallback";
-import "./App.css";
 import AgriToolkit from "./pages/AgriToolkit";
-import WeatherAlerts from "./pages/WeatherAlerts";
+import MapAlerts from "./pages/MapAlerts";
+import "./App.css";
 
 const App = () => {
   const location = useLocation();
@@ -49,8 +49,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/weatherAlerts" element={<WeatherAlerts />} />
-          
+          <Route path="/alerts" element={<MapAlerts />} />
         </Routes>
       </div>
     </div>

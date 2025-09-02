@@ -1,72 +1,174 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Lato:wght@400;700&display=swap');
-
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
-  --primary-green: #2E7D32;
-  --secondary-green: #4CAF50;
-  --accent-yellow: #FFC107;
-  --light-gray: #f4f4f4;
-  --dark-gray: #333;
-  --white: #fff;
-
-  --font-family-serif: 'Merriweather', serif;
-  --font-family-sans-serif: 'Lato', sans-serif;
+  --primary-green: #1e5631;
+  --secondary-green: #4caf50;
+  --yellow-accent: #f4c430;
+  --light-green-accent: #a8d5ba;
+  --light-background: #faf6f0;
+  --green-background: #2d4739;
+  --green-text: #1f3a24;
+  --muted-gray-text: #4a4a4a;
+  --white-text: #ffffff;
+  --soil-brown: #35160a;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Poppins, "sans-serif";
+}
+a {
+  text-decoration: none;
 }
 
+body,
+html,
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
 html {
   scroll-behavior: smooth;
 }
-
-body {
-  font-family: var(--font-family-sans-serif);
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--dark-gray);
-  background-color: var(--light-gray);
+.flex {
+  display: flex;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-a {
-  text-decoration: none;
-  color: var(--primary-green);
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family-serif);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1rem;
+.font-bold {
+  font-weight: bold;
 }
-
-h1 { font-size: 3rem; }
-h2 { font-size: 2.5rem; }
-h3 { font-size: 2rem; }
-
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
+.font-light {
+  font-weight: 300;
 }
-
-.btn {
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  border-radius: 5px;
-  background-color: var(--accent-yellow);
-  color: var(--dark-gray);
-  font-weight: 700;
+.uppercase {
   text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: background-color 0.3s ease;
+}
+.capitalize {
+  text-transform: capitalize;
 }
 
-.btn:hover {
-  background-color: #ffca2c;
+.rounded-sm {
+  border-radius: 4px;
+}
+.rounded-md {
+  border-radius: 8px;
+}
+.rounded-lg {
+  border-radius: 16px;
+}
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.border {
+  border: 1px solid #e2e8f0;
+}
+.border-none {
+  border: none;
+}
+
+.shadow-dark-sm {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.shadow-dark-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.shadow--dark-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+.shadow-light-sm {
+  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.05);
+}
+.shadow-light-md {
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+.shadow-light-lg {
+  box-shadow: 0 10px 15px rgba(255, 255, 255, 0.15);
+}
+
+button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-scale {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
 }

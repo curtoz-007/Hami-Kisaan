@@ -1,0 +1,49 @@
+{
+  "base_url": "http://<your-server-domain-or-ip>",
+  "endpoints": [
+    {
+      "path": "/",
+      "method": "GET",
+      "description": "Root endpoint for testing. Returns a simple Hello World response."
+    },
+    {
+      "path": "/Crop_recommendation",
+      "method": "GET",
+      "query_params": ["lat", "lon"],
+      "description": "Fetch crop recommendations based on latitude and longitude."
+    },
+    {
+      "path": "/transcribe",
+      "method": "POST",
+      "body": "UploadFile (audio)",
+      "description": "Uploads an audio file and returns extracted crop information in JSON."
+    },
+    {
+      "path": "/Crop_info",
+      "method": "GET",
+      "query_params": ["name"],
+      "description": "Fetch information about a specific crop."
+    },
+    {
+      "path": "/disease_detection/",
+      "method": "POST",
+      "query_params": ["lat", "lon"],
+      "body": "UploadFile (image)",
+      "description": "Upload a plant image to detect disease and store detection info."
+    },
+    {
+      "path": "/disease_detection_detailed/",
+      "method": "POST",
+      "body": {
+        "disease_name": "string"
+      },
+      "description": "Returns detailed disease info, potential harms, solutions, and sources."
+    },
+    {
+      "path": "/dashboard/data/",
+      "method": "GET",
+      "query_params": ["latitude", "longitude"],
+      "description": "Fetches weather, rainfall, soil pH, and altitude data for a given location."
+    }
+  ]
+}

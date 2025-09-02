@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/heroSection.css";
+import heroImageUrl from "../assets/hero-image.png";
 
-const HeroSection = ({ headerHeight }) => {
+const HeroSection = () => {
   return (
-    <div className="hero-section" style={{ paddingTop: `${headerHeight}px` }}>
-      <div className="container">
+    <div className="hero-section">
+      <img className="hero-image" src={heroImageUrl} />
+
+      <div className="content">
         <h1 className="hero-title">
           Hami Kissan: Growing a Food-Secure Nepal.
         </h1>
@@ -16,10 +19,12 @@ const HeroSection = ({ headerHeight }) => {
         </h2>
         <div className="cta-btns">
           <Link to="/recommend" className="hero-btn">
-            Discover Your Crops
+            🌱 Discover Your Crops
+            <p>AI Powered Recommendations</p>
           </Link>
           <Link to="/disease" className="hero-btn">
-            Smart Agri-Toolkit
+            🦠 Smart Agri-Toolkit
+            <p>Complete suite of smart tools</p>
           </Link>
         </div>
       </div>

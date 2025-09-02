@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -15,21 +15,30 @@ import AgriToolkit from "./pages/AgriToolkit";
 
 const App = () => {
   const location = useLocation();
+  const headerRef = useRef(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  useEffect(() => {
+    if (headerRef.current) {
+      setHeaderHeight(headerRef.current.offsetHeight);
+    }
+  }, [location.pathname]);
+
   // Scroll to top on route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
   return (
     <div className="app-container">
-      {location.pathname !== "/dashboard" && <Header />}
+      {location.pathname !== "/dashboard" && <Header ref={headerRef} />}
       <div
         style={{
-          marginTop: location.pathname === "/dashboard" ? "0px" : "72px",
+          paddingTop: location.pathname === "/dashboard" ? "0px" : `${headerHeight}px`,
         }}
       >
-        {/*to offset fixed header height*/}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home headerHeight={headerHeight} />} />
           <Route path="explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
           <Route path="/disease" element={<DiseaseDetection />} />

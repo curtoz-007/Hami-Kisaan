@@ -61,4 +61,4 @@ def grounded_search(prompt: str) -> str:
 #         print(grounded_search(q))
 #         print("="*50)
 
-print(grounded_search("Where is Lumbini ICT college located?"))
+# print(grounded_search("Where is Lumbini ICT college located?"))

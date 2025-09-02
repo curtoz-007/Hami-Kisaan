@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/auth.css";
+import "../styles/auth.style.css";
 
 export default function CompleteProfileModal({
   open,

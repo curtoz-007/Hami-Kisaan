@@ -1,11 +1,11 @@
 import React from "react";
 import HeroSection from "../components/HeroSection";
 
-const Home = () => {
+const Home = ({ headerHeight }) => {
   return (
     <>
-      <HeroSection />
-      home
+      <HeroSection headerHeight={headerHeight} />
+      <div className="container"></div>
     </>
   );
 };

@@ -1,257 +1,205 @@
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import CreateListingModal from "../components/CreateListingModal";
-import { useAuth } from "../context/AuthContext";
-import { signOut } from "../api/auth";
-import { updateUserLocation } from "../api/user";
-import { useGeoLocation } from "../api/useGeoLocation";
-import "../styles/dashboard.css";
+import { Link } from 'react-router-dom';
+import '../styles/dashboard.css';
 
-const DashboardHeader = ({ dashboardData, location }) => {
-  if (location.error) {
-    return <div>Error: {location.error}</div>;
-  }
-
-  if (!location.loaded || !dashboardData) {
-    return <div>Loading weather data...</div>;
-  }
-
-  const { weather } = dashboardData;
-
+const Dashboard = () => {
   return (
-    <header className="dashboard-header">
-      <div className="detail-item">
-        <span className="detail-label">📍 Location</span>
-        <span className="detail-value">
-          {location.coordinates.lat.toFixed(2)},{" "}
-          {location.coordinates.lng.toFixed(2)}
-        </span>
+    <div className="dashboard">
+      {/* Navigation */}
+      <nav className="navbar">
+        <div className="nav-container">
+          <div className="nav-content">
+            <div className="nav-brand">                                                                                           
+              <div className="brand-icon">
+                <span className="brand-emoji">🌾</span>
+              </div>
+              <span className="brand-text">Dashboard</span>
+            </div>
+            <div className="nav-links">
+              <Link to="../recommend" className="nav-link">Crops</Link>
+              <Link to="../explore" className="nav-link">Marketplace</Link>
+              <Link to="../alerts" className="nav-link">Weather</Link>
+              <Link to="../disease" className="nav-link">Plant Clinic</Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Dashboard Main Section */}
+      <div className="dashboard-main-section">
+        {/* Background Pattern */}
+        <div className="dashboard-background"></div>
+        
+        {/* Animated Background Elements */}
+        <div className="floating-elements">
+          <div className="floating-circle circle-1"></div>
+          <div className="floating-circle circle-2"></div>
+          <div className="floating-circle circle-3"></div>
+          <div className="floating-circle circle-4"></div>
+        </div>
+
+        <div className="dashboard-content">
+        <h1 className="dashboard-title">
+            <span className="gradient-text">Hami Kissan</span>
+          </h1>
+          
+          <p className="dashboard-subtitle">
+            AI-Powered Agriculture Solutions
+          </p>
+          
+          <p className="dashboard-description">
+            Transform your farming with intelligent crop recommendations, disease detection, and real-time weather insights.
+          </p>
+
+          {/* Quick Actions */}
+          <div className="quick-actions">
+            <Link to="../recommend" className="action-card card-crops">
+              <div className="action-icon">🌱</div>
+              <h3 className="action-title">Crop Advisor And Fertilizer Guide</h3>
+              <p className="action-description">AI recommendations</p>
+            </Link>
+            
+            <Link to="/disease" className="action-card card-disease">
+              <div className="action-icon">🔬</div>
+              <h3 className="action-title">Plant Doctor</h3>
+              <p className="action-description">Disease detection</p>
+            </Link>
+            
+            <Link to="/weatheralerts" className="action-card card-weather">
+              <div className="action-icon">🌦️</div>
+              <h3 className="action-title">Weather Hub</h3>
+              <p className="action-description">Live Weather alerts</p>
+            </Link>
+            
+            <Link to="/alerts" className="action-card card-fertilizer">
+              <div className="action-icon">🛡️</div>
+              <h3 className="action-title">Crop Protections</h3>
+              <p className="action-description">Disease Alerts To Protect Your Crops</p>
+            </Link>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="stats-grid">
+            <div className="stat-item">
+              <div className="stat-number">120+</div>
+              <div className="stat-label">Crop Types</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-number">AI</div>
+              <div className="stat-label">Powered</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-number">24/7</div>
+              <div className="stat-label">Monitoring</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-number">Free</div>
+              <div className="stat-label">Platform</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="detail-item">
-        <span className="detail-label">⛰️ Elevation</span>
-        <span className="detail-value">{weather.altitude?.toFixed(2)} m</span>
+
+      {/* Dashboard Features */}
+      <div className="features-section">
+        <div className="features-container">
+          <div className="section-header">
+            <h2 className="section-title">
+              Complete Farming Dashboard
+            </h2>
+            <p className="section-description">
+              Everything you need to make informed agricultural decisions in one place
+            </p>
+          </div>
+          
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon analytics-icon">
+                <span>📊</span>
+              </div>
+              <h3 className="feature-title">Smart Analytics</h3>
+              <p className="feature-description">
+                Real-time data analysis and insights for optimal farming decisions based on weather, soil, and market conditions.
+              </p>
+              <div className="feature-link">
+                <span>Learn more</span>
+                <span className="arrow">→</span>
+              </div>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon precision-icon">
+                <span>🎯</span>
+              </div>
+              <h3 className="feature-title">Precision Farming</h3>
+              <p className="feature-description">
+                Get precise recommendations for seeds, fertilizers, and farming techniques tailored to your specific location.
+              </p>
+              <div className="feature-link">
+                <span>Explore features</span>
+                <span className="arrow">→</span>
+              </div>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon protection-icon">
+                <span>🛡️</span>
+              </div>
+              <h3 className="feature-title">Crop Protection</h3>
+              <p className="feature-description">
+                Early disease detection, pest monitoring, and weather alerts to protect your crops from potential threats.
+              </p>
+              <div className="feature-link">
+                <span>Stay protected</span>
+                <span className="arrow">→</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="detail-item">
-        <span className="detail-label">🧪 Soil pH</span>
-        <span className="detail-value">{weather.soil_ph?.toFixed(2)}</span>
+
+      {/* How It Works */}
+      <div className="steps-section">
+        <div className="steps-container">
+          <div className="section-header">
+            <h2 className="section-title">Simple. Smart. Effective.</h2>
+            <p className="section-description">Get started in just three easy steps</p>
+          </div>
+          
+          <div className="steps-grid">
+            <div className="step-item">
+              <div className="step-number step-1">
+                <span>1</span>
+              </div>
+              <h3 className="step-title">Input Your Data</h3>
+              <p className="step-description">
+                Share your location, soil type, and farming preferences to get personalized recommendations.
+              </p>
+            </div>
+            
+            <div className="step-item">
+              <div className="step-number step-2">
+                <span>2</span>
+              </div>
+              <h3 className="step-title">AI Analysis</h3>
+              <p className="step-description">
+                Our advanced AI processes weather patterns, soil data, and market trends for optimal results.
+              </p>
+            </div>
+            
+            <div className="step-item">
+              <div className="step-number step-3">
+                <span>3</span>
+              </div>
+              <h3 className="step-title">Take Action</h3>
+              <p className="step-description">
+                Implement smart recommendations and monitor your crops with real-time alerts and guidance.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="detail-item">
-        <span className="detail-label">🌧️ Rainfall</span>
-        <span className="detail-value">{weather.rainfall?.toFixed(2)} mm</span>
-      </div>
-      <div className="detail-item">
-        <span className="detail-label">🌤️ Weather</span>
-        <span className="detail-value">
-          {weather.temperature?.main?.temp?.toFixed(2)}°C
-        </span>
-      </div>
-    </header>
+    </div>
   );
 };
 
-export default function Dashboard() {
-  const { user } = useAuth();
-  const [showModal, setShowModal] = useState(false);
-  const userId = user?.id;
-  const location = useGeoLocation();
-  const [dashboardData, setDashboardData] = useState(null);
-
-  useEffect(() => {
-    if (
-      user &&
-      location.loaded &&
-      !location.error &&
-      location.coordinates.lat &&
-      location.coordinates.lng
-    ) {
-      // Update user profile with location
-      updateUserLocation(
-        user.id,
-        location.coordinates.lat,
-        location.coordinates.lng
-      ).catch((err) => {
-        console.error("Failed to update user location:", err);
-      });
-    }
-  }, [user, location]);
-  // useEffect(() => {
-  //   const fetchDashboardData = async () => {
-  //     if (location.loaded && !location.error) {
-  //       try {
-  //         const response = await fetch(
-  //           `http://127.0.0.1:8000/dashboard/data/?latitude=${location.coordinates.lat}&longitude=${location.coordinates.lng}`
-  //         );
-  //         if (!response.ok) {
-  //           throw new Error("Network response was not ok");
-  //         }
-  //         const data = await response.json();
-  //         setDashboardData(data);
-  //       } catch (error) {
-  //         console.error("Error fetching dashboard data:", error);
-  //       }
-  //     }
-  //   };
-
-  //   fetchDashboardData();
-  // }, [location]);
-
-  const handleSignOut = async () => {
-    await signOut();
-    window.location.href = "/";
-  };
-
-  const specialists = [
-    { id: 1, name: "Dr. Aarav Sharma", role: "Pathologist" },
-    { id: 2, name: "Rina Gupta", role: "Entomologist" },
-    { id: 3, name: "Sunil Verma", role: "Agronomist" },
-  ];
-
-  return (
-    <>
-      <div className="dashboard-container">
-        <aside className="sidebar">
-          <div className="sidebar-header">
-            <strong className="brand-title">Hami Kissan</strong>
-          </div>
-          <nav className="sidebar-nav">
-            <Link className="sidebar-link" to="/">
-              <span className="icon">🏠</span> Home
-            </Link>
-            <Link className="sidebar-link" to="/explore">
-              <span className="icon">🌾</span> Crops Listings
-            </Link>
-            <Link className="sidebar-link" to="/disease">
-              <span className="icon">🧪</span> Plant Clinic
-            </Link>
-
-            <a className="sidebar-link" href="#">
-              <span className="icon">📰</span> News & Policies
-            </a>
-          </nav>
-          <div className="sidebar-footer">
-            <a className="sidebar-link" href="#">
-              <span className="icon">👤</span> About Me
-            </a>
-            <button className="btn-logout" onClick={handleSignOut}>
-              Log Out
-            </button>
-          </div>
-        </aside>
-
-        <main className="main-content">
-          <header className="main-header">
-            <div>
-              <h1 className="welcome-title">
-                Welcome back
-                {user ? `, ${user.user_metadata?.full_name || user.email}` : ""}
-              </h1>
-              <p className="welcome-subtitle">Your farming hub at a glance.</p>
-            </div>
-            <div className="profile-icon">
-              <span>🌾</span>
-            </div>
-          </header>
-
-          <DashboardHeader dashboardData={dashboardData} location={location} />
-
-          <section className="content-grid">
-            <div className="grid-col-span-2">
-              <div className="panel">
-                <h3 className="panel-title">🌱 List your crops</h3>
-
-                <p>
-                  Publish products to the marketplace and reach nearby buyers.
-                </p>
-                <div className="panel-actions">
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => setShowModal(true)}
-                  >
-                    Create Listing
-                  </button>
-                  <Link to="/explore" className="btn btn-secondary">
-                    View Marketplace
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <div className="dashboard-row">
-            <div className="panel dashboard-col">
-              <h4 className="panel-title">Your latest listings</h4>
-              <div className="listings-grid">
-                {[
-                  { id: 1, name: "Fresh Tomatoes", price: 45, unit: "per kg" },
-                  { id: 2, name: "Cauliflower", price: 60, unit: "per kg" },
-                  {
-                    id: 3,
-                    name: "Organic Potatoes",
-                    price: 30,
-                    unit: "per kg",
-                  },
-                  { id: 4, name: "Spinach", price: 25, unit: "per bundle" },
-                ].map((item) => (
-                  <div key={item.id} className="listing-item">
-                    <div className="item-name">{item.name}</div>
-                    <div className="item-price">
-                      Rs {item.price} {item.unit}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="panel feature-card dashboard-col">
-              <h4 className="panel-title">🧪 Plant Clinic</h4>
-              <p>Diagnose crop issues using images and symptoms.</p>
-              <div className="image-preview">
-                <span>Upload image for diagnosis</span>
-              </div>
-              <Link to="/disease" className="btn btn-tertiary">
-                Open Clinic
-              </Link>
-              <div className="specialists-list">
-                <h5>Plant Specialists</h5>
-                <ul>
-                  {specialists.map((specialist) => (
-                    <li key={specialist.id}>
-                      <span>
-                        {specialist.name} - {specialist.role}
-                      </span>
-                      <button className="btn-contact">Contact</button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </main>
-
-        <aside className="right-sidebar">
-          <div className="panel full-height-panel">
-            <h3 className="panel-title">🔔 Notifications</h3>
-            <div className="notification-list">
-              {[
-                "Your seed order has been shipped.",
-                "Rain expected in 2 days for your area.",
-                "Market price for tomatoes up 6% this week.",
-              ].map((n, i) => (
-                <div key={i} className="notification-item">
-                  {n}
-                </div>
-              ))}
-            </div>
-          </div>
-        </aside>
-      </div>
-
-      <CreateListingModal
-        open={showModal}
-        onClose={() => setShowModal(false)}
-        userId={userId}
-        onCreated={() => alert("Listing created!")}
-      />
-    </>
-  );
-}
+export default Dashboard;

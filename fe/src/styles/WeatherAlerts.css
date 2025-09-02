@@ -7,7 +7,7 @@
 
 /* Header Styles */
 .weather-header {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+  background: var(--primary-green);
   color: white;
   padding: 2rem 1rem;
 }

@@ -75,7 +75,7 @@ const WeatherAlerts = () => {
     try {
       if (showToast) setLoading(true);
      
-      const response = await fetch('http:/10.40.20.91:8000/weatherforecast', {
+      const response = await fetch('http://10.40.20.91:8000/weatherforecast', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -343,10 +343,10 @@ const WeatherAlerts = () => {
 
           {/* Quick Links */}
           <div className="quick-links">
-            <Link to="/crop-recommendation" className="quick-link btn-earth">
+            <Link to="/recommend" className="quick-link btn-earth">
               🌱 View Crop Recommendations
             </Link>
-            <Link to="/plant-disease-detection" className="quick-link btn-farm">
+            <Link to="/diseasedetector" className="quick-link btn-farm">
               🦠 Plant Disease Scanner
             </Link>
           </div>

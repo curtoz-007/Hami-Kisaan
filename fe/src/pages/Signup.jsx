@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { signInWithProvider, signUpWithEmail } from "../api/auth";
 import { createUserProfile } from "../api/user";
-import "../styles/auth.css";
+import "../styles/auth.style.css";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -57,8 +59,6 @@ const Signup = () => {
     if (Object.keys(newErrors).length === 0) {
       try {
         setSubmitting(true);
-        console.log(submitting);
-        console.log("formdata to submit", formData);
         const { user } = await signUpWithEmail({
           email: formData.email,
           password: formData.password,
@@ -91,7 +91,7 @@ const Signup = () => {
           <h1 className="auth-title">Join Hami Kissan</h1>
           <p className="auth-subtitle">Start your farming journey with us...</p>
         </div>
-
+        {errors.root && <p className="error-text">{errors.root}</p>}
         <form className="auth-form" onSubmit={(e) => handleSubmit(e)}>
           <div className="form-group">
             <input
@@ -134,46 +134,18 @@ const Signup = () => {
             )}
           </div>
 
-          <div className="form-group" style={{ marginTop: 4 }}>
-            <div className="social-divider">
-              <span>— Join as a —</span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                gap: 8,
-                justifyContent: "space-around",
-              }}
-            >
+          <div className="form-group">
+            <div className="role-selector">
               <button
                 type="button"
-                className="social-button" //for same css
-                style={{
-                  background:
-                    formData.role === "Consumer"
-                      ? "var(--secondary-green)"
-                      : undefined,
-                  color:
-                    formData.role === "Consumer"
-                      ? "white"
-                      : "var(--muted-gray)",
-                }}
+                className={`role-option ${formData.role === "Consumer" ? "selected" : ""}`}
                 onClick={() => setFormData((p) => ({ ...p, role: "Consumer" }))}
               >
                 Consumer
               </button>
-
               <button
                 type="button"
-                className="social-button" //for same css
-                style={{
-                  background:
-                    formData.role === "Farmer"
-                      ? "var(--secondary-green)"
-                      : undefined,
-                  color:
-                    formData.role === "Farmer" ? "white" : "var(--muted-gray)",
-                }}
+                className={`role-option ${formData.role === "Farmer" ? "selected" : ""}`}
                 onClick={() => setFormData((p) => ({ ...p, role: "Farmer" }))}
               >
                 Farmer
@@ -182,31 +154,28 @@ const Signup = () => {
           </div>
 
           <button type="submit" className="login-button" disabled={submitting}>
-            {submitting ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}
+            {submitting ? "Creating Account..." : "Create Account"}
           </button>
-
-          <div className="social-login">
-            <div className="social-divider">
-              <span>— Or Sign Up With —</span>
-            </div>
-
-            <div className="social-buttons">
-              <button type="button" className="social-button facebook-button">
-                <span className="social-icon">f</span>
-                Facebook
-              </button>
-
-              <button
-                type="button"
-                className="social-button google-button"
-                onClick={() => signInWithProvider("google")}
-              >
-                <span className="social-icon">G</span>
-                Google
-              </button>
-            </div>
-          </div>
         </form>
+        <div className="social-divider">Or continue with</div>
+        <div className="social-buttons">
+          <button
+            type="button"
+            className="social-button google-button"
+            onClick={() => signInWithProvider("google")}
+          >
+            <FcGoogle size={24} />
+            <span>Google</span>
+          </button>
+          <button
+            type="button"
+            className="social-button facebook-button"
+            onClick={() => signInWithProvider("facebook")}
+          >
+            <FaFacebook size={24} color="#1877F2" />
+            <span>Facebook</span>
+          </button>
+        </div>
         <div className="auth-toggle">
           <p>
             Already have an account?{" "}
@@ -221,32 +190,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-/*
-  return (
-    <div className="auth-page">
-      <div className="auth-background" />
-      <div className="auth-overlay" />
-
-      <div className="auth-container">
-        <div className="auth-header">
-          <h1 className="auth-title">Kishan Mart</h1>
-          <p className="auth-subtitle">Join the farming community</p>
-        </div>
-
-        <div className="auth-form-container">
-          
-
-          <div className="auth-toggle">
-            <p>
-              Already have an account?{" "}
-              <Link to="/login" className="auth-toggle-btn">
-                Login
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-*/

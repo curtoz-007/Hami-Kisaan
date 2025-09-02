@@ -17,6 +17,7 @@ from PIL import Image
 from io import BytesIO
 import traceback
 import asyncio
+from pydantic import BaseModel
 
 
 SUPABASE_URL: str = os.getenv("SUPABASE_URL")
@@ -28,6 +29,9 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 model = WhisperModel("medium", device="cpu", compute_type="int8", cpu_threads=os.cpu_count())
 
 print("Model loaded ready to transcribe")
+
+class DiseaseRequest(BaseModel):
+    disease_name: str
 
 
 app = FastAPI()
@@ -42,24 +46,33 @@ app.add_middleware(
 )
 
 
+from datetime import datetime, timezone
+from datetime import datetime, timezone
 
-def disease_detected(disease_name: str, latitude: float, lon: float):
+def disease_detected(disease_name: str, latitude: float, longitude: float):
+    """
+    Insert the detected disease into Supabase.
+    """
     try:
+        print("Notifying related farmers...")
 
-        print("Notifying related farmers")
+        # Data to insert
         data = {
             "disease_name": disease_name,
             "latitude": latitude,
-            "longitude": lon,
+            "longitude": longitude,
+            # "detected_at": datetime.now(timezone.utc).isoformat()
         }
-        response = supabase.table("disease_detected").insert(data).execute()
-        return response
+
+        # Insert record into Supabase
+        insert_response = supabase.table("disease_detected").insert(data).execute()
+        print("Inserted:", insert_response)
+
+        return insert_response
+
     except Exception as e:
         print("Error inserting into Supabase:", e)
         return None
-
-
-
 
 
 @app.get("/")
@@ -67,9 +80,9 @@ def read_root():
     return {"Hello": "World"}
 
 @app.get("/Crop_recommendation")
-def crop_recommendation(lat: float, lon: float):
+async def crop_recommendation(lat: float, lon: float):
     # Get recommendations (returns a pandas DataFrame)
-    recommendations = asyncio.run(get_crop_recommendations_from_location(lat, lon))
+    recommendations =  await get_crop_recommendations_from_location(lat, lon)
 
 
     if not isinstance(recommendations, pd.DataFrame):
@@ -182,12 +195,13 @@ def crop_info(name):
     return recommendations.to_dict(orient="records")
 
 
+# Disease Detection with AI our own
+
 @app.post("/disease_detection/")
 async def disease_detection(
     image: UploadFile = File(...),
-    latitude: float = Query(...),
-    lon: float = Query(...),
-    
+    lat: float = Query(...),
+    lon: float = Query(...)
 ):
     print("Received request for disease detection")
 
@@ -198,44 +212,81 @@ async def disease_detection(
         # Convert bytes to PIL Image
         image_pil = Image.open(BytesIO(image_bytes))
 
+        
+
         # Predict disease (synchronous function)
         disease_result = predict_plant_disease_from_image(image_pil)
-        print(f"Disease detected: {disease_result}")
 
-        # Async AI call to get disease solution
+        print(disease_result)
+
+        disease_result = disease_result.replace("___", " ").replace("_", " ").replace("___"," ")
+
+        disease_detected(disease_result, lat, lon)
+        return {"disease_detected": disease_result}
+
+    except:
+        raise HTTPException(status_code=500, detail="Error processing image")
+      
+      
+# disease detection detailed info by gemini
+
+@app.post("/disease_detection_detailed/")
+async def disease_detection_detailed(request: DiseaseRequest):
+    disease_name = request.disease_name
+    try:
+        print(f"Disease detected: {disease_name}")
+
+        # Prepare AI search prompt
         search_prompt = (
-            f"{disease_result} This is the disease of the plant detected from the image. "
-         
-   "Search for the disease and give the solution for it. For general farmers. "
+            f"{disease_name} This is the disease of the plant detected from the image. "
+            "Search for the disease and give the solution for it. For general farmers. "
             "Use sources especially from trusted sites. "
-            "Make your output as simple as possible and as short as possible. "
+            "Make your output as simple and short as possible. "
             "Include Disease Name, Disease Solution, and Sources."
-            "Search for the respective Potential Harm and mention how much impact could it make to farm"
-            
         )
+
+        # Call AI (assuming synchronous; if async, add await)
         solution = grounded_search(search_prompt)
 
         new_solution = msg(
-    f"""{solution}
+             f"""{solution}
 Make it simpler and return the output strictly in JSON format, without extra words or explanations.
-The expected JSON format should be:
+The expected JSON format should be as short as possible (Only give the important output) and structured compulsary as below. You Must Give the links compulsary:
 
 {{
-    "disease_detected": "Name of the disease detected",
     "Potential_Harms": "Description of potential harms",
-    "Sources": "Source(s)"
+    "Solution": "Recommended solution for the disease",
+    "Organic_Solutions": "Organic solutions for the disease",
+    "Sources": [{{"source_name": "URL"}}, {{"source_name": "URL"}}, {{"source_name": "URL"}}]
+    "Give only three sources maximum with there respective URL like above style"
 }}
-""")
+"""
+)
+
+
+
+        # Extract JSON from AI output
+        json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
+        if not json_match:
+            raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
+
+        data = json.loads(json_match.group(0))
+
+
+        print(data)
+        return data  # Return as actual JSON
+
+        # Extract JSON from AI output
         json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
         if not json_match:
             raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
 
         data = json.loads(json_match.group(0))
         
-        disease_detected(disease_result, latitude, lon)
-    
+        # Log or store disease detection (assuming synchronous)
         
-        return {"result": solution}
+
+        return data  # Return as actual JSON
 
     except Exception as e:
         traceback.print_exc()

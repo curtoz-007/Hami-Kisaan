@@ -190,6 +190,9 @@ def crop_info(name):
     # Convert to list of dicts for JSON response
     return recommendations.to_dict(orient="records")
 
+
+# Disease Detection with AI our own
+
 @app.post("/disease_detection/")
 async def disease_detection(
     image: UploadFile = File(...),
@@ -205,36 +208,66 @@ async def disease_detection(
         # Convert bytes to PIL Image
         image_pil = Image.open(BytesIO(image_bytes))
 
+        
+
         # Predict disease (synchronous function)
         disease_result = predict_plant_disease_from_image(image_pil)
-        print(f"Disease detected: {disease_result}")
 
-        # Async AI call to get disease solution
+        print(disease_result)
+
+        disease_result = disease_result.replace("___", " ").replace("_", " ").replace("___"," ")
+
+        disease_detected(disease_result, lat, lon)
+        return {"disease_detected": disease_result}
+
+    except:
+        raise HTTPException(status_code=500, detail="Error processing image")
+      
+      
+# disease detection detailed info by gemini
+
+@app.post("/disease_detection_detailed/")
+async def disease_detection_detailed(
+    disease_name: str ):
+    try:
+        print(f"Disease detected: {disease_name}")
+
+        # Prepare AI search prompt
         search_prompt = (
-            f"{disease_result} This is the disease of the plant detected from the image. "
+            f"{disease_name} This is the disease of the plant detected from the image. "
             "Search for the disease and give the solution for it. For general farmers. "
             "Use sources especially from trusted sites. "
             "Make your output as simple and short as possible. "
-            "Include Disease Name, Disease Solution, and Sources.")
+            "Include Disease Name, Disease Solution, and Sources."
+        )
 
+        # Call AI (assuming synchronous; if async, add await)
         solution = grounded_search(search_prompt)
 
         new_solution = msg(
-    f"""{solution}
+            f"""{solution}
 Make it simpler and return the output strictly in JSON format, without extra words or explanations.
-The expected JSON format should be short and structured:
+The expected JSON format should be short and structured compulsary as below:
 
 {{
-    "disease_detected": "Name of the disease detected",
     "Potential_Harms": "Description of potential harms",
     "Solution": "Recommended solution for the disease",
     "Organic_Solutions": "Organic solutions for the disease",
-    "Insecticide_Solutions": "Insecticide solutions for the disease",
-    "Sources": [{{"source_name": "URL"}}, {{"source_name": "URL"}}]
+    "Sources": [{"source_name": "URL"}, {"source_name": "URL"}]
 }}
 """
-)
+        )
 
+        # Extract JSON from AI output
+        json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
+        if not json_match:
+            raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
+
+        data = json.loads(json_match.group(0))
+
+
+        print(data)
+        return data  # Return as actual JSON
 
         # Extract JSON from AI output
         json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
@@ -244,9 +277,7 @@ The expected JSON format should be short and structured:
         data = json.loads(json_match.group(0))
         
         # Log or store disease detection (assuming synchronous)
-        disease_detected(disease_result, lat, lon)
-
-        print(data)
+        
 
         return data  # Return as actual JSON
 

@@ -153,10 +153,12 @@ Look for:
 Return ONLY the JSON object. No explanations, no markdown, no extra text.
 """
 
+        # Call AI and get output
         message = msg(prompt)
         print("Raw AI output:", message)  # Debug print
 
 
+        # Extract JSON from AI string
         json_match = re.search(r"\{.*\}", message, re.DOTALL)
         if not json_match:
             raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
@@ -164,9 +166,11 @@ Return ONLY the JSON object. No explanations, no markdown, no extra text.
         data = json.loads(json_match.group(0))
 
 
+        # Return as proper JSON
         return JSONResponse(content=data)
 
     except Exception as e:
+        # Cleanup temp file if exists
         if 'file_path' in locals() and os.path.exists(file_path):
             os.remove(file_path)
         raise HTTPException(status_code=500, detail=str(e))
@@ -176,6 +180,7 @@ Return ONLY the JSON object. No explanations, no markdown, no extra text.
 
 @app.get("/Crop_info")
 def crop_info(name):
+    # Get recommendations (returns a pandas DataFrame)
     
     recommendations = get_crop_info(name)
     
@@ -186,77 +191,11 @@ def crop_info(name):
     
     recommendations = recommendations.astype(object).where(pd.notnull(recommendations), None)
     
+    # Convert to list of dicts for JSON response
     return recommendations.to_dict(orient="records")
 
-<<<<<<< HEAD
-# @app.post("/disease_detection/")
-# async def disease_detection(
-#     image: UploadFile = File(...),
-#     lat: float = Query(...),
-#     lon: float = Query(...)
-# ):
-#     print("Received request for disease detection")
-
-#     try:
-#         # Read uploaded file asynchronously
-#         image_bytes = await image.read()
-
-#         # Convert bytes to PIL Image
-#         image_pil = Image.open(BytesIO(image_bytes))
-
-#         # Predict disease (synchronous function)
-#         disease_result = predict_plant_disease_from_image(image_pil)
-#         print(f"Disease detected: {disease_result}")
-
-#         # Async AI call to get disease solution
-#         search_prompt = (
-#             f"{disease_result} This is the disease of the plant detected from the image. "
-#             "Search for the disease and give the solution for it. For general farmers. "
-#             "Use sources especially from trusted sites. "
-#             "Make your output as simple and short as possible. "
-#             "Include Disease Name, Disease Solution, and Sources.")
-
-#         solution = grounded_search(search_prompt)
-
-#         new_solution = msg(
-#     f"""{solution}
-# Make it simpler and return the output strictly in JSON format, without extra words or explanations.
-# The expected JSON format should be short and structured:
-
-# {{
-#     "disease_detected": "Name of the disease detected",
-#     "Potential_Harms": "Description of potential harms",
-#     "Solution": "Recommended solution for the disease",
-#     "Organic_Solutions": "Organic solutions for the disease",
-#     "Insecticide_Solutions": "Insecticide solutions for the disease",
-#     "Sources": [{{"source_name": "URL"}}, {{"source_name": "URL"}}]
-# }}
-# """
-# )
-
-
-#         # Extract JSON from AI output
-#         json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
-#         if not json_match:
-#             raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
-
-#         data = json.loads(json_match.group(0))
-        
-#         # Log or store disease detection (assuming synchronous)
-#         disease_detected(disease_result, lat, lon)
-
-#         print(data)
-
-#         return data  # Return as actual JSON
-
-#     except Exception as e:
-#         traceback.print_exc()
-#         raise HTTPException(status_code=500, detail=str(e))
-
-=======
 
 # Disease Detection with AI our own
->>>>>>> d1958b4f410fdab8bdc9eb35ab806f6efa205884
 
 @app.post("/disease_detection/")
 async def disease_detection(
@@ -267,26 +206,20 @@ async def disease_detection(
     print("Received request for disease detection")
 
     try:
+        # Read uploaded file asynchronously
         image_bytes = await image.read()
 
+        # Convert bytes to PIL Image
         image_pil = Image.open(BytesIO(image_bytes))
 
-<<<<<<< HEAD
-=======
         
 
         # Predict disease (synchronous function)
->>>>>>> d1958b4f410fdab8bdc9eb35ab806f6efa205884
         disease_result = predict_plant_disease_from_image(image_pil)
 
-<<<<<<< HEAD
-        disease_detected(disease_result, lat, lon)
-
-        return {"disease_detected": disease_result} 
-=======
         print(disease_result)
 
-        disease_result = disease_result.replace("___", " ").replace("_", " ").replace("___"," ")
+        disease_result = disease_result.replace("_", " ").replace("", " ").replace("__"," ")
 
         disease_detected(disease_result, lat, lon)
         return {"disease_detected": disease_result}
@@ -354,12 +287,10 @@ The expected JSON format should be as short as possible (Only give the important
         
 
         return data  # Return as actual JSON
->>>>>>> d1958b4f410fdab8bdc9eb35ab806f6efa205884
 
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
-
     
 
 @app.get("/dashboard/data/")

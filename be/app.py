@@ -38,13 +38,16 @@ class DiseaseRequest(BaseModel):
 app = FastAPI()
 
 # Add CORS middleware
+from fastapi.middleware.cors import CORSMiddleware
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000", "http://localhost:5173"],  # Add your frontend URLs
+    allow_origins=["*"],  # allow all domains
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 
@@ -366,6 +369,7 @@ Possible pages and their routes/functions:
 6) Alerts: "/alerts", function = disease alerts on a map
 7) Explore: "/explore", function = explore, buy or sell crops in the marketplace
 8) Tutorial: "/tutorial", function = tutorial for farmers
+9) Notification: "/notifications", function = Provides Notifications For Farmers about their field, government policies
 
 Return **ONLY a valid JSON object** in the following format:
 

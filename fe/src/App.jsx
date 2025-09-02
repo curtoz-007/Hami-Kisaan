@@ -18,7 +18,6 @@ import VoiceRoutingModal from "./components/VoiceRoutingModal";
 import NotFound from "./pages/NotFound";
 import { IoMdMic } from "react-icons/io";
 import "./App.css";
-import VoiceRoutingModal from "./components/VoiceRoutingModal";
 import Notifications from "./pages/Notifications";
 
 const App = () => {

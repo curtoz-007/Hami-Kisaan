@@ -24,42 +24,10 @@ body{
   <body onload="translatePage('ne')">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init();
-    // Initialize the hidden Google Translate element
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement(
-        { pageLanguage: 'en' }, // Original language
-        'google_translate_element'
-      );
-      if (window.__pendingLang) {
-        setTimeout(() => translatePage(window.__pendingLang), 0);
-      }
-    }
-
-    // Translate on demand by setting the hidden select and firing change
-    function translatePage(lang) {
-      var selectField = document.querySelector('select.goog-te-combo');
-      if (selectField) {
-        if (selectField.value === lang) return;
-        selectField.value = lang;
-        var event = document.createEvent('HTMLEvents');
-        event.initEvent('change', true, true);
-        selectField.dispatchEvent(event);
-      } else {
-        window.__pendingLang = lang;
-        var tries = 0;
-        var interval = setInterval(function () {
-          var sel = document.querySelector('select.goog-te-combo');
-          if (sel || tries++ > 20) {
-            clearInterval(interval);
-            if (sel) translatePage(window.__pendingLang);
-          }
-        }, 200);
-      }
-    }
-    translatePage('ne');
+    
+  
   </script>
 </html>

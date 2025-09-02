@@ -82,8 +82,9 @@ const VoiceRoutingModal = ({ opened, setOpened }) => {
     try {
       setUploading(true);
       const formData = new FormData();
-      formData.append("file", audioBlob, `routing-                                              ${Date.now()}.webm`);
-      const res = await fetch("http://localhost:8000/transcribe", {
+      formData.append("file", audioBlob, `routing-${Date.now()}.webm`);
+      console.log("Uploading audio for routing...", formData);
+      const res = await fetch("http://localhost:8000/transcribe/Findpage", {
         method: "POST",
         body: formData,
       });
@@ -93,18 +94,13 @@ const VoiceRoutingModal = ({ opened, setOpened }) => {
         return;
       }
       const result = await res.json();
+      console.log("Transcription result:", result);
+      navigate(result.page);
       setTranscript(result.transcription || "");
-      // Example: route based on transcript
-      if (result.transcription) {
-        const text = result.transcription.toLowerCase();
-        if (text.includes("dashboard")) navigate("/dashboard");
-        else if (text.includes("explore")) navigate("/explore");
-        else if (text.includes("about")) navigate("/about");
-        // Add more routes as needed
-      }
     } catch (err) {
       setError(err.message || "Upload failed");
     } finally {
+      setOpened(false)
       setUploading(false);
     }
   };
@@ -116,6 +112,7 @@ const VoiceRoutingModal = ({ opened, setOpened }) => {
       <div className="modal-content" style={{ maxWidth: 400 }}>
         <h2>Voice Routing</h2>
         <p>Record your command and we'll route you!</p>
+        {uploading && <div>Please wait while we process your request. It may take a moment...</div>}
         {error && <div style={{ color: "red" }}>{error}</div>}
         <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
           {!isRecording && !audioBlob && (

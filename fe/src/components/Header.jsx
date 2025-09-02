@@ -25,6 +25,7 @@ const Header = () => {
       { name: "Plant Clinic", href: "/disease" },
       { name: "Alerts", href: "/alerts" },
       { name: "Recommendations", href: "/recommend" },
+      { name: "Tutorials", href: "/tutorial" },
     ];
   }
   const navigate = useNavigate();

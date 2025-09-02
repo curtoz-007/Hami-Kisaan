@@ -106,7 +106,7 @@ export default function Diseasedetection() {
       const formData = new FormData()
       formData.append('image', selectedFile)
 
-      const url = new URL('http://localhost:8000/disease_detection')
+      const url = new URL('http://10.40.20.91:8000/disease_detection')
       url.searchParams.append('lat', latitude)
       url.searchParams.append('lon', longitude)
 

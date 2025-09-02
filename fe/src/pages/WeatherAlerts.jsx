@@ -75,7 +75,7 @@ const WeatherAlerts = () => {
     try {
       if (showToast) setLoading(true);
      
-      const response = await fetch('http://10.40.21.98:8000/weatherforecast', {
+      const response = await fetch('http:/10.40.20.91:8000/weatherforecast', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -92,7 +92,6 @@ const WeatherAlerts = () => {
 
       const data = await response.json();
      
-      // Filter out "No significant weather threats detected" alerts
       const filteredAlerts = (data.alerts || []).filter(alert =>
         !alert.toLowerCase().includes('no significant weather threat')
       );
@@ -101,7 +100,6 @@ const WeatherAlerts = () => {
       setLastUpdate(new Date());
     } catch (error) {
       console.error('Weather alerts error:', error);
-      // Show positive message instead of error for API failures
       setAlerts([]);
       setLastUpdate(new Date());
     } finally {

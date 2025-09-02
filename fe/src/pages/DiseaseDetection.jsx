@@ -1,221 +1,221 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import "../styles/DiseaseDetection.css";
 
 export default function DiseaseDetection() {
   const location = useLocation();
-  const [selectedFile, setSelectedFile] = useState(null)
-  const [preview, setPreview] = useState(null)
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [isFetchingRecommendations, setIsFetchingRecommendations] = useState(false)
-  const [isLoadingDiseaseDetail, setIsLoadingDiseaseDetail] = useState(false)
-  const [result, setResult] = useState(null)
-  const [recommendations, setRecommendations] = useState(null)
-  const [error, setError] = useState(null)
-  const fileInputRef = useRef(null)
-  const videoRef = useRef(null)
-  const canvasRef = useRef(null)
-  const [showCamera, setShowCamera] = useState(false)
-  const lastFetchedDisease = useRef(null)
-  const hasFetched = useRef(false)
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isFetchingRecommendations, setIsFetchingRecommendations] = useState(false);
+  const [isLoadingDiseaseDetail, setIsLoadingDiseaseDetail] = useState(false);
+  const [result, setResult] = useState(null);
+  const [recommendations, setRecommendations] = useState(null);
+  const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [showCamera, setShowCamera] = useState(false);
+  const lastFetchedDisease = useRef(null);
+  const hasFetched = useRef(false);
 
   const handleFileSelect = (e) => {
-    const file = e.target.files[0]
+    const file = e.target.files[0];
     if (file) {
       if (file.type.startsWith('image/')) {
-        setSelectedFile(file)
-        setError(null)
-        const reader = new FileReader()
-        reader.onload = (e) => setPreview(e.target.result)
-        reader.readAsDataURL(file)
+        setSelectedFile(file);
+        setError(null);
+        const reader = new FileReader();
+        reader.onload = (e) => setPreview(e.target.result);
+        reader.readAsDataURL(file);
       } else {
-        setError('Please select a valid image file (JPEG, PNG, etc.)')
-        setSelectedFile(null)
-        setPreview(null)
+        setError('Please select a valid image file (JPEG, PNG, etc.)');
+        setSelectedFile(null);
+        setPreview(null);
       }
     }
-  }
+  };
 
   const handleDrop = (e) => {
-    e.preventDefault()
-    const file = e.dataTransfer.files[0]
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) {
-      setSelectedFile(file)
-      setError(null)
-      const reader = new FileReader()
-      reader.onload = (e) => setPreview(e.target.result)
-      reader.readAsDataURL(file)
+      setSelectedFile(file);
+      setError(null);
+      const reader = new FileReader();
+      reader.onload = (e) => setPreview(e.target.result);
+      reader.readAsDataURL(file);
     }
-  }
+  };
 
   const handleDragOver = (e) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       if (videoRef.current) {
-        videoRef.current.srcObject = stream
-        setShowCamera(true)
-        setError(null)
+        videoRef.current.srcObject = stream;
+        setShowCamera(true);
+        setError(null);
       }
     } catch (err) {
-      setError('Failed to access camera. Please ensure camera access is allowed.')
-      console.error('Camera error:', err)
+      setError('Failed to access camera. Please ensure camera access is allowed.');
+      console.error('Camera error:', err);
     }
-  }
+  };
 
   const capturePhoto = () => {
-    if (!videoRef.current || !canvasRef.current) return
+    if (!videoRef.current || !canvasRef.current) return;
 
-    const canvas = canvasRef.current
-    const video = videoRef.current
-    canvas.width = video.videoWidth
-    canvas.height = video.videoHeight
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
     canvas.toBlob((blob) => {
-      const file = new File([blob], 'captured-photo.jpg', { type: 'image/jpeg' })
-      setSelectedFile(file)
-      setPreview(canvas.toDataURL('image/jpeg'))
-      setShowCamera(false)
-      video.srcObject.getTracks().forEach(track => track.stop())
-    }, 'image/jpeg')
-  }
+      const file = new File([blob], 'captured-photo.jpg', { type: 'image/jpeg' });
+      setSelectedFile(file);
+      setPreview(canvas.toDataURL('image/jpeg'));
+      setShowCamera(false);
+      video.srcObject.getTracks().forEach(track => track.stop());
+    }, 'image/jpeg');
+  };
 
   const closeCamera = () => {
     if (videoRef.current && videoRef.current.srcObject) {
-      videoRef.current.srcObject.getTracks().forEach(track => track.stop())
+      videoRef.current.srcObject.getTracks().forEach(track => track.stop());
     }
-    setShowCamera(false)
-    setError(null)
-  }
+    setShowCamera(false);
+    setError(null);
+  };
 
   const fetchRecommendations = useCallback(async (disease) => {
-    if (lastFetchedDisease.current === disease) return recommendations
+    if (lastFetchedDisease.current === disease || hasFetched.current) return;
 
-    setIsFetchingRecommendations(true)
-    setError(null)
+    setIsFetchingRecommendations(true);
+    setError(null);
 
     try {
-      const response = await fetch('http://10.40.20.91:8000/disease_detection_detailed/', {
+      const response = await fetch('http://10.40.20.192:8000/disease_detection_detailed/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ disease_name: disease }),
-      })
+      });
 
       if (response.ok) {
-        const content = await response.json()
-        console.log('API Response:', content)
-        setRecommendations(content)
-        lastFetchedDisease.current = disease
-        return content
+        const content = await response.json();
+        setRecommendations(content);
+        lastFetchedDisease.current = disease;
+        hasFetched.current = true;
+        return content;
       } else {
-        throw new Error('Failed to fetch recommendations from disease detection API')
+        throw new Error('Failed to fetch recommendations from disease detection API');
       }
     } catch (err) {
-      setError('Failed to fetch recommendations. Please try again.')
-      console.error('Disease Detection API Error:', err)
-      return null
+      setError('Failed to fetch recommendations. Please try again.');
+      console.error('Disease Detection API Error:', err);
+      return null;
     } finally {
-      setIsFetchingRecommendations(false)
+      setIsFetchingRecommendations(false);
     }
-  }, [recommendations])
+  }, []);
 
   const analyzeImage = async () => {
-    if (!selectedFile) return
+    if (!selectedFile) return;
 
-    setIsAnalyzing(true)
-    setError(null)
-    setResult(null)
-    setRecommendations(null)
-    lastFetchedDisease.current = null
+    setIsAnalyzing(true);
+    setError(null);
+    setResult(null);
+    setRecommendations(null);
+    lastFetchedDisease.current = null;
+    hasFetched.current = false;
 
     try {
       if (!navigator.geolocation) {
-        throw new Error('Geolocation is not supported by this browser')
+        throw new Error('Geolocation is not supported by this browser');
       }
 
       const position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject)
-      })
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
 
-      const { latitude, longitude } = position.coords
+      const { latitude, longitude } = position.coords;
+      console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+      const formData = new FormData();
+      formData.append('image', selectedFile);
 
-      const formData = new FormData()
-      formData.append('image', selectedFile)
-
-      const url = new URL('http://10.40.20.91:8000/disease_detection')
-      url.searchParams.append('lat', latitude)
-      url.searchParams.append('lon', longitude)
+      const url = new URL('http://10.40.20.192:8000/disease_detection');
+      url.searchParams.append('lat', latitude);
+      url.searchParams.append('lon', longitude);
 
       const response = await fetch(url, {
         method: 'POST',
         body: formData,
-      })
+      });
 
       if (response.ok) {
-        const data = await response.json()
-        console.log(data)
-        setResult(data)
+        const data = await response.json();
+        console.log(data);
+        setResult(data);
         if (data.disease_detected) {
-          fetchRecommendations(data.disease_detected)
+          await fetchRecommendations(data.disease_detected);
         } else {
-          throw new Error('No disease detected in the response')
+          throw new Error('No disease detected in the response');
         }
       } else {
-        throw new Error('Failed to analyze image')
+        throw new Error('Failed to analyze image');
       }
     } catch (err) {
-      setError('Failed to analyze image or get location. Please try again.')
-      console.error('Error:', err)
+      setError('Failed to analyze image or get location. Please try again.');
+      console.error('Error:', err);
     } finally {
-      setIsAnalyzing(false)
+      setIsAnalyzing(false);
     }
-  }
+  };
 
   const resetForm = () => {
-    setSelectedFile(null)
-    setPreview(null)
-    setResult(null)
-    setRecommendations(null)
-    setError(null)
-    lastFetchedDisease.current = null
+    setSelectedFile(null);
+    setPreview(null);
+    setResult(null);
+    setRecommendations(null);
+    setError(null);
+    lastFetchedDisease.current = null;
+    hasFetched.current = false;
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''
+      fileInputRef.current.value = '';
     }
-  }
+  };
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const diseaseName = params.get("name")
+    const params = new URLSearchParams(location.search);
+    const diseaseName = params.get("name")?.trim().toLowerCase();
 
     const fetchDiseaseDetail = async () => {
       if (diseaseName && !hasFetched.current) {
-        hasFetched.current = true
-        setIsLoadingDiseaseDetail(true)
-        console.log("Fetching for disease name:", diseaseName)
-        const result = await fetchRecommendations(diseaseName)
-        console.log("Fetched disease details:", result)
-        setIsLoadingDiseaseDetail(false)
+        setIsLoadingDiseaseDetail(true);
+        console.log("Fetching for disease name:", diseaseName);
+        const result = await fetchRecommendations(diseaseName);
+        console.log("Fetched disease details:", result);
+        setIsLoadingDiseaseDetail(false);
       }
-    }
+    };
 
-    fetchDiseaseDetail()
+    fetchDiseaseDetail();
 
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach(track => track.stop())
-        videoRef.current.srcObject = null
+        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+        videoRef.current.srcObject = null;
       }
-      hasFetched.current = false
-    }
-  }, [location.search, fetchRecommendations])
+    };
+  }, [location.search]);
 
-  const hasQuery = !!new URLSearchParams(location.search).get("name")
+  const hasQuery = !!new URLSearchParams(location.search).get("name");
 
   return (
     <div className="disease-page">
@@ -373,14 +373,14 @@ export default function DiseaseDetection() {
                       <h4>Sources</h4>
                       <ul className="sources-list">
                         {recommendations.Sources?.map((source, index) => {
-                          const [source_name, URL] = Object.entries(source)[0]
+                          const [source_name, URL] = Object.entries(source)[0];
                           return (
                             <li key={index}>
                               <a href={URL} target="_blank" rel="noopener noreferrer" className="source-link">
                                 {source_name}
                               </a>
                             </li>
-                          )
+                          );
                         })}
                       </ul>
                     </>
@@ -428,5 +428,5 @@ export default function DiseaseDetection() {
       </div>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
     </div>
-  )
+  );
 }

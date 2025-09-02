@@ -233,7 +233,7 @@ async def disease_detection(
 async def disease_detection_detailed(request: DiseaseRequest):
     disease_name = request.disease_name
     try:
-        print(f"Disease detected: {disease_name}")
+        print(f"Request for detail of  {disease_name}")
 
         # Prepare AI search prompt
         search_prompt = (
@@ -241,8 +241,21 @@ async def disease_detection_detailed(request: DiseaseRequest):
             "Search for the disease and give the solution for it. For general farmers. "
             "Use sources especially from trusted sites. "
             "Make your output as simple and short as possible. "
-            "Include Disease Name, Disease Solution, and Sources."
+            "Include the following JSON structure:\n\n"
+            "{\n"
+            '  "Disease_Name": "Name of the disease",\n'
+            '  "Potential_Harms": "Description of potential harms",\n'
+            '  "Solution": "Recommended solution for the disease",\n'
+            '  "Organic_Solutions": "Organic solutions for the disease",\n'
+            '  "Sources": [\n'
+            '    {"Source Name": "Source 1", "Source URL": "https://..."},\n'
+            '    {"Source Name": "Source 2", "Source URL": "https://..."},\n'
+            '    {"Source Name": "Source 3", "Source URL": "https://..."}\n'
+            '  ]\n'
+            "}\n\n"
         )
+
+
 
         # Call AI (assuming synchronous; if async, add await)
         solution = grounded_search(search_prompt)
@@ -271,7 +284,7 @@ The expected JSON format should be as short as possible (Only give the important
 
         data = json.loads(json_match.group(0))
 
-
+        print("Extracted JSON data:")
         print(data)
         return data  # Return as actual JSON
 
@@ -318,11 +331,11 @@ async def weather_forecast(input_data: WeatherLocationInput):
         raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
 
 
+# Navigate page
+
 @app.post("/transcribe/Findpage")
 async def upload_audio(file: UploadFile = File(...)):
-
     print("Received request for transcription")
-
     try:
         # Save uploaded file temporarily
         file_path = f"./temp_{file.filename}"

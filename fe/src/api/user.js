@@ -16,11 +16,12 @@ export async function createUserProfile({ id, fullName, email, role }) {
 export async function getUserProfile(id) {
   const { data, error } = await supabase
     .from(TABLE)
-    .select("id, full_name, email, role, phone, address, facebook_profile_url")
+    .select(
+      "id, full_name, email, role, phone, address, facebook_profile_url, latitude, longitude"
+    )
     .eq("id", id)
     .single();
   if (error && error.code !== "PGRST116") throw error; // 116 = No rows
-  console.log("data by getUserProfile", data);
   return data || null;
 }
 

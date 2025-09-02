@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File,  Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from Bestcrop import get_crop_recommendations_from_location,fetch_soil_ph,fetch_weather,fetch_rainfall,fetch_altitude
+from weatheralert import analyze_forecast_for_alerts, LocationInput as WeatherLocationInput
 import pandas as pd
 from faster_whisper import WhisperModel
 import json
@@ -304,3 +305,14 @@ async def get_dashboard_data(latitude:float, longitude:float):
             "altitude": await fetch_altitude(latitude, longitude),
         },
     }
+
+
+@app.post("/weatherforecast")
+async def weather_forecast(input_data: WeatherLocationInput):
+    try:
+        alerts = analyze_forecast_for_alerts(input_data.latitude, input_data.longitude, input_data.days)
+        return {"alerts": alerts}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")

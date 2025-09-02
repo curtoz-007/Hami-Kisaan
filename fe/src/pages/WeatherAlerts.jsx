@@ -75,7 +75,7 @@ const WeatherAlerts = () => {
     try {
       if (showToast) setLoading(true);
      
-      const response = await fetch('http://api.xento.xyz/weatherforecast', {
+      const response = await fetch('http://10.40.21.98:8000/weatherforecast', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

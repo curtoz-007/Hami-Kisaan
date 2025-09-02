@@ -65,6 +65,6 @@ def predict_plant_disease_from_image(image: Image.Image) -> str:
     return predicted_disease
 
 # # # Example usage:
-img = Image.open(r"D:\Team-QUBITS\be\12.jpg")
-disease = predict_plant_disease_from_image(img)
-print(f"Predicted disease: {disease}")
+# img = Image.open(r"D:\Team-QUBITS\be\12.jpg")
+# disease = predict_plant_disease_from_image(img)
+# print(f"Predicted disease: {disease}")

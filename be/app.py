@@ -184,6 +184,7 @@ def crop_info(name):
     
     return recommendations.to_dict(orient="records")
 
+<<<<<<< HEAD
 # @app.post("/disease_detection/")
 # async def disease_detection(
 #     image: UploadFile = File(...),
@@ -248,6 +249,10 @@ def crop_info(name):
 #         traceback.print_exc()
 #         raise HTTPException(status_code=500, detail=str(e))
 
+=======
+
+# Disease Detection with AI our own
+>>>>>>> d1958b4f410fdab8bdc9eb35ab806f6efa205884
 
 @app.post("/disease_detection/")
 async def disease_detection(
@@ -262,12 +267,87 @@ async def disease_detection(
 
         image_pil = Image.open(BytesIO(image_bytes))
 
-        disease_result = predict_plant_disease_from_image(image_pil)
-        print(f"Disease detected: {disease_result}")
+<<<<<<< HEAD
+=======
+        
 
+        # Predict disease (synchronous function)
+>>>>>>> d1958b4f410fdab8bdc9eb35ab806f6efa205884
+        disease_result = predict_plant_disease_from_image(image_pil)
+
+<<<<<<< HEAD
         disease_detected(disease_result, lat, lon)
 
         return {"disease_detected": disease_result} 
+=======
+        print(disease_result)
+
+        disease_result = disease_result.replace("___", " ").replace("_", " ").replace("___"," ")
+
+        disease_detected(disease_result, lat, lon)
+        return {"disease_detected": disease_result}
+
+    except:
+        raise HTTPException(status_code=500, detail="Error processing image")
+      
+      
+# disease detection detailed info by gemini
+
+@app.post("/disease_detection_detailed/")
+async def disease_detection_detailed(
+    disease_name: str ):
+    try:
+        print(f"Disease detected: {disease_name}")
+
+        # Prepare AI search prompt
+        search_prompt = (
+            f"{disease_name} This is the disease of the plant detected from the image. "
+            "Search for the disease and give the solution for it. For general farmers. "
+            "Use sources especially from trusted sites. "
+            "Make your output as simple and short as possible. "
+            "Include Disease Name, Disease Solution, and Sources."
+        )
+
+        # Call AI (assuming synchronous; if async, add await)
+        solution = grounded_search(search_prompt)
+
+        new_solution = msg(
+            f"""{solution}
+Make it simpler and return the output strictly in JSON format, without extra words or explanations.
+The expected JSON format should be short and structured compulsary as below:
+
+{{
+    "Potential_Harms": "Description of potential harms",
+    "Solution": "Recommended solution for the disease",
+    "Organic_Solutions": "Organic solutions for the disease",
+    "Sources": [{"source_name": "URL"}, {"source_name": "URL"}]
+}}
+"""
+        )
+
+        # Extract JSON from AI output
+        json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
+        if not json_match:
+            raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
+
+        data = json.loads(json_match.group(0))
+
+
+        print(data)
+        return data  # Return as actual JSON
+
+        # Extract JSON from AI output
+        json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
+        if not json_match:
+            raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
+
+        data = json.loads(json_match.group(0))
+        
+        # Log or store disease detection (assuming synchronous)
+        
+
+        return data  # Return as actual JSON
+>>>>>>> d1958b4f410fdab8bdc9eb35ab806f6efa205884
 
     except Exception as e:
         traceback.print_exc()

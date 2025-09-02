@@ -31,7 +31,7 @@ def predict_plant_disease_from_image(image: Image.Image) -> str:
     Predicts the disease of a plant leaf from a PIL Image object using a pretrained model.
     """
     # Correct checkpoint path
-    checkpoint_path = Path(r"D:\python learning\Team-QuBits\be\AI\results\checkpoint-5373")
+    checkpoint_path = Path(r"D:\Team-QUBITS\be\AI\results\checkpoint-5373")
 
     if not checkpoint_path.exists():
         raise FileNotFoundError(f"Checkpoint folder not found: {checkpoint_path}")
@@ -65,6 +65,6 @@ def predict_plant_disease_from_image(image: Image.Image) -> str:
     return predicted_disease
 
 # # # Example usage:
-# img = Image.open(r"D:\python learning\Team-QuBits\be\12.jpg")
-# disease = predict_plant_disease_from_image(img)
-# print(f"Predicted disease: {disease}")
+img = Image.open(r"D:\Team-QUBITS\be\12.jpg")
+disease = predict_plant_disease_from_image(img)
+print(f"Predicted disease: {disease}")

@@ -185,5 +185,5 @@ async def get_crop_recommendations_from_location(lat: float, lon: float):
     return recommendations
 
 
-a = asyncio.run(get_crop_recommendations_from_location(27, 84))
-print(a)
+# a = asyncio.run(get_crop_recommendations_from_location(27, 84))
+# print(a)

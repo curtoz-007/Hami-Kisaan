@@ -17,11 +17,11 @@ const Header = () => {
 
   if (user) {
     navLinks = [
-      { name: "Home", href: "/" },
       { name: "Dashboard", href: "/dashboard" },
       { name: "Explore", href: "/explore" },
       { name: "Plant Clinic & Alerts", href: "/disease" },
       { name: "Recommendations", href: "/recommend" },
+      { name: "Tutorials", href: "/tutorial" },
     ];
   }
   const navigate = useNavigate();

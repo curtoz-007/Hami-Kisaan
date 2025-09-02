@@ -335,7 +335,7 @@ async def weather_forecast(input_data: WeatherLocationInput):
 
 @app.post("/transcribe/Findpage")
 async def upload_audio(file: UploadFile = File(...)):
-    print("Received request for transcription")
+    print("Received request for routing")
     try:
         # Save uploaded file temporarily
         file_path = f"./temp_{file.filename}"
@@ -352,41 +352,28 @@ async def upload_audio(file: UploadFile = File(...)):
 
         # AI prompt to extract crop data
         prompt = f"""
-Analyze this text and extract crop information. The text may be in Hindi, English, or mixed languages:
+Analyze the following text and determine which page the user wants to navigate to on the website. 
+The text may be in Hindi, English, or a mix of both:
 "{text}"
 
-Common Hindi crop names and their English equivalents:
-- टमाटर, गोलवेदा, गोलभेडा = Tomato
-- आलू = Potato
-- प्याज = Onion
-- गोल वेडा = Round Gourd
-- भिंडी = Okra
-- बैंगन = Brinjal
-- मिर्च = Chili
-- धनिया = Coriander
-- पालक = Spinach
-- गोभी = Cabbage
-- चावल = Rice
-- गेहूं = Wheat
-- मक्का = Corn
+Possible pages and their routes/functions:
 
-Extract the following information and return ONLY a valid JSON object:
+1) Crop Recommendation: "/recommend", function = recommend crops to grow
+2) Weather Forecast: "/weatheralerts", function = get weather alerts
+3) Disease Detection: "/disease", function = detect crop diseases using photos
+4) Crop Info: "/recommend", function = information about recommended crops
+5) Dashboard: "/", function = home/dashboard
+6) Alerts: "/alerts", function = disease alerts on a map
+7) Explore: "/explore", function = explore, buy or sell crops in the marketplace
+8) Tutorial: "/tutorial", function = tutorial for farmers
+
+Return **ONLY a valid JSON object** in the following format:
 
 {{
-  "crop_name": "English crop name or null",
-  "crop_unit": "unit like per kg,per dozen , per piece, null",
-  "price_per_unit": "price number or null",
-  "quantity": "quantity number or null"
+  "page": "route of the page"
 }}
-
-Look for:
-- Crop names (English)
-- Quantities (numbers with per kilo,per piece, etc.)
-- Prices (numbers with rupees, rs, per kg, per piece, etc.)
-- Units (kg, kilo, per kg, etc.)
-
-Return ONLY the JSON object. No explanations, no markdown, no extra text.
 """
+
 
         # Call AI and get output
         message = msg(prompt)

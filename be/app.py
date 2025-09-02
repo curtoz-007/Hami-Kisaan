@@ -316,3 +316,84 @@ async def weather_forecast(input_data: WeatherLocationInput):
         raise e
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
+
+
+@app.post("/transcribe/Findpage")
+async def upload_audio(file: UploadFile = File(...)):
+
+    print("Received request for transcription")
+
+    try:
+        # Save uploaded file temporarily
+        file_path = f"./temp_{file.filename}"
+        with open(file_path, "wb") as f:
+            f.write(await file.read())
+
+        # Transcribe the audio
+        segments, info = model.transcribe(file_path, beam_size=1, language="hi", vad_filter=True)
+        text = " ".join([s.text for s in segments])
+
+        # Clean up temporary file
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+        # AI prompt to extract crop data
+        prompt = f"""
+Analyze this text and extract crop information. The text may be in Hindi, English, or mixed languages:
+"{text}"
+
+Common Hindi crop names and their English equivalents:
+- टमाटर, गोलवेदा, गोलभेडा = Tomato
+- आलू = Potato
+- प्याज = Onion
+- गोल वेडा = Round Gourd
+- भिंडी = Okra
+- बैंगन = Brinjal
+- मिर्च = Chili
+- धनिया = Coriander
+- पालक = Spinach
+- गोभी = Cabbage
+- चावल = Rice
+- गेहूं = Wheat
+- मक्का = Corn
+
+Extract the following information and return ONLY a valid JSON object:
+
+{{
+  "crop_name": "English crop name or null",
+  "crop_unit": "unit like per kg,per dozen , per piece, null",
+  "price_per_unit": "price number or null",
+  "quantity": "quantity number or null"
+}}
+
+Look for:
+- Crop names (English)
+- Quantities (numbers with per kilo,per piece, etc.)
+- Prices (numbers with rupees, rs, per kg, per piece, etc.)
+- Units (kg, kilo, per kg, etc.)
+
+Return ONLY the JSON object. No explanations, no markdown, no extra text.
+"""
+
+        # Call AI and get output
+        message = msg(prompt)
+        print("Raw AI output:", message)  # Debug print
+
+
+        # Extract JSON from AI string
+        json_match = re.search(r"\{.*\}", message, re.DOTALL)
+        if not json_match:
+            raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
+
+        data = json.loads(json_match.group(0))
+
+
+        # Return as proper JSON
+        return JSONResponse(content=data)
+
+    except Exception as e:
+        # Cleanup temp file if exists
+        if 'file_path' in locals() and os.path.exists(file_path):
+            os.remove(file_path)
+        raise HTTPException(status_code=500, detail=str(e))
+    

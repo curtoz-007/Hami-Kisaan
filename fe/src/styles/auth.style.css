@@ -1,9 +1,6 @@
 .auth-page {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 2rem 0;
   background: url("../assets/auth-bg.jpeg") no-repeat center center fixed;
 }
 
@@ -11,6 +8,7 @@
   background: #ffffff9f;
   backdrop-filter: blur(5px);
   padding: 2rem;
+  margin-block: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -109,7 +107,7 @@
 
 .social-divider span {
   color: var(--muted-gray);
-  font-size: 1rem;
+  font-size: 0.875rem;
   padding: 8px 15px;
   border-radius: 15px;
   backdrop-filter: blur(10px);
@@ -130,18 +128,15 @@
   border: 1px solid var(--green-background);
   border-radius: 20px;
   color: var(--muted-gray);
-  font-size: 1rem;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.facebook-button {
-  background-color: #fff;
-  color: #444;
-}
-
 .facebook-button:hover {
-  background-color: #f1f1f1;
+  background: rgba(66, 103, 178, 0.8);
+  border-color: #4267b2;
+  color: white;
 }
 
 .google-button:hover {
@@ -152,7 +147,7 @@
 
 .social-icon {
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1rem;
   width: 20px;
   height: 20px;
   display: flex;
@@ -169,7 +164,7 @@
 
 .auth-toggle p {
   color: var(--soil-brown);
-  font-size: 1rem;
+  font-size: 0.875rem;
   margin: 0;
 }
 
@@ -177,7 +172,7 @@
   background: none;
   border: none;
   color: #4caf50;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   text-decoration: underline;
@@ -202,28 +197,4 @@
 
 .error-icon {
   font-size: 1.2rem;
-}
-
-.role-selector {
-  display: flex;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  overflow: hidden;
-}
-
-.role-option {
-  flex: 1;
-  padding: 1rem;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  background-color: #fff;
-  border: none;
-  font-size: 1rem;
-  color: var(--muted-gray);
-}
-
-.role-option.selected {
-  background-color: var(--primary-green);
-  color: var(--white);
 }

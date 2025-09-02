@@ -37,7 +37,10 @@ const MapView = () => {
       }
     };
     const getLocation = async () => {
-      if (!user) return;
+      if (!user) {
+        console.log("User not logged in");
+        return <p>Please login to continue</p>;
+      }
       try {
         const pos = await fetchUserLocation(user.id);
         if (
@@ -110,7 +113,11 @@ const MapView = () => {
                 cursor: "pointer",
                 fontWeight: 600,
               }}
-              onClick={() => navigate("/disease")}
+              onClick={() =>
+                navigate(
+                  `/disease?name=${encodeURIComponent(alert.disease_name)}`
+                )
+              }
             >
               विवरण हेर्नुहोस्
             </button>

@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { getListings } from "../api/listings";
 import ContactModal from "../components/ContactModal";
-import { FiFilter, FiTrendingUp } from "react-icons/fi";
+import CreateListingModal from "../components/CreateListingModal";
+import {useAuth} from "../context/AuthContext"
 import "../styles/explore.css";
 
 const Explore = () => {
   const [crops, setCrops] = useState([]);
   const [search, setSearch] = useState("");
   const [contactUser, setContactUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const {user} = useAuth();
+  const userId = user?.id;
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -29,6 +34,7 @@ const Explore = () => {
       p.user?.address?.toLowerCase().includes(search.toLowerCase())
   );
   return (
+    <>
     <div className="explore-page">
       <ContactModal
         user={contactUser}
@@ -50,13 +56,8 @@ const Explore = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <button>
-              <FiFilter />
-              Filter
-            </button>
-            <button>
-              <FiTrendingUp />
-              Top Rated
+            <button onClick={() => setShowModal(true)}>
+              Create Listing
             </button>
           </div>
           <div className="recommendations-grid" style={{ marginTop: 16 }}>
@@ -154,6 +155,13 @@ const Explore = () => {
         </div>
       </div>
     </div>
+          <CreateListingModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+        userId={userId}
+        onCreated={() => alert("Listing created!")}
+      />
+    </>
   );
 };
 

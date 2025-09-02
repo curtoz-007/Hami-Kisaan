@@ -1,8 +1,59 @@
-.record-container {
-  padding: 10px 20px;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 30, 30, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  flex-direction: column;
+  z-index: 9999;
 }
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 32px 24px 24px 24px;
+  min-width: 320px;
+  max-width: 90vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+.button {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  background: #e0e0e0;
+  color: #333;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button.primary {
+  background: #1976d2;
+  color: #fff;
+}
+
+.button:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}
+
+audio {
+  margin-top: 10px;
+  width: 100%;
+}
+
+@media (max-width: 500px) {
+  .modal-content {
+    padding: 18px 8px;
+    min-width: 0;
+
+  }}

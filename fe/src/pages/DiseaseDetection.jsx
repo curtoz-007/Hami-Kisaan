@@ -1,11 +1,14 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { useLocation } from 'react-router-dom';
 import "../styles/DiseaseDetection.css";
 
 export default function DiseaseDetection() {
+  const location = useLocation();
   const [selectedFile, setSelectedFile] = useState(null)
   const [preview, setPreview] = useState(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [isFetchingRecommendations, setIsFetchingRecommendations] = useState(false)
+  const [isLoadingDiseaseDetail, setIsLoadingDiseaseDetail] = useState(false)
   const [result, setResult] = useState(null)
   const [recommendations, setRecommendations] = useState(null)
   const [error, setError] = useState(null)
@@ -13,6 +16,8 @@ export default function DiseaseDetection() {
   const videoRef = useRef(null)
   const canvasRef = useRef(null)
   const [showCamera, setShowCamera] = useState(false)
+  const lastFetchedDisease = useRef(null)
+  const hasFetched = useRef(false)
 
   const handleFileSelect = (e) => {
     const file = e.target.files[0]
@@ -87,7 +92,9 @@ export default function DiseaseDetection() {
     setError(null)
   }
 
-   const fetchRecommendations = async (disease) => {
+  const fetchRecommendations = useCallback(async (disease) => {
+    if (lastFetchedDisease.current === disease) return recommendations
+
     setIsFetchingRecommendations(true)
     setError(null)
 
@@ -102,17 +109,21 @@ export default function DiseaseDetection() {
 
       if (response.ok) {
         const content = await response.json()
+        console.log('API Response:', content)
         setRecommendations(content)
+        lastFetchedDisease.current = disease
+        return content
       } else {
         throw new Error('Failed to fetch recommendations from disease detection API')
       }
     } catch (err) {
       setError('Failed to fetch recommendations. Please try again.')
       console.error('Disease Detection API Error:', err)
+      return null
     } finally {
       setIsFetchingRecommendations(false)
     }
-  }
+  }, [recommendations])
 
   const analyzeImage = async () => {
     if (!selectedFile) return
@@ -121,6 +132,7 @@ export default function DiseaseDetection() {
     setError(null)
     setResult(null)
     setRecommendations(null)
+    lastFetchedDisease.current = null
 
     try {
       if (!navigator.geolocation) {
@@ -171,10 +183,39 @@ export default function DiseaseDetection() {
     setResult(null)
     setRecommendations(null)
     setError(null)
+    lastFetchedDisease.current = null
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
   }
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const diseaseName = params.get("name")
+
+    const fetchDiseaseDetail = async () => {
+      if (diseaseName && !hasFetched.current) {
+        hasFetched.current = true
+        setIsLoadingDiseaseDetail(true)
+        console.log("Fetching for disease name:", diseaseName)
+        const result = await fetchRecommendations(diseaseName)
+        console.log("Fetched disease details:", result)
+        setIsLoadingDiseaseDetail(false)
+      }
+    }
+
+    fetchDiseaseDetail()
+
+    return () => {
+      if (videoRef.current && videoRef.current.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach(track => track.stop())
+        videoRef.current.srcObject = null
+      }
+      hasFetched.current = false
+    }
+  }, [location.search, fetchRecommendations])
+
+  const hasQuery = !!new URLSearchParams(location.search).get("name")
 
   return (
     <div className="disease-page">
@@ -184,111 +225,120 @@ export default function DiseaseDetection() {
           <p>Upload a photo or capture a live image of your plant to get instant disease analysis</p>
         </div>
 
+        {hasQuery && isLoadingDiseaseDetail && (
+          <div className="loading-message">
+            <span className="loading-spinner"></span>
+            Loading disease details...
+          </div>
+        )}
+
         <div className="disease-content">
-          <div className="upload-section">
-            <div  
-                 onDrop={handleDrop}
-                 onDragOver={handleDragOver}
-                 className={selectedFile ? 'upload-area +has-file' : 'upload-area'}>
-              
-              {!preview && !showCamera ? (
-                <div className="upload-placeholder">
-                  <div className="upload-icon">📸</div>
-                  <h3>Upload or Capture Plant Image</h3>
-                  <p>Drag & drop an image, upload from device, or use camera</p>
-                  <div className="button-group">
-                    <button 
-                      className="button primary"
-                      onClick={() => fileInputRef.current?.click()}
-                    >
-                      Upload Image
-                    </button>
-                    <button 
-                      className="button primary"
-                      onClick={startCamera}
-                    >
-                      Open Camera
-                    </button>
+          {!hasQuery && (
+            <div className="upload-section">
+              <div  
+                   onDrop={handleDrop}
+                   onDragOver={handleDragOver}
+                   className={selectedFile ? 'upload-area has-file' : 'upload-area'}>
+                
+                {!preview && !showCamera ? (
+                  <div className="upload-placeholder">
+                    <div className="upload-icon">📸</div>
+                    <h3>Upload or Capture Plant Image</h3>
+                    <p>Drag & drop an image, upload from device, or use camera</p>
+                    <div className="button-group">
+                      <button 
+                        className="button primary"
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        Upload Image
+                      </button>
+                      <button 
+                        className="button primary"
+                        onClick={startCamera}
+                      >
+                        Open Camera
+                      </button>
+                    </div>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileSelect}
+                      style={{ display: 'none' }}
+                    />
                   </div>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileSelect}
-                    style={{ display: 'none' }}
-                  />
+                ) : showCamera ? (
+                  <div className="camera-preview">
+                    <video ref={videoRef} autoPlay playsInline style={{ width: '100%', maxHeight: '300px', borderRadius: '8px' }} />
+                    <div className="camera-controls">
+                      <button 
+                        className="button primary"
+                        onClick={capturePhoto}
+                      >
+                        Capture Photo
+                      </button>
+                      <button 
+                        className="button secondary"
+                        onClick={closeCamera}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="image-preview">
+                    <img src={preview} alt="Plant preview" />
+                    <div className="preview-overlay">
+                      <button 
+                        className="button secondary"
+                        onClick={resetForm}
+                      >
+                        Change Image
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {error && (
+                <div className="error-message">
+                  <span className="error-icon">⚠️</span>
+                  {error}
                 </div>
-              ) : showCamera ? (
-                <div className="camera-preview">
-                  <video ref={videoRef} autoPlay playsInline style={{ width: '100%', maxHeight: '300px', borderRadius: '8px' }} />
-                  <div className="camera-controls">
-                    <button 
-                      className="button primary"
-                      onClick={capturePhoto}
-                    >
-                      Capture Photo
-                    </button>
-                    <button 
-                      className="button secondary"
-                      onClick={closeCamera}
-                    >
-                      Cancel
-                    </button>
+              )}
+
+              {selectedFile && (
+                <div className="file-info">
+                  <div className="file-details">
+                    <span className="file-name">{selectedFile.name}</span>
+                    <span className="file-size">{(selectedFile.size / 1024 / 1024).toFixed(2)} MB</span>
                   </div>
-                </div>
-              ) : (
-                <div className="image-preview">
-                  <img src={preview} alt="Plant preview" />
-                  <div className="preview-overlay">
-                    <button 
-                      className="button secondary"
-                      onClick={resetForm}
-                    >
-                      Change Image
-                    </button>
-                  </div>
+                  <button 
+                    className="button primary analyze-btn"
+                    onClick={analyzeImage}
+                    disabled={isAnalyzing}
+                  >
+                    {isAnalyzing ? (
+                      <>
+                        <span className="loading-spinner"></span>
+                        Analyzing...
+                      </>
+                    ) : (
+                      'Analyze Plant'
+                    )}
+                  </button>
                 </div>
               )}
             </div>
+          )}
 
-            {error && (
-              <div className="error-message">
-                <span className="error-icon">⚠️</span>
-                {error}
-              </div>
-            )}
-
-            {selectedFile && (
-              <div className="file-info">
-                <div className="file-details">
-                  <span className="file-name">{selectedFile.name}</span>
-                  <span className="file-size">{(selectedFile.size / 1024 / 1024).toFixed(2)} MB</span>
-                </div>
-                <button 
-                  className="button primary analyze-btn"
-                  onClick={analyzeImage}
-                  disabled={isAnalyzing}
-                >
-                  {isAnalyzing ? (
-                    <>
-                      <span className="loading-spinner"></span>
-                      Analyzing...
-                    </>
-                  ) : (
-                    'Analyze Plant'
-                  )}
-                </button>
-              </div>
-            )}
-          </div>
-
-          {result && (
+          {(result || (hasQuery && recommendations)) && (
             <div className="results-section">
               <h2>Analysis Results</h2>
               <div className="result-card">
                 <div className="result-header">
                   <div className="disease-icon">
-                    {result?.disease_detected?.toLowerCase()?.includes('healthy') ? '✅' : '⚠️'}
+                    {(result?.disease_detected || new URLSearchParams(location.search).get("name"))?.toLowerCase()?.includes('healthy') ? '✅' : '⚠️'}
                   </div>
                   <div className="result-info">
                     <h3>
@@ -296,7 +346,9 @@ export default function DiseaseDetection() {
                         ? result.disease_detected.toLowerCase().includes('healthy')
                           ? 'Plant is Healthy'
                           : `Disease: ${result.disease_detected}`
-                        : 'Unknown Disease'}
+                        : hasQuery
+                          ? `Disease: ${new URLSearchParams(location.search).get("name")}`
+                          : 'Unknown Disease'}
                     </h3>
                   </div>
                 </div>

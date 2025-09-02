@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
-import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import About from "./pages/About";
 import Login from "./pages/Login";
@@ -14,18 +13,14 @@ import AgriToolkit from "./pages/AgriToolkit";
 import MapAlerts from "./pages/MapAlerts";
 import WeatherAlerts from "./pages/WeatherAlerts";
 import HamikissanTutorial from "./pages/HamikissanTutorial";
-import "./App.css";
 import Footer from "./components/Footer";
+import { IoMdMic } from "react-icons/io";
+import "./App.css";
+import VoiceRoutingModal from "./components/VoiceRoutingModal";
 
 const App = () => {
   const location = useLocation();
-  const headerRef = useRef(null);
-
-  useEffect(() => {
-    if (headerRef.current) {
-      setHeaderHeight(headerRef.current.offsetHeight);
-    }
-  }, [location.pathname]);
+  const [opened, setOpened] = useState(false);
 
   // Scroll to top on route change
   useEffect(() => {
@@ -34,14 +29,19 @@ const App = () => {
 
   return (
     <div className="app-container">
-      {location.pathname !== "/dashboard" && <Header ref={headerRef} />}
+      <div className="voice-routing" onClick={() => setOpened(true)}>
+        {console.log("voice routing opened", opened)}
+        <IoMdMic />
+      </div>
+       <Header />
+       {opened ? <VoiceRoutingModal opened={opened} setOpened={setOpened} /> : null}
       <div
       // style={{
       //   paddingTop: location.pathname === "/dashboard" ? "0px" : "72px",
       // }}
       >
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
           <Route path="/disease" element={<DiseaseDetection />} />
@@ -53,10 +53,10 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/alerts" element={<MapAlerts />} />
           <Route path="/weatheralerts" element={<WeatherAlerts />} />
-          <Route path="/hamikissantutorial" element={<HamikissanTutorial />} />
+          <Route path="/tutorial" element={<HamikissanTutorial />} />
         </Routes>
       </div>
-      {location.pathname !== "/dashboard" && <Footer />}
+       <Footer />
     </div>
   );
 };

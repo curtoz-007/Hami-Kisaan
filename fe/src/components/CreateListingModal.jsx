@@ -71,7 +71,7 @@ export default function CreateListingModal({
   return (
     <div
       style={{
-        position: "absolute",
+        position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
@@ -80,12 +80,13 @@ export default function CreateListingModal({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        maxHeight: "100vh",
         overflowY: "auto",
       }}
     >
       <div
         className="auth-container"
-        style={{ width: 500, background: "white" }}
+        style={{ width: 500, background: "white", marginTop: "12rem"}}
       >
         <h1 className="auth-title">Create Listing</h1>
         {error && (

@@ -24,6 +24,7 @@ export default function AuthCallback() {
         return;
       }
 
+      // Check profile exists and has role/phone/address at minimum
       const profile = await getUserProfile(user.id);
       const hasRequired =
         profile && profile.role && profile.phone && profile.address;

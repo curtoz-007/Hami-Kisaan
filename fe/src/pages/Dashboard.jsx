@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { FaSeedling, FaMicroscope, FaCloudRain, FaShieldAlt, FaGraduationCap, FaChartBar, FaBullseye, FaArrowRight } from 'react-icons/fa';
+import { GiWheat } from 'react-icons/gi';
 import '../styles/dashboard.css';
 
 const Dashboard = () => {
@@ -10,7 +12,7 @@ const Dashboard = () => {
           <div className="nav-content">
             <div className="nav-brand">                                                                                           
               <div className="brand-icon">
-                <span className="brand-emoji">🌾</span>
+                <GiWheat />
               </div>
               <span className="brand-text">Dashboard</span>
             </div>
@@ -52,41 +54,43 @@ const Dashboard = () => {
 
           {/* Quick Actions */}
           <div className="quick-actions">
-            <Link to="../recommend" className="action-card card-crops"
-            
-            >
-              <div className="action-icon">🌱</div>
+            <Link to="../recommend" className="action-card card-crops">
+              <div className="action-icon">
+                <FaSeedling />
+              </div>
               <h3 className="action-title">Crop Advisor And Fertilizer Guide</h3>
               <p className="action-description">AI recommendations</p>
             </Link>
-            
-            <Link to="/disease" className="action-card card-disease"
-            
-            >
-              <div className="action-icon">🔬</div>
-              <h3 className="action-title">Plant Doctor</h3>
-              <p className="action-description">Disease detection</p>
-            </Link>
-            
-            <Link to="/weatheralerts" className="action-card card-weather"
-            
-            >
-              <div className="action-icon">🌦️</div>
+
+             <Link to="/weatheralerts" className="action-card card-weather">
+              <div className="action-icon">
+                <FaCloudRain />
+              </div>
               <h3 className="action-title">Weather Hub</h3>
               <p className="action-description">Live Weather alerts</p>
             </Link>
             
+            <Link to="/disease" className="action-card card-disease">
+              <div className="action-icon">
+                <FaMicroscope />
+              </div>
+              <h3 className="action-title">Plant Doctor</h3>
+              <p className="action-description">Disease detection</p>
+            </Link>
+            
+            
             <Link to="/alerts" className="action-card card-alert">
-              <div className="action-icon">🛡️</div>
+              <div className="action-icon">
+                <FaShieldAlt />
+              </div>
               <h3 className="action-title">Crop Protections</h3>
               <p className="action-description">Disease Alerts To Protect Your Crops</p>
             </Link>
 
-
-
-
-            <Link to="/tutorial" className="action-card card-toturial">
-              <div className="action-icon">®️</div>
+            <Link to="/tutorial" className="action-card card-tutorial" style={{gridColumn: "1 / -1"}}>
+              <div className="action-icon">
+                <FaGraduationCap />
+              </div>
               <h3 className="action-title">Guides for Crops</h3>
               <p className="action-description">Tutorials/Advice on how to Grow Crops Effectively</p>
             </Link>
@@ -129,7 +133,7 @@ const Dashboard = () => {
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon analytics-icon">
-                <span>📊</span>
+                <FaChartBar />
               </div>
               <h3 className="feature-title">Smart Analytics</h3>
               <p className="feature-description">
@@ -137,13 +141,13 @@ const Dashboard = () => {
               </p>
               <div className="feature-link">
                 <span>Learn more</span>
-                <span className="arrow">→</span>
+                <FaArrowRight className="arrow" />
               </div>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon precision-icon">
-                <span>🎯</span>
+                <FaBullseye />
               </div>
               <h3 className="feature-title">Precision Farming</h3>
               <p className="feature-description">
@@ -151,13 +155,13 @@ const Dashboard = () => {
               </p>
               <div className="feature-link">
                 <span>Explore features</span>
-                <span className="arrow">→</span>
+                <FaArrowRight className="arrow" />
               </div>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon protection-icon">
-                <span>🛡️</span>
+                <FaShieldAlt />
               </div>
               <h3 className="feature-title">Crop Protection</h3>
               <p className="feature-description">
@@ -165,7 +169,7 @@ const Dashboard = () => {
               </p>
               <div className="feature-link">
                 <span>Stay protected</span>
-                <span className="arrow">→</span>
+                <FaArrowRight className="arrow" />
               </div>
             </div>
           </div>

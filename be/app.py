@@ -113,6 +113,8 @@ async def upload_audio(file: UploadFile = File(...)):
         segments, info = model.transcribe(file_path, beam_size=1, language="hi", vad_filter=True)
         text = " ".join([s.text for s in segments])
 
+        print(f"Transcription complete, text = {text}")
+
         # Clean up temporary file
         if os.path.exists(file_path):
             os.remove(file_path)
@@ -245,15 +247,16 @@ async def disease_detection_detailed(request: DiseaseRequest):
             "Use sources especially from trusted sites. "
             "Make your output as simple and short as possible. "
             "Include the following JSON structure:\n\n"
+            
             "{\n"
             '  "Disease_Name": "Name of the disease",\n'
             '  "Potential_Harms": "Description of potential harms",\n'
             '  "Solution": "Recommended solution for the disease",\n'
             '  "Organic_Solutions": "Organic solutions for the disease",\n'
             '  "Sources": [\n'
-            '    {"Source Name": "Source 1", "Source URL": "https://..."},\n'
-            '    {"Source Name": "Source 2", "Source URL": "https://..."},\n'
-            '    {"Source Name": "Source 3", "Source URL": "https://..."}\n'
+            '    {"Source Name 1": "Source URL 1",\n'
+            '    {"Source Name 2":, "Source URL 2"},\n'
+            '    {"Source Name 3", "Source URL 3"}\n'
             '  ]\n'
             "}\n\n"
         )
@@ -267,7 +270,6 @@ async def disease_detection_detailed(request: DiseaseRequest):
              f"""{solution}
 Make it simpler and return the output strictly in JSON format, without extra words or explanations.
 The expected JSON format should be as short as possible (Only give the important output) and structured compulsary as below. You Must Give the links compulsary:
-
 {{
     "Potential_Harms": "Description of potential harms",
     "Solution": "Recommended solution for the disease",
@@ -348,35 +350,75 @@ async def upload_audio(file: UploadFile = File(...)):
         # Transcribe the audio
         segments, info = model.transcribe(file_path, beam_size=1, language="hi", vad_filter=True)
         text = " ".join([s.text for s in segments])
+        print("Transcribed text:", text)  # Debug print
 
         # Clean up temporary file
         if os.path.exists(file_path):
             os.remove(file_path)
 
         # AI prompt to extract crop data
-        prompt = f"""
-Analyze the following text and determine which page the user wants to navigate to on the website. 
-The text may be in Hindi, English, or a mix of both:
-"{text}"
+        prompt = f"""Analyze the following user query and determine which page of the website the user wants to navigate to. 
+                The query text may be in Hindi, English, or a mix of both:
 
-Possible pages and their routes/functions:
+                "{text}"
 
-1) Crop Recommendation: "/recommend", function = recommend crops to grow
-2) Weather Forecast: "/weatheralerts", function = get weather alerts
-3) Disease Detection: "/disease", function = detect crop diseases using photos
-4) Crop Info: "/recommend", function = information about recommended crops
-5) Dashboard: "/", function = home/dashboard
-6) Alerts: "/alerts", function = disease alerts on a map
-7) Explore: "/explore", function = explore, buy or sell crops in the marketplace
-8) Tutorial: "/tutorial", function = tutorial for farmers
-9) Notification: "/notifications", function = Provides Notifications For Farmers about their field, government policies
+                Available pages, their routes, and functions:
 
-Return **ONLY a valid JSON object** in the following format:
+                1) Crop Recommendation 
+                route: "/recommend" 
+                function: Suggests the best crops for the farmer to grow based on their location, soil type, season, weather conditions, and temperature. 
+                Helps farmers make data-driven decisions for higher yield.
 
-{{
-  "page": "route of the page"
-}}
-"""
+                2) Weather Forecast 
+                route: "/weatheralerts" 
+                function: Provides real-time and upcoming weather conditions, temperature, rainfall chances, and extreme weather alerts. 
+                Helps farmers plan irrigation, fertilizer use, and crop protection.
+
+                3) Disease Detection 
+                route: "/disease" 
+                function: Allows farmers to upload crop images for AI-based disease detection. 
+                Identifies plant diseases, pests, or nutrient deficiencies and provides treatment suggestions.
+
+                4) Crop Info 
+                route: "/recommend" 
+                function: Gives detailed information about crops (growth stages, soil requirements, fertilizer use, irrigation needs, harvesting tips). 
+                Helps farmers manage crops effectively after choosing them.
+
+                5) Dashboard 
+                route: "/" 
+                function: Main homepage/dashboard showing an overview of all features, shortcuts, and personalized recommendations.
+
+                6) Alerts 
+                route: "/alerts" 
+                function: Displays map-based crop disease alerts and outbreaks in nearby regions. 
+                Helps farmers take preventive measures before diseases spread.
+
+                7) Explore 
+                route: "/explore" 
+                function: Online marketplace where farmers can sell their crops/vegetables/Fruits directly. 
+                Encourages fair pricing and better market access. 
+
+                8) Tutorial 
+                route: "/tutorial" 
+                function: Provides step-by-step tutorials, guides, and videos for farmers to learn modern agricultural techniques. 
+                Includes best practices for planting, irrigation, pest control, and harvesting. It's a youtube for all the tutorial things. User can watch videos here
+
+                9) Notification 
+                route: "/notifications" 
+                function: Shows all notifications relevant to farmers such as updates about their fields, reminders, weather warnings, and new government policies. 
+                Ensures farmers don’t miss critical information.
+
+                10) Not Found 
+                route: "/404" 
+                function: If the user query does not match any of the above pages, return this page indicating no relevant result.
+
+                Return **ONLY** a valid JSON object in the following format:
+
+                {{
+                "page": "ROUTE_OF_THE_PAGE"
+                }}
+                """
+
 
 
         # Call AI and get output

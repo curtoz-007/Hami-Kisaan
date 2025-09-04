@@ -29,10 +29,17 @@
   font-weight: 500;
   text-decoration: none;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .nav .nav-link:hover {
   color: var(--yellow-accent);
+}
+
+.nav-icon {
+  font-size: 16px;
 }
 
 .auth-btns {

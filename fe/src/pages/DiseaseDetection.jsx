@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+import { FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
 import "../styles/DiseaseDetection.css";
 
 export default function DiseaseDetection() {
@@ -99,7 +100,7 @@ export default function DiseaseDetection() {
     setError(null);
 
     try {
-      const response = await fetch('http://api1.xento.xyz/disease_detection_detailed/', {
+      const response = await fetch('http://10.40.20.192:8000/disease_detection_detailed/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -149,9 +150,9 @@ export default function DiseaseDetection() {
       const formData = new FormData();
       formData.append('image', selectedFile);
 
-      const url = new URL('http://api1.xento.xyz/disease_detection');
-      url.searchParams.append('lat', latitude);
-      url.searchParams.append('lon', longitude);
+      const url = new URL('http://10.40.20.192:8000/disease_detection')
+      url.searchParams.append('lat', latitude)
+      url.searchParams.append('lon', longitude)
 
       const response = await fetch(url, {
         method: 'POST',
@@ -302,7 +303,9 @@ export default function DiseaseDetection() {
 
               {error && (
                 <div className="error-message">
-                  <span className="error-icon">⚠️</span>
+                  <span className="error-icon">
+                    <FaExclamationTriangle />
+                  </span>
                   {error}
                 </div>
               )}
@@ -338,7 +341,10 @@ export default function DiseaseDetection() {
               <div className="result-card">
                 <div className="result-header">
                   <div className="disease-icon">
-                    {(result?.disease_detected || new URLSearchParams(location.search).get("name"))?.toLowerCase()?.includes('healthy') ? '✅' : '⚠️'}
+                    {(result?.disease_detected || new URLSearchParams(location.search).get("name"))?.toLowerCase()?.includes('healthy') ? 
+                      <FaCheckCircle style={{ color: '#4CAF50' }} /> : 
+                      <FaExclamationTriangle style={{ color: '#FF9800' }} />
+                    }
                   </div>
                   <div className="result-info">
                     <h3>
@@ -398,32 +404,6 @@ export default function DiseaseDetection() {
               </div>
             </div>
           )}
-
-          <div className="tips-section">
-            <h2>Tips for Better Results</h2>
-            <div className="tips-grid">
-              <div className="tip-card">
-                <div className="tip-icon">📱</div>
-                <h3>Clear Photos</h3>
-                <p>Take photos in good lighting with the affected area clearly visible</p>
-              </div>
-              <div className="tip-card">
-                <div className="tip-icon">🔍</div>
-                <h3>Close-up Shots</h3>
-                <p>Focus on the specific symptoms or affected parts of the plant</p>
-              </div>
-              <div className="tip-card">
-                <div className="tip-icon">🌞</div>
-                <h3>Natural Light</h3>
-                <p>Use natural daylight for the most accurate color representation</p>
-              </div>
-              <div className="tip-card">
-                <div className="tip-icon">📏</div>
-                <h3>Multiple Angles</h3>
-                <p>Take photos from different angles for comprehensive analysis</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <canvas ref={canvasRef} style={{ display: 'none' }} />

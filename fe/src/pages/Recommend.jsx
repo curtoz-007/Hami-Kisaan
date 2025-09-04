@@ -1,4 +1,6 @@
-import React, { State, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { FaSeedling, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
+import { GiWheat } from "react-icons/gi";
 import "../styles/recommend.css";
 import imagesList from "../images/images.json";
 
@@ -15,8 +17,8 @@ const Recommend = () => {
   const [visibleCrops, setVisibleCrops] = useState(8);
 
   const monthNames = [
-    "Poush", "Magh", "Falgun", "chaitra", "Baishakh", "Jestha",
-    "Aasad", "Shrawan", "Bhadra", "Ashoj", "Kartik", "Mangshir"
+    "Poush", "Magh", "Faalgun", "chaitra", "Baishakh", "Jestha",
+    "Aasad", "Shraawan", "Bhaadra", "Ashoj", "Kartik", "Mangshir"
   ];
 
   const currentMonth = monthNames[new Date().getUTCMonth()];
@@ -63,7 +65,7 @@ const Recommend = () => {
 
   const fetchCropRecommendations = async (lat, lon) => {
     try {
-      const response = await fetch(`http://api1.xento.xyz/Crop_recommendation?lat=${lat}&lon=${lon}`);
+      const response = await fetch(`http://10.40.20.192:8000/Crop_recommendation?lat=${lat}&lon=${lon}`);
       if (!response.ok) throw new Error('Failed to fetch recommendations');
       const data = await response.json();
       const sortedCrops = data.sort((a, b) => b.Score - a.Score);
@@ -101,7 +103,7 @@ const Recommend = () => {
     setCropDetails(null);
 
     try {
-      const response = await fetch(`http://api1.xento.xyz/Crop_info?name=${encodeURIComponent(crop.Crop)}`);
+      const response = await fetch(`http://10.40.20.192:8000/Crop_info?name=${encodeURIComponent(crop.Crop)}`);
       if (!response.ok) throw new Error('Failed to fetch crop details');
       const data = await response.json();
       setCropDetails(data[0]);
@@ -175,7 +177,10 @@ const Recommend = () => {
     return (
       <div className="recommend-container">
         <header className="recommend-header">
-          <h1 className="text-3xl font-bold text-green-700">🌱 Hami Kisaan Crop Recommendations</h1>
+          <h1 className="text-3xl font-bold text-green-700">
+            <FaSeedling style={{ marginRight: '8px' }} />
+            Hami Kisaan Crop Recommendations
+          </h1>
         </header>
         {renderLocationStatus()}
       </div>
@@ -185,18 +190,30 @@ const Recommend = () => {
   return (
     <div className="recommend-container">
       <header className="recommend-header">
-        <h1 className="text-3xl font-bold text-green-700">🌱 Hami Kisaan Crop Recommendations</h1>
+        <h1 className="text-3xl font-bold text-green-700">
+          <FaSeedling style={{ marginRight: '8px' }} />
+          हामी किसान बाली परामर्श
+        </h1>
         <div className="location-info">
           <div className="info-item">
-            <span className="info-label">📍 Location:</span>
+            <span className="info-label">
+              <FaMapMarkerAlt style={{ marginRight: '4px' }} />
+              Location:
+            </span>
             <span className="info-value">{placeName}</span>
           </div>
           <div className="info-item">
-            <span className="info-label">📅 Current Month:</span>
+            <span className="info-label">
+              <FaCalendarAlt style={{ marginRight: '4px' }} />
+              Current Month:
+            </span>
             <span className="info-value">{currentMonth}</span>
           </div>
           <div className="info-item">
-            <span className="info-label">🌾 Crops Found:</span>
+            <span className="info-label">
+              <GiWheat style={{ marginRight: '4px' }} />
+              Crops Found:
+            </span>
             <span className="info-value">{crops.length}</span>
           </div>
         </div>
@@ -310,7 +327,10 @@ const Recommend = () => {
                   </div>
 
                   <div className="details-section">
-                    <h3 className="section-title">📅 Planting & Harvesting</h3>
+                    <h3 className="section-title">
+                      <FaCalendarAlt style={{ marginRight: '8px' }} />
+                      Planting & Harvesting
+                    </h3>
                     <div className="details-grid">
                       <div className="detail-item">
                         <span className="detail-label">Planting Period:</span>

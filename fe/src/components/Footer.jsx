@@ -1,4 +1,5 @@
 import React from "react";
+import { FaSeedling } from "react-icons/fa";
 import "../styles/footer.css";
 
 const Footer = () => {
@@ -6,7 +7,10 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-brand">
-          <span className="footer-logo">🌱 Team QuBits</span>
+          <span className="footer-logo">
+            <FaSeedling style={{ marginRight: '8px' }} />
+            Team QuBits
+          </span>
           <span className="footer-tagline">
             Empowering Nepali Agriculture with AI & Community
           </span>

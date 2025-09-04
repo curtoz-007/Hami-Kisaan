@@ -8,6 +8,7 @@ import {
   MdNotifications, 
   MdSecurity,
 } from 'react-icons/md';
+import { FaSeedling, FaBug } from 'react-icons/fa';
 import { WiDaySunny as WiSun, WiThermometer as WiTemp, WiStrongWind as WiWind, WiRain as WiRainIcon, WiThunderstorm as WiThunder } from 'react-icons/wi';
 import '../styles/WeatherAlerts.css';
 
@@ -75,7 +76,7 @@ const WeatherAlerts = () => {
     try {
       if (showToast) setLoading(true);
      
-      const response = await fetch('http://10.40.20.91:8000/weatherforecast', {
+      const response = await fetch('http://10.40.20.192:8000/weatherforecast', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -344,10 +345,12 @@ const WeatherAlerts = () => {
           {/* Quick Links */}
           <div className="quick-links">
             <Link to="/recommend" className="quick-link btn-earth">
-              🌱 View Crop Recommendations
+              <FaSeedling style={{ marginRight: '8px' }} />
+              View Crop Recommendations
             </Link>
-            <Link to="/diseasedetector" className="quick-link btn-farm">
-              🦠 Plant Disease Scanner
+            <Link to="/disease" className="quick-link btn-farm">
+              <FaBug style={{ marginRight: '8px' }} />
+              Plant Disease Scanner
             </Link>
           </div>
         </div>

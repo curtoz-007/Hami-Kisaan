@@ -17,7 +17,7 @@
   background-color: var(--yellow-accent);
   z-index: 1000;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .voice-routing:hover, .voice-routing:hover > * {
@@ -29,4 +29,90 @@
   font-size: 35px;
   color: white;
   transition: transform 0.3s ease;
+}
+
+/* Countdown state */
+.voice-routing.counting-down {
+  background-color: #ff9800;
+  animation: pulse 1s infinite;
+}
+
+.voice-routing.counting-down .countdown-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+}
+
+/* Recording state */
+.voice-routing.recording {
+  background-color: #f44336;
+  animation: pulse 0.5s infinite;
+}
+
+.voice-routing.recording .recording-indicator {
+  font-size: 20px;
+  animation: blink 1s infinite;
+}
+
+/* Uploading state */
+.voice-routing.uploading {
+  background-color: #2196f3;
+  cursor: not-allowed;
+}
+
+/* Overlay styles */
+.countdown-overlay,
+.recording-overlay,
+.uploading-overlay,
+.error-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  z-index: 1001;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.countdown-message,
+.recording-message,
+.uploading-message {
+  margin: 0;
+}
+
+.error-overlay {
+  background: rgba(244, 67, 54, 0.9);
+}
+
+.error-message {
+  margin: 0;
+  color: white;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0.3;
+  }
 }

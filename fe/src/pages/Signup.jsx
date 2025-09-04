@@ -88,7 +88,7 @@ const Signup = () => {
     <div className="page auth-page">
       <div className="auth-container">
         <div className="auth-header">
-          <h1 className="auth-title">Join Hami Kissan</h1>
+          <h1 className="auth-title">Join Hami Kisaan</h1>
           <p className="auth-subtitle">Start your farming journey with us...</p>
         </div>
         {errors.root && <p className="error-text">{errors.root}</p>}

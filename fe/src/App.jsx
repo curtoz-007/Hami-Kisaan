@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Explore from "./pages/Explore";
@@ -14,15 +14,14 @@ import MapAlerts from "./pages/MapAlerts";
 import WeatherAlerts from "./pages/WeatherAlerts";
 import HamikissanTutorial from "./pages/HamikissanTutorial";
 import Footer from "./components/Footer";
-import VoiceRoutingModal from "./components/VoiceRoutingModal";
+import VoiceButton from "./components/VoiceButton";
 import NotFound from "./pages/NotFound";
-import { IoMdMic } from "react-icons/io";
 import "./App.css";
 import Notifications from "./pages/Notifications";
+import CreateListingModal from "./components/CreateListingModal";
 
 const App = () => {
   const location = useLocation();
-  const [opened, setOpened] = useState(false);
 
   // Scroll to top on route change
   useEffect(() => {
@@ -31,12 +30,8 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <div className="voice-routing" onClick={() => setOpened(true)}>
-        {console.log("voice routing opened", opened)}
-        <IoMdMic />
-      </div>
+      <VoiceButton />
        <Header />
-       {opened ? <VoiceRoutingModal opened={opened} setOpened={setOpened} /> : null}
       <div
       // style={{
       //   paddingTop: location.pathname === "/dashboard" ? "0px" : "72px",
@@ -57,6 +52,7 @@ const App = () => {
           <Route path="/weatheralerts" element={<WeatherAlerts />} />
           <Route path="/tutorial" element={<HamikissanTutorial />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="/404" element={<NotFound />} />
         </Routes>
       </div>
        <Footer />

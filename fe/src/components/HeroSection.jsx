@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { FaSeedling, FaBug } from "react-icons/fa";
 import "../styles/heroSection.css";
 // import heroImageUrl from "../assets/hero-image3.jpg";
 // import heroImageUrl from "../assets/hero-image2.png";
@@ -21,11 +22,13 @@ const HeroSection = () => {
         </h2>
         <div className="cta-btns">
           <Link to="/recommend" className="hero-btn">
-            🌱 Discover Your Crops
+            <FaSeedling style={{ marginRight: '8px' }} />
+            Discover Your Crops
             <p>AI Powered Recommendations</p>
           </Link>
           <Link to="/disease" className="hero-btn">
-            🦠 Plant Clinic & Alerts
+            <FaBug style={{ marginRight: '8px' }} />
+            Plant Clinic & Alerts
             <p>Detect diseases and notify others too</p>
           </Link>
         </div>

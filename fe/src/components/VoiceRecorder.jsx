@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { FaCircle } from "react-icons/fa";
 import "../styles/recorder.css";
 
 export default function VoiceRecorder({ onCropDataExtracted }) {
@@ -286,7 +287,8 @@ export default function VoiceRecorder({ onCropDataExtracted }) {
             color: "#c62828",
           }}
         >
-          🔴 Recording... Speak now!
+          <FaCircle style={{ color: '#ff0000', marginRight: '8px' }} />
+          Recording... Speak now!
         </div>
       )}
       {error && (
@@ -315,7 +317,8 @@ export default function VoiceRecorder({ onCropDataExtracted }) {
             onClick={stopRecording}
             style={{ backgroundColor: "#ff4444", color: "white" }}
           >
-            🔴 Stop Recording
+            <FaCircle style={{ color: '#ff0000', marginRight: '8px' }} />
+            Stop Recording
           </button>
         )}
         {!!audioBlob && (
@@ -353,7 +356,7 @@ export default function VoiceRecorder({ onCropDataExtracted }) {
                 {uploading ? "Uploading..." : "Upload"}
               </button>
             </div>
-            {audioBlob && (
+            {/* {audioBlob && (
               <div
                 style={{
                   marginTop: 16,
@@ -385,8 +388,8 @@ export default function VoiceRecorder({ onCropDataExtracted }) {
                   </a>
                 </p>
               </div>
-            )}
-            {uploadResult && (
+            )} */}
+            {/* {uploadResult && (
               <div
                 style={{
                   marginTop: 16,
@@ -429,7 +432,7 @@ export default function VoiceRecorder({ onCropDataExtracted }) {
                   </div>
                 )}
               </div>
-            )}
+            )} */}
           </>
         )}
       </div>

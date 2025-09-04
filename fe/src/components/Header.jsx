@@ -2,42 +2,40 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { signOut } from "../api/auth";
-import { FaSignOutAlt } from "react-icons/fa";
-import { MdOutlineExplore } from "react-icons/md";
-import { FaRegBell } from "react-icons/fa";
+import { FaSignOutAlt, FaRegBell } from "react-icons/fa";
 import "../styles/header.css";
 
 const Header = () => {
   const { user } = useAuth();
 
   let navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Explore", href: "/explore" },
-    { name: "About", href: "/about" },
-    { name: "Disease Detection", href: "/disease" },
-    { name: "Crop Recommendation", href: "/recommend" },
+    { name: "Home", href: "/", },
+    { name: "बजार", href: "/explore", },
+    { name: "About", href: "/about",},
+    { name: "Disease Detection", href: "/disease", },
+    { name: "बाली परामर्श", href: "/recommend",},
   ];
 
   if (user) {
     navLinks = [
-      { name: "Dashboard", href: "/dashboard" },
-      { name: "Explore", href: "/explore", icon: <MdOutlineExplore /> },
-      { name: "Plant Clinic", href: "/disease" },
-      { name: "Alerts", href: "/alerts" },
-      { name: "Recommendations", href: "/recommend" },
-      { name: "Tutorials", href: "/tutorial" },
+      { name: "Dashboard", href: "/dashboard",  },
+      { name: "बजार", href: "/explore", },
+      { name: "Plant Clinic", href: "/disease",  },
+      { name: "Alerts", href: "/alerts"},
+      { name: "बाली परामर्श", href: "/recommend", },
+      { name: "Tutorials", href: "/tutorial", },
     ];
   }
   const navigate = useNavigate();
   return (
     <header className="header shadow-dark-md">
       <Link to={"/"} className="logo">
-        Hami Kissan
+        Hami Kisaan
       </Link>
       <nav className="nav">
         {navLinks.map((link) => (
           <Link key={link.name} to={link.href} className="nav-link">
-            {link.icon}
+            {link.icon && <span className="nav-icon">{link.icon}</span>}
             {link.name}
           </Link>
         ))}
@@ -50,14 +48,18 @@ const Header = () => {
             </span>
             <button
               className="btn btn-signup"
+              style={{ display: "flex", alignItems: "center" }}
               onClick={async (e) => {
                 e.preventDefault();
                 await signOut();
                 navigate("/");
               }}
             >
-        Sign out <FaSignOutAlt />
+        Sign out <FaSignOutAlt style={{ color: "inherit" , marginLeft: "5px", fontSize: "16px"}} />
             </button>
+            <Link to="/notifications" className="nav-icon" title="Notifications" style={{color:"white", fontSize:"24px"}}>
+              <FaRegBell />
+            </Link>
           </>
         ) : (
           <>
@@ -73,9 +75,6 @@ const Header = () => {
             >
               Sign Up
             </button>
-            <Link to="/notifications" className="icon-button" title="Notifications">
-              <FaRegBell />
-            </Link>
           </>
         )}
       </div>

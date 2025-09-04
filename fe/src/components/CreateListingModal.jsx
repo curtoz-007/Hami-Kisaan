@@ -86,7 +86,7 @@ export default function CreateListingModal({
     >
       <div
         className="auth-container"
-        style={{ width: 500, background: "white", marginTop: "12rem"}}
+        style={{ width: 500, background: "white", marginTop: "10rem"}}
       >
         <h1 className="auth-title">Create Listing</h1>
         {error && (

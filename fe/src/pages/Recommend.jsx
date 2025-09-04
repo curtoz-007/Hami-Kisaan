@@ -5,7 +5,7 @@ import "../styles/recommend.css";
 import imagesList from "../images/images.json";
 
 const Recommend = () => {
-  const BE_BASE_URL = (import.meta && import.meta.env && import.meta.env.VITE_BE_BASE_URL) || 'http://127.0.0.1:8000';
+  const BE_BASE_URL = `http://api1.xento.xyz`;
   const [locationState, setLocationState] = useState("requesting");
   const [crops, setCrops] = useState([]);
   const [userLocation, setUserLocation] = useState({ lat: null, lon: null });

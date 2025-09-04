@@ -4,7 +4,7 @@ import { FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
 import "../styles/DiseaseDetection.css";
 
 export default function DiseaseDetection() {
-  const BE_BASE_URL = (import.meta && import.meta.env && import.meta.env.VITE_BE_BASE_URL) || 'http://127.0.0.1:8000';
+  const BE_BASE_URL = `https://api1.xento.xyz`;
   const location = useLocation();
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);

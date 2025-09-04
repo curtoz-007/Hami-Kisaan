@@ -253,63 +253,54 @@ async def disease_detection(
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
-
 @app.post("/disease_detection_detailed/")
 async def disease_detection_detailed(request: DiseaseRequest):
     disease_name = request.disease_name
     print(f"Request for details of disease: {disease_name}")
 
     try:
-        # Prepare AI search prompt
         search_prompt = (
-            f"{disease_name} This is the disease of the plant detected from the image. "
-            "Search for the disease and give the solution for it. For general farmers. "
-            "Use sources especially from trusted sites. "
-            "Make your output as simple and short as possible. "
-            "Include the following JSON structure:\n\n"
-            "{\n"
-            '  "Potential_Harms": "Description of potential harms",\n'
-            '  "Solution": "Recommended solution for the disease",\n'
-            '  "Organic_Solutions": "Organic solutions for the disease",\n'
-            '  "Sources": [\n'
-            '    {"Source Name 1": "Source URL 1"},\n'
-            '    {"Source Name 2": "Source URL 2"},\n'
-            '    {"Source Name 3": "Source URL 3"}\n'
-            '  ]\n'
-            "}\n\n"
+            f"{disease_name} This is the disease of a plant detected from an image. "
+"Provide a simple solution for general farmers. "
+"Use trusted sources and keep the output concise. "
+"Return the response in the following JSON structure:\n\n"
+"{\n"
+"  \"Potential_Harms\": \"Description of potential harms\",\n"
+"  \"Solution\": \"Recommended solution for the disease\",\n"
+"  \"Organic_Solutions\": \"Organic solutions for the disease\",\n"
+"  \"Sources\": [\n"
+"    {\"source_name_1\": \"Source_1_url\"},\n"
+"    {\"source_name_2\": \"Source_2_url\"},\n"
+"    {\"source_name_3\": \"Source_3_url\"}\n"
+"  ]\n"
+"}\n\n"
         )
 
-        # Call AI (assuming synchronous; if async, add await)
         solution = grounded_search(search_prompt)
         print(f"AI response: {solution}")
 
-        # Simplify AI output
-        new_solution = msg(
-            f"""{solution}
-Make it simpler and return the output strictly in JSON format, without extra words or explanations.
-The expected JSON format should be as short as possible and structured as below:
-{{
-    "Potential_Harms": "Description of potential harms",
-    "Solution": "Recommended solution for the disease",
-    "Organic_Solutions": "Organic solutions for the disease",
-    "Sources": [{{"source_name": "URL"}}, {{"source_name": "URL"}}, {{"source_name": "URL"}}]
-}}
-"""
-        )
-
-        # Extract JSON from AI output
-        json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
+        json_match = re.search(r"\{.*\}", solution, re.DOTALL)
         if not json_match:
-            raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
+            print("AI response does not contain valid JSON")
+            return {
+                "Potential_Harms": "",
+                "Solution": "",
+                "Organic_Solutions": "",
+                "Sources": []
+            }
 
         data = json.loads(json_match.group(0))
         print(f"Extracted JSON data: {data}")
-
         return data
 
     except Exception as e:
-        traceback.print_exc()
-        raise HTTPException(status_code=500, detail=f"Error processing disease details: {str(e)}")
+        print(f"Error processing disease details: {str(e)}")
+        return {
+            "Potential_Harms": "",
+            "Solution": "",
+            "Organic_Solutions": "",
+            "Sources": []
+        }
 
 @app.get("/dashboard/data/")
 

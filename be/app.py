@@ -201,45 +201,65 @@ def crop_info(name):
 
 # Disease Detection with AI our own
 
+
 @app.post("/disease_detection/")
 async def disease_detection(
     image: UploadFile = File(...),
     lat: float = Query(...),
     lon: float = Query(...)
 ):
-    print("Received request for disease detection")
+    print(f"Received request for disease detection: lat={lat}, lon={lon}, filename={image.filename}")
 
     try:
-        # Read uploaded file asynchronously
+        # Validate file type
+        if not image.content_type.startswith("image/"):
+            raise HTTPException(status_code=400, detail="Invalid file type. Only images (JPEG, PNG, etc.) are allowed.")
+
+        MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
         image_bytes = await image.read()
+        if len(image_bytes) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=400, detail="Image size exceeds 5MB limit.")
+
+        print(f"Image size: {len(image_bytes)} bytes")
 
         # Convert bytes to PIL Image
-        image_pil = Image.open(BytesIO(image_bytes))
+        try:
+            image_pil = Image.open(BytesIO(image_bytes))
+            print("Image successfully opened with PIL")
+        except Exception as e:
+            print(f"Error opening image: {str(e)}")
+            raise HTTPException(status_code=400, detail=f"Invalid image format: {str(e)}")
 
-        
+        # Predict disease (assuming synchronous function)
+        try:
+            disease_result = predict_plant_disease_from_image(image_pil)
+            print(f"Prediction result: {disease_result}")
+        except Exception as e:
+            print(f"Error in predict_plant_disease_from_image: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
 
-        # Predict disease (synchronous function)
-        disease_result = predict_plant_disease_from_image(image_pil)
+        # Clean up disease name
+        disease_result = disease_result.replace("_", " ").replace("___", " ").replace("__", " ")
+        print(f"Cleaned disease result: {disease_result}")
 
-        print(disease_result)
+        # Optionally store or process the result (replace disease_detected if needed)
+        # If disease_detected is meant to be disease_detection_detailed, call it here
+        # await disease_detection_detailed(DiseaseRequest(disease_name=disease_result))
 
-        disease_result = disease_result.replace("_", " ").replace("___", " ").replace("__"," ")
-
-        disease_detected(disease_result, lat, lon)
         return {"disease_detected": disease_result}
 
-    except:
-        raise HTTPException(status_code=500, detail="Error processing image")
-      
-      
-# disease detection detailed info by gemini
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
 
 @app.post("/disease_detection_detailed/")
 async def disease_detection_detailed(request: DiseaseRequest):
     disease_name = request.disease_name
-    try:
-        print(f"Request for detail of  {disease_name}")
+    print(f"Request for details of disease: {disease_name}")
 
+    try:
         # Prepare AI search prompt
         search_prompt = (
             f"{disease_name} This is the disease of the plant detected from the image. "
@@ -247,40 +267,35 @@ async def disease_detection_detailed(request: DiseaseRequest):
             "Use sources especially from trusted sites. "
             "Make your output as simple and short as possible. "
             "Include the following JSON structure:\n\n"
-            
             "{\n"
-            '  "Disease_Name": "Name of the disease",\n'
             '  "Potential_Harms": "Description of potential harms",\n'
             '  "Solution": "Recommended solution for the disease",\n'
             '  "Organic_Solutions": "Organic solutions for the disease",\n'
             '  "Sources": [\n'
-            '    {"Source Name 1": "Source URL 1",\n'
-            '    {"Source Name 2":, "Source URL 2"},\n'
-            '    {"Source Name 3", "Source URL 3"}\n'
+            '    {"Source Name 1": "Source URL 1"},\n'
+            '    {"Source Name 2": "Source URL 2"},\n'
+            '    {"Source Name 3": "Source URL 3"}\n'
             '  ]\n'
             "}\n\n"
         )
 
-
-
         # Call AI (assuming synchronous; if async, add await)
         solution = grounded_search(search_prompt)
+        print(f"AI response: {solution}")
 
+        # Simplify AI output
         new_solution = msg(
-             f"""{solution}
+            f"""{solution}
 Make it simpler and return the output strictly in JSON format, without extra words or explanations.
-The expected JSON format should be as short as possible (Only give the important output) and structured compulsary as below. You Must Give the links compulsary:
+The expected JSON format should be as short as possible and structured as below:
 {{
     "Potential_Harms": "Description of potential harms",
     "Solution": "Recommended solution for the disease",
     "Organic_Solutions": "Organic solutions for the disease",
     "Sources": [{{"source_name": "URL"}}, {{"source_name": "URL"}}, {{"source_name": "URL"}}]
-    "Give only three sources maximum with there respective URL like above style"
 }}
 """
-)
-
-
+        )
 
         # Extract JSON from AI output
         json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
@@ -288,27 +303,13 @@ The expected JSON format should be as short as possible (Only give the important
             raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
 
         data = json.loads(json_match.group(0))
+        print(f"Extracted JSON data: {data}")
 
-        print("Extracted JSON data:")
-        print(data)
-        return data  # Return as actual JSON
-
-        # Extract JSON from AI output
-        json_match = re.search(r"\{.*\}", new_solution, re.DOTALL)
-        if not json_match:
-            raise HTTPException(status_code=500, detail="Could not extract JSON from AI output")
-
-        data = json.loads(json_match.group(0))
-        
-        # Log or store disease detection (assuming synchronous)
-        
-
-        return data  # Return as actual JSON
+        return data
 
     except Exception as e:
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
-    
+        raise HTTPException(status_code=500, detail=f"Error processing disease details: {str(e)}")
 
 @app.get("/dashboard/data/")
 

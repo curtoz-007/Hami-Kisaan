@@ -21,27 +21,45 @@ export default function DiseaseDetection() {
   const lastFetchedDisease = useRef(null);
   const hasFetched = useRef(false);
 
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB limit
+
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.type.startsWith('image/')) {
-        setSelectedFile(file);
-        setError(null);
-        const reader = new FileReader();
-        reader.onload = (e) => setPreview(e.target.result);
-        reader.readAsDataURL(file);
-      } else {
+      console.log('Selected file:', file.name, file.type, file.size);
+      if (!file.type.startsWith('image/')) {
         setError('Please select a valid image file (JPEG, PNG, etc.)');
         setSelectedFile(null);
         setPreview(null);
+        return;
       }
+      if (file.size > MAX_FILE_SIZE) {
+        setError('File size exceeds 5MB limit.');
+        setSelectedFile(null);
+        setPreview(null);
+        return;
+      }
+      setSelectedFile(file);
+      setError(null);
+      const reader = new FileReader();
+      reader.onload = (e) => setPreview(e.target.result);
+      reader.readAsDataURL(file);
     }
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
+    if (file) {
+      console.log('Dropped file:', file.name, file.type, file.size);
+      if (!file.type.startsWith('image/')) {
+        setError('Please select a valid image file (JPEG, PNG, etc.)');
+        return;
+      }
+      if (file.size > MAX_FILE_SIZE) {
+        setError('File size exceeds 5MB limit.');
+        return;
+      }
       setSelectedFile(file);
       setError(null);
       const reader = new FileReader();
@@ -79,6 +97,13 @@ export default function DiseaseDetection() {
 
     canvas.toBlob((blob) => {
       const file = new File([blob], 'captured-photo.jpg', { type: 'image/jpeg' });
+      console.log('Captured file:', file.name, file.type, file.size);
+      if (file.size > MAX_FILE_SIZE) {
+        setError('Captured photo exceeds 5MB limit.');
+        setShowCamera(false);
+        video.srcObject.getTracks().forEach(track => track.stop());
+        return;
+      }
       setSelectedFile(file);
       setPreview(canvas.toDataURL('image/jpeg'));
       setShowCamera(false);
@@ -109,26 +134,32 @@ export default function DiseaseDetection() {
         body: JSON.stringify({ disease_name: disease }),
       });
 
-      if (response.ok) {
-        const content = await response.json();
-        setRecommendations(content);
-        lastFetchedDisease.current = disease;
-        hasFetched.current = true;
-        return content;
-      } else {
-        throw new Error('Failed to fetch recommendations from disease detection API');
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Recommendations API error:', response.status, errorText);
+        throw new Error(`Failed to fetch recommendations: ${response.status} ${errorText}`);
       }
+
+      const content = await response.json();
+      console.log('Recommendations response:', content);
+      setRecommendations(content);
+      lastFetchedDisease.current = disease;
+      hasFetched.current = true;
+      return content;
     } catch (err) {
-      setError('Failed to fetch recommendations. Please try again.');
-      console.error('Disease Detection API Error:', err);
+      setError(err.message || 'Failed to fetch recommendations. Please try again.');
+      console.error('Recommendations API Error:', err);
       return null;
     } finally {
       setIsFetchingRecommendations(false);
     }
-  }, []);
+  }, [BE_BASE_URL]);
 
   const analyzeImage = async () => {
-    if (!selectedFile) return;
+    if (!selectedFile) {
+      setError('No file selected.');
+      return;
+    }
 
     setIsAnalyzing(true);
     setError(null);
@@ -139,42 +170,52 @@ export default function DiseaseDetection() {
 
     try {
       if (!navigator.geolocation) {
-        throw new Error('Geolocation is not supported by this browser');
+        throw new Error('Geolocation is not supported by this browser.');
       }
 
       const position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
+        navigator.geolocation.getCurrentPosition(
+          resolve,
+          (error) => reject(new Error(`Geolocation failed: ${error.message}`))
+        );
       });
 
       const { latitude, longitude } = position.coords;
-      console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+      console.log(`Latitude: ${latitude.toFixed(5)}, Longitude: ${longitude.toFixed(5)}`);
+
       const formData = new FormData();
       formData.append('image', selectedFile);
+      for (let [key, value] of formData.entries()) {
+        console.log(`FormData: ${key}=${value.name || value}`);
+      }
 
-      const url = new URL(`${BE_BASE_URL}/disease_detection`)
-      url.searchParams.append('lat', latitude)
-      url.searchParams.append('lon', longitude)
+      const url = new URL(`${BE_BASE_URL}/disease_detection`);
+      url.searchParams.append('lat', latitude.toFixed(5));
+      url.searchParams.append('lon', longitude.toFixed(5));
 
       const response = await fetch(url, {
         method: 'POST',
         body: formData,
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        setResult(data);
-        if (data.disease_detected) {
-          await fetchRecommendations(data.disease_detected);
-        } else {
-          throw new Error('No disease detected in the response');
-        }
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Disease Detection API error:', response.status, errorText);
+        throw new Error(`Failed to analyze image: ${response.status} ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log('Disease Detection API response:', data);
+      setResult(data);
+
+      if (data.disease_detected) {
+        await fetchRecommendations(data.disease_detected);
       } else {
-        throw new Error('Failed to analyze image');
+        setError('No disease detected in the image.');
       }
     } catch (err) {
-      setError('Failed to analyze image or get location. Please try again.');
-      console.error('Error:', err);
+      setError(err.message || 'Failed to analyze image. Please try again later.');
+      console.error('Error in analyzeImage:', err);
     } finally {
       setIsAnalyzing(false);
     }
@@ -215,7 +256,7 @@ export default function DiseaseDetection() {
         videoRef.current.srcObject = null;
       }
     };
-  }, [location.search]);
+  }, [location.search, fetchRecommendations]);
 
   const hasQuery = !!new URLSearchParams(location.search).get("name");
 
@@ -237,24 +278,24 @@ export default function DiseaseDetection() {
         <div className="disease-content">
           {!hasQuery && (
             <div className="upload-section">
-              <div  
-                   onDrop={handleDrop}
-                   onDragOver={handleDragOver}
-                   className={selectedFile ? 'upload-area has-file' : 'upload-area'}>
-                
+              <div
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                className={selectedFile ? 'upload-area has-file' : 'upload-area'}
+              >
                 {!preview && !showCamera ? (
                   <div className="upload-placeholder">
                     <div className="upload-icon">📸</div>
                     <h3>Upload or Capture Plant Image</h3>
                     <p>Drag & drop an image, upload from device, or use camera</p>
                     <div className="button-group">
-                      <button 
+                      <button
                         className="button primary"
                         onClick={() => fileInputRef.current?.click()}
                       >
                         Upload Image
                       </button>
-                      <button 
+                      <button
                         className="button primary"
                         onClick={startCamera}
                       >
@@ -273,13 +314,13 @@ export default function DiseaseDetection() {
                   <div className="camera-preview">
                     <video ref={videoRef} autoPlay playsInline style={{ width: '100%', maxHeight: '300px', borderRadius: '8px' }} />
                     <div className="camera-controls">
-                      <button 
+                      <button
                         className="button primary"
                         onClick={capturePhoto}
                       >
                         Capture Photo
                       </button>
-                      <button 
+                      <button
                         className="button secondary"
                         onClick={closeCamera}
                       >
@@ -291,7 +332,7 @@ export default function DiseaseDetection() {
                   <div className="image-preview">
                     <img src={preview} alt="Plant preview" />
                     <div className="preview-overlay">
-                      <button 
+                      <button
                         className="button secondary"
                         onClick={resetForm}
                       >
@@ -317,7 +358,7 @@ export default function DiseaseDetection() {
                     <span className="file-name">{selectedFile.name}</span>
                     <span className="file-size">{(selectedFile.size / 1024 / 1024).toFixed(2)} MB</span>
                   </div>
-                  <button 
+                  <button
                     className="button primary analyze-btn"
                     onClick={analyzeImage}
                     disabled={isAnalyzing}
@@ -342,8 +383,8 @@ export default function DiseaseDetection() {
               <div className="result-card">
                 <div className="result-header">
                   <div className="disease-icon">
-                    {(result?.disease_detected || new URLSearchParams(location.search).get("name"))?.toLowerCase()?.includes('healthy') ? 
-                      <FaCheckCircle style={{ color: '#4CAF50' }} /> : 
+                    {(result?.disease_detected || new URLSearchParams(location.search).get("name"))?.toLowerCase()?.includes('healthy') ?
+                      <FaCheckCircle style={{ color: '#4CAF50' }} /> :
                       <FaExclamationTriangle style={{ color: '#FF9800' }} />
                     }
                   </div>
@@ -359,7 +400,7 @@ export default function DiseaseDetection() {
                     </h3>
                   </div>
                 </div>
-                
+
                 <div className="result-details">
                   {isFetchingRecommendations ? (
                     <div className="loading-recommendations">

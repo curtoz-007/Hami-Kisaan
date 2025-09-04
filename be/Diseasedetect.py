@@ -1,7 +1,7 @@
+from pathlib import Path
 import torch
 from transformers import AutoFeatureExtractor, AutoModelForImageClassification
 from PIL import Image
-from pathlib import Path
 
 # ---- LABEL MAPPING ----
 LABEL_MAP = {
@@ -30,41 +30,63 @@ def predict_plant_disease_from_image(image: Image.Image) -> str:
     """
     Predicts the disease of a plant leaf from a PIL Image object using a pretrained model.
     """
-    # Correct checkpoint path
-    checkpoint_path = Path(r"D:\Team-QUBITS\be\AI\results\checkpoint-5373")
+    # Resolve checkpoint path relative to this script
+    checkpoint_path = Path(__file__).parent / "AI" / "results" / "checkpoint-5373"
+    # Alternative for testing: Hardcode absolute path
+    # checkpoint_path = Path("/home/user/Hami-Kisaan/be/AI/results/checkpoint-5373")
 
+    print(f"Checking checkpoint path: {checkpoint_path}")
     if not checkpoint_path.exists():
         raise FileNotFoundError(f"Checkpoint folder not found: {checkpoint_path}")
+    if not checkpoint_path.is_dir():
+        raise NotADirectoryError(f"Checkpoint path is not a directory: {checkpoint_path}")
 
-    # Load model & extractor
-    extractor = AutoFeatureExtractor.from_pretrained(str(checkpoint_path), local_files_only=True)
-    model = AutoModelForImageClassification.from_pretrained(str(checkpoint_path), local_files_only=True)
+    # Verify required files
+    required_files = ["training_args.bin", "config.json", "preprocessor_config.json"]
+    for file in required_files:
+        if not (checkpoint_path / file).exists():
+            raise FileNotFoundError(f"Missing required file in checkpoint: {file}")
+
+    print("Checkpoint folder and files verified")
+
+    try:
+        # Load model & extractor
+        extractor = AutoFeatureExtractor.from_pretrained(str(checkpoint_path), local_files_only=True)
+        model = AutoModelForImageClassification.from_pretrained(str(checkpoint_path), local_files_only=True)
+    except Exception as e:
+        print(f"Error loading model or extractor: {str(e)}")
+        raise
 
     # Device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     model.eval()
+    print(f"Using device: {device}")
 
     # Ensure image is RGB
     image = image.convert("RGB")
 
     # Preprocess image
-    inputs = extractor(images=image, return_tensors="pt")
-    inputs = {k: v.to(device) for k, v in inputs.items()}
+    try:
+        inputs = extractor(images=image, return_tensors="pt")
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+    except Exception as e:
+        print(f"Error preprocessing image: {str(e)}")
+        raise
 
     # Predict
-    with torch.no_grad():
-        outputs = model(**inputs)
-        logits = outputs.logits
-        predicted_class_idx = logits.argmax(-1).item()
+    try:
+        with torch.no_grad():
+            outputs = model(**inputs)
+            logits = outputs.logits
+            predicted_class_idx = logits.argmax(-1).item()
+    except Exception as e:
+        print(f"Error during prediction: {str(e)}")
+        raise
 
     # Get proper label
-    predicted_label = model.config.id2label.get(predicted_class_idx)
+    predicted_label = model.config.id2label.get(predicted_class_idx, "Unknown")
     predicted_disease = LABEL_MAP.get(predicted_label, "Unknown")
+    print(f"Predicted disease: {predicted_disease}")
 
     return predicted_disease
-
-# # # Example usage:
-# img = Image.open(r"D:\Team-QUBITS\be\12.jpg")
-# disease = predict_plant_disease_from_image(img)
-# print(f"Predicted disease: {disease}")

@@ -13,7 +13,7 @@ import { WiDaySunny as WiSun, WiThermometer as WiTemp, WiStrongWind as WiWind, W
 import '../styles/WeatherAlerts.css';
 
 const WeatherAlerts = () => {
-  const BE_BASE_URL = `http://api1.xento.xyz`;
+  const BE_BASE_URL = `https://api1.xento.xyz`;
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState(null);

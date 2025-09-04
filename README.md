@@ -302,4 +302,3 @@ For support and questions:
 ---
 
 **Made with ❤️ by Team QuBits**
-**Team Members :- Immense Raj Subedi, Ananta Pokhrel, Shital Gautam **

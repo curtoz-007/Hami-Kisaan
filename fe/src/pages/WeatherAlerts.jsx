@@ -13,6 +13,7 @@ import { WiDaySunny as WiSun, WiThermometer as WiTemp, WiStrongWind as WiWind, W
 import '../styles/WeatherAlerts.css';
 
 const WeatherAlerts = () => {
+  const BE_BASE_URL = (import.meta && import.meta.env && import.meta.env.VITE_BE_BASE_URL) || 'http://127.0.0.1:8000';
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState(null);
@@ -76,7 +77,7 @@ const WeatherAlerts = () => {
     try {
       if (showToast) setLoading(true);
      
-      const response = await fetch('http://10.40.20.192:8000/weatherforecast', {
+      const response = await fetch(`${BE_BASE_URL}/weatherforecast`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

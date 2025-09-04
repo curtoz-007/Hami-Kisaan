@@ -4,6 +4,7 @@ import { FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
 import "../styles/DiseaseDetection.css";
 
 export default function DiseaseDetection() {
+  const BE_BASE_URL = (import.meta && import.meta.env && import.meta.env.VITE_BE_BASE_URL) || 'http://127.0.0.1:8000';
   const location = useLocation();
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -100,7 +101,7 @@ export default function DiseaseDetection() {
     setError(null);
 
     try {
-      const response = await fetch('http://10.40.20.192:8000/disease_detection_detailed/', {
+      const response = await fetch(`${BE_BASE_URL}/disease_detection_detailed/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ export default function DiseaseDetection() {
       const formData = new FormData();
       formData.append('image', selectedFile);
 
-      const url = new URL('http://10.40.20.192:8000/disease_detection')
+      const url = new URL(`${BE_BASE_URL}/disease_detection`)
       url.searchParams.append('lat', latitude)
       url.searchParams.append('lon', longitude)
 

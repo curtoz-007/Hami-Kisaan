@@ -1,5 +1,5 @@
 {
-  "base_url": "http://<your-server-domain-or-ip>",
+  "base_url": "http://127.0.0.1:8000",
   "endpoints": [
     {
       "path": "/",

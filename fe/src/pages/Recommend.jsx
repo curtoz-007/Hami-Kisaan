@@ -5,6 +5,7 @@ import "../styles/recommend.css";
 import imagesList from "../images/images.json";
 
 const Recommend = () => {
+  const BE_BASE_URL = (import.meta && import.meta.env && import.meta.env.VITE_BE_BASE_URL) || 'http://127.0.0.1:8000';
   const [locationState, setLocationState] = useState("requesting");
   const [crops, setCrops] = useState([]);
   const [userLocation, setUserLocation] = useState({ lat: null, lon: null });
@@ -65,7 +66,7 @@ const Recommend = () => {
 
   const fetchCropRecommendations = async (lat, lon) => {
     try {
-      const response = await fetch(`http://10.40.20.192:8000/Crop_recommendation?lat=${lat}&lon=${lon}`);
+      const response = await fetch(`${BE_BASE_URL}/Crop_recommendation?lat=${lat}&lon=${lon}`);
       if (!response.ok) throw new Error('Failed to fetch recommendations');
       const data = await response.json();
       const sortedCrops = data.sort((a, b) => b.Score - a.Score);
@@ -103,7 +104,7 @@ const Recommend = () => {
     setCropDetails(null);
 
     try {
-      const response = await fetch(`http://10.40.20.192:8000/Crop_info?name=${encodeURIComponent(crop.Crop)}`);
+      const response = await fetch(`${BE_BASE_URL}/Crop_info?name=${encodeURIComponent(crop.Crop)}`);
       if (!response.ok) throw new Error('Failed to fetch crop details');
       const data = await response.json();
       setCropDetails(data[0]);

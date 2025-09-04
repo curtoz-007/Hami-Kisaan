@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { State, useEffect } from "react";
 import "../styles/recommend.css";
 import imagesList from "../images/images.json";
 

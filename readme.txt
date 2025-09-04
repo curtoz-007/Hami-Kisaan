@@ -1,179 +1,280 @@
-# 🌾 Hami-Kisaan — AI-Powered Farming Assistant
+<h1 align="center">🌾 Hami‑Kisaan</h1>
+<p align="center"><b>AI‑Powered Farming Assistant</b></p>
+<p align="center" style="max-width:600px; line-height:1.5;">
+  Empowering farmers with AI — crop recommendations, disease detection, weather alerts, and a smart marketplace.
+</p>
 
-Hami-Kisaan is a full-stack AI-powered agricultural platform that helps farmers make smarter decisions.
+<p align="center">
+  <img alt="Backend FastAPI" src="https://img.shields.io/badge/backend-FastAPI-009688?logo=fastapi&logoColor=white">
+  <img alt="Frontend React" src="https://img.shields.io/badge/frontend-React-61DAFB?logo=react&logoColor=black">
+  <img alt="Database Supabase" src="https://img.shields.io/badge/database-Supabase-3ECF8E?logo=supabase&logoColor=white">
+  <img alt="License Restricted" src="https://img.shields.io/badge/license-Restricted-red">
+</p>
 
-It integrates crop recommendations, plant disease detection, weather alerts, map-based disease tracking, and a marketplace for farmers to buy and sell crops.
-
-> ⚠️ Note: This project was developed by Immense Raj Subedi, Shital Gautam, and Ananta Pokhrel for a hackathon. Any reproduction or deployment is only allowed with explicit permission. See Licensing.
-
----
-
-## 📑 Table of Contents
-
-- [Core Features](#-core-features)
-- [Screenshots](#-screenshots)
-- [Technology Stack](#%EF%B8%8F-technology-stack)
-- [Backend Setup (FastAPI + Supabase)](#%EF%B8%8F-backend-setup-fastapi--supabase)
-- [Frontend Setup (Vite + React)](#-frontend-setup-vite--react)
-- [API Endpoints](#-api-endpoints)
-- [Frontend → Backend Wiring](#-frontend--backend-wiring)
-- [Usage Notes](#-usage-notes)
-- [Licensing & Permissions](#-licensing--permissions)
+<p align="center">
+  <i>Developed by Immense Raj Subedi, Shital Gautam, and Ananta Pokhrel for a hackathon.</i><br/>
+  <sub>Reproduction or deployment only with explicit permission. See Licensing.</sub>
+</p>
 
 ---
 
-## 🌟 Core Features
-
-- **AI Crop Recommendations**
-  - Suggests optimal crops based on location, soil type, season, weather, and temperature
-  - Helps maximize yield and reduce crop failure
-- **Plant Disease Detection**
-  - Upload crop images for AI-based disease or pest detection
-  - Detailed disease info, potential harms, and organic solutions
-  - Automatic map alerts flag infected areas in red
-- **Weather Forecasts & Alerts**
-  - Real-time and future weather predictions
-  - Extreme weather alerts for better planning
-- **Map-Based Alerts**
-  - Visualize disease outbreaks on an interactive map to take preventive measures
-- **Crop Information**
-  - Growth guidance, soil requirements, fertilizers, irrigation, and harvesting tips
-- **Marketplace**
-  - List crops via typing or AI-assisted form filling; buyers can search and purchase
-- **Dashboard**
-  - Central hub for weather, recommendations, disease alerts, and notifications
-- **Tutorials**
-  - Step-by-step guides for modern farming techniques
+<h2 style="color:#009688;">📑 Table of Contents</h2>
+<ul>
+  <li><a href="#🌟-core-features">Core Features</a></li>
+  <li><a href="#📊-feature-overview">Feature Overview</a></li>
+  <li><a href="#🖼️-screenshots">Screenshots</a></li>
+  <li><a href="#🛠️-technology-stack">Technology Stack</a></li>
+  <li><a href="#🧭-project-structure">Project Structure</a></li>
+  <li><a href="#⚙️-backend-setup-fastapi--supabase">Backend Setup</a></li>
+  <li><a href="#💻-frontend-setup-vite--react">Frontend Setup</a></li>
+  <li><a href="#⚡-quick-start-commands">Quick Start</a></li>
+  <li><a href="#📌-api-endpoints">API Endpoints</a></li>
+  <li><a href="#🔗-frontend-→-backend-wiring">Frontend → Backend Wiring</a></li>
+  <li><a href="#📦-usage-notes">Usage Notes</a></li>
+  <li><a href="#📜-licensing--permissions">Licensing & Permissions</a></li>
+</ul>
 
 ---
 
-## 🖼️ Screenshots
-
-![Crop Recommendation](Workflowdig/CropRecommendation.jpg)
-
-![Disease Detection](Workflowdig/Disease_Detection.jpg)
-
-![Weather Alerts](Workflowdig/Weatheralert.jpg)
-
-![Voice-powered Listing](Workflowdig/Voicepoweredlisting.jpg)
+<h2 style="color:#009688;">🌟 Core Features</h2>
+<div style="background:#f0f8ff; padding:15px; border-radius:10px;">
+<ul>
+<li><b>AI Crop Recommendations</b>
+  <ul>
+    <li>Optimal crops based on location, soil, season, weather, temperature</li>
+    <li>Maximize yield and reduce crop failure</li>
+  </ul>
+</li>
+<li><b>Plant Disease Detection</b>
+  <ul>
+    <li>Upload crop images for AI diagnosis</li>
+    <li>Get disease info, harms, and organic solutions</li>
+    <li>Map alerts flag infected areas in red</li>
+  </ul>
+</li>
+<li><b>Weather Forecasts & Alerts</b>
+  <ul>
+    <li>Real-time & future predictions</li>
+    <li>Extreme weather alerts</li>
+  </ul>
+</li>
+<li><b>Map-Based Alerts</b>
+  <ul>
+    <li>Interactive outbreak visualization</li>
+  </ul>
+</li>
+<li><b>Crop Information</b>
+  <ul>
+    <li>Guidance on growth, soil, fertilizers, irrigation, harvesting</li>
+  </ul>
+</li>
+<li><b>Marketplace</b>
+  <ul>
+    <li>Manual + AI-assisted crop listings</li>
+  </ul>
+</li>
+<li><b>Dashboard & Tutorials</b>
+  <ul>
+    <li>Central hub for weather, recommendations, alerts, notifications</li>
+    <li>Step-by-step modern farming guides</li>
+  </ul>
+</li>
+</ul>
+</div>
 
 ---
 
-## 🛠️ Technology Stack
-
-- **Backend:** FastAPI, Python, Whisper AI, Supabase (PostgreSQL)
-- **Frontend:** React, Vite
-- **AI Models:** Faster Whisper for audio transcription, custom ML models for disease detection
-- **Deployment:** Local dev-ready, cloud-ready (FastAPI compatible)
+<h2 style="color:#009688;">📊 Feature Overview</h2>
+<table>
+<tr>
+<th>Area</th><th>Highlights</th><th>Status</th>
+</tr>
+<tr>
+<td>Crop Recommendation</td><td>Location, soil, season, weather-aware suggestions</td><td>✅</td>
+</tr>
+<tr>
+<td>Disease Detection</td><td>Image upload, diagnosis, organic remedies, map flags</td><td>✅</td>
+</tr>
+<tr>
+<td>Weather</td><td>Real-time + forecast, extreme alerts</td><td>✅</td>
+</tr>
+<tr>
+<td>Map Alerts</td><td>Outbreak visualization, risk awareness</td><td>✅</td>
+</tr>
+<tr>
+<td>Marketplace</td><td>Manual + AI-assisted listings</td><td>✅</td>
+</tr>
+<tr>
+<td>Tutorials</td><td>Practical, step-by-step guidance</td><td>✅</td>
+</tr>
+</table>
 
 ---
 
-## ⚙️ Backend Setup (FastAPI + Supabase)
+<h2 style="color:#009688;">🖼️ Screenshots</h2>
+<p align="center">
+<img src="Workflowdig/CropRecommendation.jpg" alt="Crop Recommendation" width="300">
+<img src="Workflowdig/Disease_Detection.jpg" alt="Disease Detection" width="300">
+<img src="Workflowdig/Weatheralert.jpg" alt="Weather Alerts" width="300">
+<img src="Workflowdig/Voicepoweredlisting.jpg" alt="Voice Listing" width="300">
+</p>
 
-1. Create & activate virtual environment
+---
 
-```bash
-cd be
+<h2 style="color:#009688;">🛠️ Technology Stack</h2>
+<ul>
+<li><b>Backend:</b> FastAPI, Python, Whisper AI, Supabase (PostgreSQL)</li>
+<li><b>Frontend:</b> React, Vite</li>
+<li><b>AI Models:</b> Faster Whisper, custom disease detection ML models</li>
+<li><b>Deployment:</b> Local dev-ready, cloud-ready (FastAPI compatible)</li>
+</ul>
+
+---
+
+<h2 style="color:#009688;">🧭 Project Structure</h2>
+<pre>
+Hami-Kisaan/
+├─ be/                    # FastAPI backend
+│  ├─ app.py              # Entry point
+│  ├─ Bestcrop.py         # Crop recommendation
+│  ├─ Diseasedetect.py    # Plant disease detection
+│  ├─ weatherforecast.py  # Weather forecasts
+│  ├─ Cropinfo.py         # Crop information
+│  └─ AI/                 # AI training/inference assets
+└─ fe/                    # React frontend (Vite)
+   ├─ src/pages/          # Pages (Dashboard, Recommend, DiseaseDetection, ...)
+   └─ src/components/     # Reusable components
+</pre>
+
+---
+
+<h2 style="color:#009688;">⚙️ Backend Setup (FastAPI + Supabase)</h2>
+
+<ol>
+<li><b>Create & activate virtual environment</b>
+
+<pre><code>cd be
 python -m venv .venv
 . .venv\Scripts\activate
-```
+</code></pre>
+</li>
 
-2. Install dependencies
+<li><b>Install dependencies</b>
 
-```bash
-pip install -r requirements.txt
-```
+<pre><code>pip install -r requirements.txt
+</code></pre>
+</li>
 
-3. Set environment variables (PowerShell example)
+<li><b>Set environment variables (PowerShell)</b>
 
-```powershell
-$env:SUPABASE_URL = "<your-supabase-url>"
-$env:SUPABASE_SERVICE_ROLE = "<your-supabase-service-role-key>"
-$env:weather_api_key = "<your-weatherapi.com-key>"
-```
+<pre><code>$env:SUPABASE_URL = "&lt;your-supabase-url&gt;"
+$env:SUPABASE_SERVICE_ROLE = "&lt;your-supabase-service-role-key&gt;"
+$env:weather_api_key = "&lt;your-weatherapi.com-key&gt;"
+</code></pre>
+</li>
 
-4. Run the backend API
+<li><b>Run the backend API</b>
 
-```bash
-uvicorn app:app --reload
-```
+<pre><code>uvicorn app:app --reload
+</code></pre>
 
-Base URL: `http://127.0.0.1:8000`
+Base URL: <code>http://127.0.0.1:8000</code>
 
-> Tip: Update checkpoint path in `be/Diseasedetect.py` if different.
+<blockquote>Tip: Update checkpoint path in <code>be/Diseasedetect.py</code> if different.</blockquote>
+</li>
+</ol>
 
 ---
 
-## 💻 Frontend Setup (Vite + React)
+<h2 style="color:#009688;">💻 Frontend Setup (Vite + React)</h2>
 
-1. Install dependencies
+<ol>
+<li><b>Install dependencies</b>
 
-```bash
-cd fe
+<pre><code>cd fe
 npm install
-```
+</code></pre>
+</li>
 
-2. Configure backend base URL
+<li><b>Configure backend base URL</b>
 
-Create `.env` in `fe/` with:
+Create <code>.env</code> in <code>fe/</code> with:
 
-```env
-VITE_BE_BASE_URL=http://127.0.0.1:8000
-```
+<pre><code>VITE_BE_BASE_URL=http://127.0.0.1:8000
+</code></pre>
+</li>
 
-3. Run development server
+<li><b>Run development server</b>
 
-```bash
-npm run dev
-```
+<pre><code>npm run dev
+</code></pre>
 
-Frontend URL: `http://localhost:5173`
-
----
-
-## 📌 API Endpoints
-
-| Endpoint | Method | Description |
-| --- | --- | --- |
-| `/` | GET | Health check |
-| `/Crop_recommendation` | GET | Query: `lat`, `lon` |
-| `/Crop_info` | GET | Query: `name` |
-| `/disease_detection/` | POST | Form: `image`; Query: `lat`, `lon` |
-| `/disease_detection_detailed/` | POST | JSON: `{ "disease_name": "string" }` |
-| `/weatherforecast` | POST | JSON: `{ "latitude": number, "longitude": number }` |
-| `/dashboard/data/` | GET | Query: `latitude`, `longitude` |
-| `/transcribe` | POST | Audio transcription for marketplace or navigation |
-| `/transcribe/Findpage` | POST | AI-based navigation to site pages |
+Frontend URL: <code>http://localhost:5173</code>
+</li>
+</ol>
 
 ---
 
-## 🔗 Frontend → Backend Wiring
+<h2 style="color:#009688;">⚡ Quick Start (Commands)</h2>
 
-| Component | API Calls / Usage |
-| --- | --- |
-| `pages/DiseaseDetection.jsx` | POST ``${VITE_BE_BASE_URL}/disease_detection?lat=..&lon=..``; POST ``${VITE_BE_BASE_URL}/disease_detection_detailed/`` |
-| `pages/Recommend.jsx` | GET ``${VITE_BE_BASE_URL}/Crop_recommendation?lat=..&lon=..``; GET ``${VITE_BE_BASE_URL}/Crop_info?name=..`` |
-| `pages/WeatherAlerts.jsx` | POST ``${VITE_BE_BASE_URL}/weatherforecast`` |
-| `pages/Dashboard.jsx` and `pages/MapAlerts.jsx` | GET `/dashboard/data` → temperature, rainfall, soil pH, altitude; red flags for detected diseases |
-| `components/VoiceRecorder.jsx` | POST `/transcribe` → AI-assisted crop listing |
+<table>
+<tr><th>Target</th><th>Commands</th></tr>
+<tr><td>Backend</td><td><code>cd be</code> → <code>python -m venv .venv</code> → <code>. .venv\Scripts\activate</code> → <code>pip install -r requirements.txt</code> → <code>uvicorn app:app --reload</code></td></tr>
+<tr><td>Frontend</td><td><code>cd fe</code> → <code>npm install</code> → create <code>.env</code> with <code>VITE_BE_BASE_URL=http://127.0.0.1:8000</code> → <code>npm run dev</code></td></tr>
+</table>
 
 ---
 
-## 📦 Usage Notes
+<h2 style="color:#009688;">📌 API Endpoints</h2>
 
-- Ensure Supabase keys are correctly configured
-- Disease map alerts require latitude and longitude
-- Marketplace supports both manual and AI-assisted crop listings
-- All AI outputs are processed into clean JSON for frontend integration
+<table>
+<tr><th>Endpoint</th><th>Method</th><th>Description</th></tr>
+<tr><td><code>/</code></td><td>GET</td><td>Health check</td></tr>
+<tr><td><code>/Crop_recommendation</code></td><td>GET</td><td>Query: <code>lat</code>, <code>lon</code></td></tr>
+<tr><td><code>/Crop_info</code></td><td>GET</td><td>Query: <code>name</code></td></tr>
+<tr><td><code>/disease_detection/</code></td><td>POST</td><td>Form: <code>image</code>; Query: <code>lat</code>, <code>lon</code></td></tr>
+<tr><td><code>/disease_detection_detailed/</code></td><td>POST</td><td>JSON: <code>{ "disease_name": "string" }</code></td></tr>
+<tr><td><code>/weatherforecast</code></td><td>POST</td><td>JSON: <code>{ "latitude": number, "longitude": number, "days": number }</code></td></tr>
+<tr><td><code>/dashboard/data/</code></td><td>GET</td><td>Query: <code>latitude</code>, <code>longitude</code></td></tr>
+<tr><td><code>/transcribe</code></td><td>POST</td><td>Audio transcription for marketplace or navigation</td></tr>
+<tr><td><code>/transcribe/Findpage</code></td><td>POST</td><td>AI-based navigation to site pages</td></tr>
+</table>
 
 ---
 
-## 📜 Licensing & Permissions
+<h2 style="color:#009688;">🔗 Frontend → Backend Wiring</h2>
 
-- Developed by Shital Gautam, Ananta Pokhrel, and Immense Raj Subedi for a hackathon
-- Any reproduction, redistribution, or commercial deployment is strictly prohibited without explicit written permission
-- For inquiries regarding use or collaboration, contact the developers
+<table>
+<tr><th>Component</th><th>API Calls / Usage</th></tr>
+<tr><td><code>pages/DiseaseDetection.jsx</code></td><td>POST <code>${VITE_BE_BASE_URL}/disease_detection?lat=..&amp;lon=..</code>; POST <code>${VITE_BE_BASE_URL}/disease_detection_detailed/</code></td></tr>
+<tr><td><code>pages/Recommend.jsx</code></td><td>GET <code>${VITE_BE_BASE_URL}/Crop_recommendation?lat=..&amp;lon=..</code>; GET <code>${VITE_BE_BASE_URL}/Crop_info?name=..</code></td></tr>
+<tr><td><code>pages/WeatherAlerts.jsx</code></td><td>POST <code>${VITE_BE_BASE_URL}/weatherforecast</code></td></tr>
+<tr><td><code>pages/Dashboard.jsx</code> &amp; <code>pages/MapAlerts.jsx</code></td><td>GET <code>/dashboard/data</code> → temperature, rainfall, soil pH, altitude; red flags for detected diseases</td></tr>
+<tr><td><code>components/VoiceRecorder.jsx</code></td><td>POST <code>/transcribe</code> → AI-assisted crop listing</td></tr>
+</table>
 
 ---
 
-© 2025 Immense Raj Subedi, Shital Gautam, Ananta Pokhrel. All rights reserved.
+<h2 style="color:#009688;">📦 Usage Notes</h2>
+
+<ul>
+<li>Ensure Supabase keys are correctly configured</li>
+<li>Disease map alerts require latitude and longitude</li>
+<li>Marketplace supports both manual and AI-assisted crop listings</li>
+<li>All AI outputs are processed into clean JSON for frontend integration</li>
+</ul>
+
+---
+
+<h2 style="color:#009688;">📜 Licensing & Permissions</h2>
+
+<ul>
+<li>Developed by Shital Gautam, Ananta Pokhrel, and Immense Raj Subedi for a hackathon</li>
+<li>Any reproduction, redistribution, or commercial deployment is strictly prohibited without explicit written permission</li>
+<li>For inquiries regarding use or collaboration, contact the developers</li>
+</ul>
+
+---
+
+<p align="center"><sub>© 2025 Immense Raj Subedi, Shital Gautam, Ananta Pokhrel. All rights reserved.</sub></p>
+

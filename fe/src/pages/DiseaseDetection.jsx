@@ -99,7 +99,7 @@ export default function DiseaseDetection() {
     setError(null);
 
     try {
-      const response = await fetch('http://10.40.20.192:8000/disease_detection_detailed/', {
+      const response = await fetch('http://api1.xento.xyz/disease_detection_detailed/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ export default function DiseaseDetection() {
       const formData = new FormData();
       formData.append('image', selectedFile);
 
-      const url = new URL('http://10.40.20.192:8000/disease_detection');
+      const url = new URL('http://api1.xento.xyz/disease_detection');
       url.searchParams.append('lat', latitude);
       url.searchParams.append('lon', longitude);
 

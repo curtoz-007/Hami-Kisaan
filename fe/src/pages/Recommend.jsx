@@ -63,7 +63,7 @@ const Recommend = () => {
 
   const fetchCropRecommendations = async (lat, lon) => {
     try {
-      const response = await fetch(`http://10.40.20.192:8000/Crop_recommendation?lat=${lat}&lon=${lon}`);
+      const response = await fetch(`http://api1.xento.xyz/Crop_recommendation?lat=${lat}&lon=${lon}`);
       if (!response.ok) throw new Error('Failed to fetch recommendations');
       const data = await response.json();
       const sortedCrops = data.sort((a, b) => b.Score - a.Score);
@@ -101,7 +101,7 @@ const Recommend = () => {
     setCropDetails(null);
 
     try {
-      const response = await fetch(`http://10.40.20.192:8000/Crop_info?name=${encodeURIComponent(crop.Crop)}`);
+      const response = await fetch(`http://api1.xento.xyz/Crop_info?name=${encodeURIComponent(crop.Crop)}`);
       if (!response.ok) throw new Error('Failed to fetch crop details');
       const data = await response.json();
       setCropDetails(data[0]);
